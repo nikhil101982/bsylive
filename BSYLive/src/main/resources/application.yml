@@ -13,7 +13,7 @@ vimeo:
     user:
       live:
         quota:
-          url: https://api.vimeo.com
+          url: https://api.vimeo.com/me
           
 ---
 
