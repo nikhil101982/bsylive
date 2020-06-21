@@ -1,0 +1,42 @@
+logging:
+  level:
+    ROOT: INFO
+    org.springframework: INFO
+    com.bsy.live: DEBUG
+
+spring:
+  profiles:
+    active: dev
+    
+vimeo:
+  check:
+    user:
+      live:
+        quota:
+          url: https://api.vimeo.com
+          
+---
+
+#dev profile
+
+spring:
+  profiles: dev
+
+server:
+  port: 8081
+  
+ 
+
+---
+
+#integration profile
+
+spring:
+  profiles: integration
+  
+server:
+  port: 8082
+
+
+
+  
