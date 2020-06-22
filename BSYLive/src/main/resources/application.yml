@@ -1,7 +1,7 @@
 logging:
   level:
-    ROOT: INFO
-    org.springframework: INFO
+    ROOT: ERROR
+    org.springframework: ERROR
     com.bsy.live: DEBUG
 
 spring:
