@@ -1,4 +1,4 @@
-package com.bsy.live.check.user.quota;
+package com.bsy.live.model.checkUserQuota;
 
 import java.io.Serializable;
 

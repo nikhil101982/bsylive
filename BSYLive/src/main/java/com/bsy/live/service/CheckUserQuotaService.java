@@ -1,4 +1,4 @@
-package com.bsy.live.check.user.quota;
+package com.bsy.live.service;
 
 import java.util.Arrays;
 
@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import com.bsy.live.model.checkUserQuota.CheckUserQuotaResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

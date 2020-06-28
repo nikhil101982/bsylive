@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bsy.live.check.user.quota.CheckUserQuotaResponse;
-import com.bsy.live.check.user.quota.CheckUserQuotaService;
+import com.bsy.live.model.checkUserQuota.CheckUserQuotaResponse;
+import com.bsy.live.service.CheckUserQuotaService;
 
 import lombok.extern.slf4j.Slf4j;
 
