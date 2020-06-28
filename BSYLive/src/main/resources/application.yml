@@ -30,8 +30,7 @@ spring:
 
 #integration profile
 
-spring:
-  profiles: integration
+
   
 
 
