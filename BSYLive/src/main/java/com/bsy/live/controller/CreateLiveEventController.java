@@ -1,6 +1,8 @@
 
 package com.bsy.live.controller;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +24,15 @@ public class CreateLiveEventController {
 	@Autowired
 	CreateLiveEventService createLiveEventService;
 
-	@GetMapping(value = "/liveEvent")
-	public ResponseEntity<CreateLiveEventResponse> addEnvelope(@RequestHeader(value = AUTH_HEADER) String token)
-			throws Exception {
+	@GetMapping(value = "/events/{user_id}")
+	public ResponseEntity<CreateLiveEventResponse> createEvent(@RequestHeader(value = AUTH_HEADER) String token,
+			@PathParam("user_id") String userId) throws Exception {
 
-		CreateLiveEventResponse userQuotaResponse = createLiveEventService.createLiveEvent(token);
-		log.debug("operation=checking end user's live quota, Returning CheckUserQuotaResponse=" + userQuotaResponse);
-		return new ResponseEntity<CreateLiveEventResponse>(userQuotaResponse, HttpStatus.OK);
+		CreateLiveEventResponse createLiveEventResponse = createLiveEventService.createLiveEvent(token , userId);
+		
+		log.debug("operation=create live event, Returning CreateLiveEventResponse=" + createLiveEventResponse);
+		
+		return new ResponseEntity<CreateLiveEventResponse>(createLiveEventResponse, HttpStatus.OK);
 
 	}
 

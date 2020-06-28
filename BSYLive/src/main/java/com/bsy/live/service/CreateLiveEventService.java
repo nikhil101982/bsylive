@@ -24,14 +24,13 @@ public class CreateLiveEventService {
 	@Value("${vimeo.check.user.live.quota.url}")
 	String url;
 
-	public CreateLiveEventResponse createLiveEvent(String token) {
+	public CreateLiveEventResponse createLiveEvent(String token, String userId) {
 
 		HttpHeaders headers = headers(token);
-
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 
 		try {
-			return restTemplate.exchange(url, HttpMethod.GET, entity, CreateLiveEventResponse.class).getBody();
+			return restTemplate.exchange(url, HttpMethod.POST, entity, CreateLiveEventResponse.class).getBody();
 		} catch (RestClientException e) {
 			log.info("Rest client exception");
 			throw new RestClientException("Rest client error" + e);
