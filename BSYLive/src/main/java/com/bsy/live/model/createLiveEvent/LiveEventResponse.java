@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateLiveEventResponse implements Serializable {
+public class LiveEventResponse implements Serializable {
 
 	@JsonProperty("album")
 	public List<String> album = null;
