@@ -27,8 +27,7 @@ public class CreateLiveEventController {
 	CreateLiveEventService liveEventService;
 
 	@PostMapping(value = "/events/{user_id}")
-	public ResponseEntity<LiveEventResponse> createEvent(@RequestHeader(value = AUTH_HEADER) String token,
-			@PathParam("user_id") String userId) throws Exception {
+	public ResponseEntity<LiveEventResponse> createEvent(@PathParam("user_id") String userId) throws Exception {
 
 		LiveEventResponse liveEventResponse = liveEventService.createLiveEvent(userId);
 
@@ -39,8 +38,7 @@ public class CreateLiveEventController {
 	}
 
 	@PostMapping(value = "/events")
-	public ResponseEntity<LiveEventResponse> liveEvents(@RequestHeader(value = AUTH_HEADER) String token)
-			throws Exception {
+	public ResponseEntity<LiveEventResponse> liveEvents() throws Exception {
 
 		LiveEventResponse liveEventResponse = liveEventService.liveEvents();
 
@@ -49,10 +47,9 @@ public class CreateLiveEventController {
 		return new ResponseEntity<LiveEventResponse>(liveEventResponse, HttpStatus.OK);
 
 	}
-	
+
 	@PostMapping(value = "/me/events")
-	public ResponseEntity<LiveEventResponse> meLiveEvents(@RequestHeader(value = AUTH_HEADER) String token)
-			throws Exception {
+	public ResponseEntity<LiveEventResponse> meLiveEvents() throws Exception {
 
 		LiveEventResponse liveEventResponse = liveEventService.meLiveEvents();
 

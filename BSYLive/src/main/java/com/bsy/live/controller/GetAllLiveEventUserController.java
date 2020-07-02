@@ -27,8 +27,7 @@ public class GetAllLiveEventUserController {
 	GetAllLiveEventUserService getLiveEventService;
 
 	@GetMapping(value = "/events/{user_id}")
-	public ResponseEntity<LiveEventResponse> getEvent(@RequestHeader(value = AUTH_HEADER) String token,
-			@PathParam("user_id") String userId) throws Exception {
+	public ResponseEntity<LiveEventResponse> getEvent(@PathParam("user_id") String userId) throws Exception {
 
 		LiveEventResponse liveEventResponse = getLiveEventService.createLiveEvent(userId);
 
@@ -39,8 +38,7 @@ public class GetAllLiveEventUserController {
 	}
 
 	@GetMapping(value = "/events")
-	public ResponseEntity<LiveEventResponse> liveEvents(@RequestHeader(value = AUTH_HEADER) String token)
-			throws Exception {
+	public ResponseEntity<LiveEventResponse> liveEvents() throws Exception {
 
 		LiveEventResponse liveEventResponse = getLiveEventService.liveEvents();
 
@@ -51,8 +49,7 @@ public class GetAllLiveEventUserController {
 	}
 
 	@GetMapping(value = "/me/events")
-	public ResponseEntity<LiveEventResponse> meLiveEvents(@RequestHeader(value = AUTH_HEADER) String token)
-			throws Exception {
+	public ResponseEntity<LiveEventResponse> meLiveEvents() throws Exception {
 
 		LiveEventResponse liveEventResponse = getLiveEventService.meLiveEvents();
 
