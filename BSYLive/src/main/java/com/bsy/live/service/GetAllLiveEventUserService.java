@@ -1,5 +1,8 @@
 package com.bsy.live.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -25,13 +28,17 @@ public class GetAllLiveEventUserService {
 	@Value("${vimeo.live.events.me.url}")
 	String meLiveEventUrl;
 
-	public LiveEventResponse createLiveEvent(String userId) {
+	public LiveEventResponse getAllLiveEvent(String userId) {
 
 //		HttpHeaders headers = headers(token);
 //		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("user_id", userId);
+
 
 		try {
-			return restTemplate.exchange(getLiveEventsUrl, HttpMethod.GET, null, LiveEventResponse.class)
+			return restTemplate.exchange(getLiveEventsUrl, HttpMethod.GET, null, LiveEventResponse.class,params)
 					.getBody();
 		} catch (RestClientException e) {
 			log.info("Rest client exception");

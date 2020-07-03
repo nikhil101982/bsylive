@@ -37,26 +37,6 @@ public class CreateLiveEventController {
 
 	}
 
-	@PostMapping(value = "/events")
-	public ResponseEntity<LiveEventResponse> liveEvents() throws Exception {
 
-		LiveEventResponse liveEventResponse = liveEventService.liveEvents();
-
-		log.debug("operation=live events, Returning LiveEventResponse=" + liveEventResponse);
-
-		return new ResponseEntity<LiveEventResponse>(liveEventResponse, HttpStatus.OK);
-
-	}
-
-	@PostMapping(value = "/me/events")
-	public ResponseEntity<LiveEventResponse> meLiveEvents() throws Exception {
-
-		LiveEventResponse liveEventResponse = liveEventService.meLiveEvents();
-
-		log.debug("operation=live events, Returning LiveEventResponse=" + liveEventResponse);
-
-		return new ResponseEntity<LiveEventResponse>(liveEventResponse, HttpStatus.OK);
-
-	}
 
 }

@@ -1,6 +1,8 @@
 package com.bsy.live.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -34,9 +36,13 @@ public class CreateLiveEventService {
 
 //		HttpHeaders headers = headers(token);
 //		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("user_id", userId);
+
 
 		try {
-			return restTemplate.exchange(createLiveEventsUrl, HttpMethod.POST, null, LiveEventResponse.class)
+			return restTemplate.exchange(createLiveEventsUrl, HttpMethod.POST, null, LiveEventResponse.class,params)
 					.getBody();
 		} catch (RestClientException e) {
 			log.info("Rest client exception");

@@ -29,7 +29,7 @@ public class GetAllLiveEventUserController {
 	@GetMapping(value = "/events/{user_id}")
 	public ResponseEntity<LiveEventResponse> getEvent(@PathParam("user_id") String userId) throws Exception {
 
-		LiveEventResponse liveEventResponse = getLiveEventService.createLiveEvent(userId);
+		LiveEventResponse liveEventResponse = getLiveEventService.getAllLiveEvent(userId);
 
 		log.debug("operation=get live event, Returning LiveEventResponse=" + liveEventResponse);
 
