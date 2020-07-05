@@ -29,7 +29,8 @@ public class LiveStreamingController {
 	/*
 	 * 2 api's
 	 * 
-	 * 1. Create a video placeholder for the live stream 2.Send the live stream to
+	 * 1. Create a video placeholder for the live stream 
+	 * 2.Send the live stream to
 	 * the video placeholder
 	 */
 
@@ -51,10 +52,9 @@ public class LiveStreamingController {
 	 */
 
 	@PostMapping(value = "/liveStreaming")
-	public ResponseEntity<StreamingResponse> liveStream(@RequestHeader(value = AUTH_HEADER) String token,
-			@RequestBody CreateVideoPlaceholderForTheLiveStreamingRequest request) throws Exception {
+	public ResponseEntity<StreamingResponse> liveStream(@RequestHeader(value = AUTH_HEADER) String token) throws Exception {
 
-		StreamingResponse liveResponse = liveStreamingService.sendLiveStream(token, request);
+		StreamingResponse liveResponse = liveStreamingService.sendLiveStream(token);
 
 		log.debug("operation= Live streaming, Returning LiveResponse=" + liveResponse);
 

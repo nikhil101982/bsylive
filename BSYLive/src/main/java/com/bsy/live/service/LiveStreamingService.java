@@ -8,12 +8,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingRequest;
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingResponse;
 import com.bsy.live.model.createVideoPlaceholder.Live;
 import com.bsy.live.model.createVideoPlaceholder.StreamingRequest;
 import com.bsy.live.model.createVideoPlaceholder.StreamingResponse;
+import com.bsy.live.model.createVideoPlaceholder.Upload;
 import com.bsy.live.util.CreateHttpHeaders;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -34,7 +37,10 @@ public class LiveStreamingService {
 	@Value("${vimeo.send.the.live.stream.url}")
 	String liveStreamUrl;
 
-	CreateVideoPlaceholderForTheLiveStreamingResponse videoPlaceHolder;
+	CreateVideoPlaceholderForTheLiveStreamingResponse videoPlaceHolderResponse;
+	
+	CreateVideoPlaceholderForTheLiveStreamingRequest request;
+
 
 	/*
 	 * 1. Create a video placeholder for the live stream API
@@ -57,12 +63,15 @@ public class LiveStreamingService {
 	/*
 	 * 2.Send the live stream to the video placeholder
 	 */
-	public StreamingResponse sendLiveStream(String token, CreateVideoPlaceholderForTheLiveStreamingRequest request) {
+	public StreamingResponse sendLiveStream(String token) {
 
+		Upload upload = new Upload("live");
+		request.setUpload(upload);
+		
 		HttpHeaders headers = createHttpHeaders.headers(token);
 		HttpEntity<?> entity = new HttpEntity<Object>(request, headers);
 
-		videoPlaceHolder = createVideoPlaceholderForTheLiveStream(entity);
+		videoPlaceHolderResponse = createVideoPlaceholderForTheLiveStream(entity);
 
 		Live live = new Live("ready");
 		StreamingRequest liveRequest = new StreamingRequest(live);
@@ -70,7 +79,7 @@ public class LiveStreamingService {
 
 		try {
 
-			liveStreamUrl.concat(videoPlaceHolder.getLink());
+			liveStreamUrl.concat(videoPlaceHolderResponse.getLink());
 			return restTemplate.exchange(liveStreamUrl, HttpMethod.PATCH, httpEntity, StreamingResponse.class)
 					.getBody();
 
@@ -95,7 +104,7 @@ public class LiveStreamingService {
 
 		try {
 
-			liveStreamUrl.concat(videoPlaceHolder.getLink());
+			liveStreamUrl.concat(videoPlaceHolderResponse.getLink());
 			restTemplate.exchange(liveStreamUrl, HttpMethod.PATCH, httpEntity, void.class);
 
 		} catch (RestClientException e) {
