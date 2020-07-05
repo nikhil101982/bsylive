@@ -4,12 +4,36 @@
 <meta charset="UTF-8">
 <title>Get Started</title>
 </head>
-<body>
+<body style="background-color: rgb(179, 89, 25);">
 	<div>
 		<h1>Live Streaming</h1>
+
 	</div>
 
+https://twitter.com/nirajnk11/status/1274600385726935040/photo/2
+
+	<button onclick="liveStreaming()">Live Start</button>
+	
+		<button onclick="liveStreaming()">Live Stop</button>
+	
 
 
+
+
+	<script>
+		function liveStreaming() {
+
+			URL = "http://localhost:8081/test";
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("GET", URL, false);
+			xmlhttp.setRequestHeader("Content-Type", "application/json");
+			xmlhttp.send();
+			alert(xmlhttp.responseText);
+			document.getElementById("div").innerHTML = xmlhttp.statusText + ":"
+					+ xmlhttp.status + "<BR><textarea rows='100' cols='100'>"
+					+ xmlhttp.responseText + "</textarea>";
+
+		}
+	</script>
 </body>
 </html>

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 @RestController
 @RequestMapping("/v1/live")
-public class LiveStreamingController {
+public class BroadcastLiveStreamingController {
 
 	private static final String AUTH_HEADER = "Authorization";
 
