@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingRequest;
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingResponse;
-import com.bsy.live.model.createVideoPlaceholder.LiveResponse;
+import com.bsy.live.model.createVideoPlaceholder.StreamingResponse;
 import com.bsy.live.service.LiveStreamingService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,13 @@ public class LiveStreamingController {
 	LiveStreamingService liveStreamingService;
 
 	/*
+	 * 2 api's
+	 * 
+	 * 1. Create a video placeholder for the live stream 2.Send the live stream to
+	 * the video placeholder
+	 */
+
+	/*
 	 * The API responds with HTTP status 200 and the complete video representation.
 	 * in response look for the live field, and specifically for live.link and
 	 * live.key: The live.link field gives the RTMP URL of your live video, while
@@ -36,15 +43,22 @@ public class LiveStreamingController {
 	 * stream key.
 	 */
 
+	/**
+	 * @param token
+	 * @param CreateVideoPlaceholderForTheLiveStreamingRequest
+	 * @return LiveResponse
+	 * @throws Exception
+	 */
+
 	@PostMapping(value = "/liveStreaming")
-	public ResponseEntity<LiveResponse> liveStream(@RequestHeader(value = AUTH_HEADER) String token,
+	public ResponseEntity<StreamingResponse> liveStream(@RequestHeader(value = AUTH_HEADER) String token,
 			@RequestBody CreateVideoPlaceholderForTheLiveStreamingRequest request) throws Exception {
 
-		LiveResponse liveResponse = liveStreamingService.sendLiveStream(token, request);
+		StreamingResponse liveResponse = liveStreamingService.sendLiveStream(token, request);
 
 		log.debug("operation= Live streaming, Returning LiveResponse=" + liveResponse);
 
-		return new ResponseEntity<LiveResponse>(liveResponse, HttpStatus.OK);
+		return new ResponseEntity<StreamingResponse>(liveResponse, HttpStatus.OK);
 
 	}
 

@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingRequest;
 import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingResponse;
 import com.bsy.live.model.createVideoPlaceholder.Live;
-import com.bsy.live.model.createVideoPlaceholder.LiveRequest;
-import com.bsy.live.model.createVideoPlaceholder.LiveResponse;
+import com.bsy.live.model.createVideoPlaceholder.StreamingRequest;
+import com.bsy.live.model.createVideoPlaceholder.StreamingResponse;
 import com.bsy.live.util.CreateHttpHeaders;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +34,11 @@ public class LiveStreamingService {
 	@Value("${vimeo.send.the.live.stream.url}")
 	String liveStreamUrl;
 
+	CreateVideoPlaceholderForTheLiveStreamingResponse videoPlaceHolder;
+
+	/*
+	 * 1. Create a video placeholder for the live stream API
+	 */
 	public CreateVideoPlaceholderForTheLiveStreamingResponse createVideoPlaceholderForTheLiveStream(
 			HttpEntity<?> entity) {
 
@@ -49,22 +54,49 @@ public class LiveStreamingService {
 
 	}
 
-	public LiveResponse sendLiveStream(String token, CreateVideoPlaceholderForTheLiveStreamingRequest request) {
+	/*
+	 * 2.Send the live stream to the video placeholder
+	 */
+	public StreamingResponse sendLiveStream(String token, CreateVideoPlaceholderForTheLiveStreamingRequest request) {
 
 		HttpHeaders headers = createHttpHeaders.headers(token);
 		HttpEntity<?> entity = new HttpEntity<Object>(request, headers);
 
-		CreateVideoPlaceholderForTheLiveStreamingResponse videoPlaceHolder = createVideoPlaceholderForTheLiveStream(
-				entity);
+		videoPlaceHolder = createVideoPlaceholderForTheLiveStream(entity);
 
 		Live live = new Live("ready");
-		LiveRequest liveRequest = new LiveRequest(live);
+		StreamingRequest liveRequest = new StreamingRequest(live);
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(liveRequest, headers);
 
 		try {
 
 			liveStreamUrl.concat(videoPlaceHolder.getLink());
-			return restTemplate.exchange(liveStreamUrl, HttpMethod.PATCH, httpEntity, LiveResponse.class).getBody();
+			return restTemplate.exchange(liveStreamUrl, HttpMethod.PATCH, httpEntity, StreamingResponse.class)
+					.getBody();
+
+		} catch (RestClientException e) {
+			log.info("Rest client exception for send live streaming api");
+			throw new RestClientException("Rest client exception for send live streaming api error" + e);
+		}
+
+	}
+
+	/*
+	 * 3. End live stream API
+	 */
+
+	public void endLiveStream(String token) {
+
+		HttpHeaders headers = createHttpHeaders.headers(token);
+
+		Live live = new Live("done");
+		StreamingRequest liveRequest = new StreamingRequest(live);
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(liveRequest, headers);
+
+		try {
+
+			liveStreamUrl.concat(videoPlaceHolder.getLink());
+			restTemplate.exchange(liveStreamUrl, HttpMethod.PATCH, httpEntity, void.class);
 
 		} catch (RestClientException e) {
 			log.info("Rest client exception for send live streaming api");
