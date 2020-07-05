@@ -23,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/live")
 public class CreateLiveEventController {
 
-	private static final String AUTH_HEADER = "Authorization";
-
 	@Autowired
 	CreateLiveEventService liveEventService;
 

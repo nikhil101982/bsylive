@@ -1,17 +1,14 @@
 package com.bsy.live.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingRequest;
-import com.bsy.live.model.createVideoPlaceholder.CreateVideoPlaceholderForTheLiveStreamingResponse;
 import com.bsy.live.model.createVideoPlaceholder.StreamingResponse;
 import com.bsy.live.service.LiveStreamingService;
 
@@ -23,16 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/live")
 public class BroadcastLiveStreamingController {
 
-	private static final String AUTH_HEADER = "Authorization";
-
 	@Autowired
 	LiveStreamingService liveStreamingService;
+
+	@Value("${vimeo.live.api.access.token}")
+	String token;
 
 	/*
 	 * 2 api's
 	 * 
-	 * 1. Create a video placeholder for the live stream 
-	 * 2.Send the live stream to
+	 * 1. Create a video placeholder for the live stream 2.Send the live stream to
 	 * the video placeholder
 	 */
 
@@ -54,7 +51,7 @@ public class BroadcastLiveStreamingController {
 	 */
 
 	@PostMapping(value = "/liveStreaming")
-	public ResponseEntity<StreamingResponse> liveStream(@RequestHeader(value = AUTH_HEADER) String token) throws Exception {
+	public ResponseEntity<StreamingResponse> liveStream() throws Exception {
 
 		StreamingResponse liveResponse = liveStreamingService.sendLiveStream(token);
 

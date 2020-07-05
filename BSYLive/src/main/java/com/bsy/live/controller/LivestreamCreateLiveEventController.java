@@ -7,6 +7,7 @@ import java.util.Base64;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,12 +31,12 @@ public class LivestreamCreateLiveEventController {
 
 	@Autowired
 	LiveStreamCreateLiveEventService liveEventService;
-
-	private static final String AUTH_HEADER = "Authorization";
+	
+	@Value("${vimeo.live.api.access.token}")
+	String basicAuthString;
 
 	@PostMapping(value = "/event/{accountId}")
-	public ResponseEntity<LivestreamCreateLiveEventResponse> createEvent(
-			@RequestHeader(value = AUTH_HEADER) String basicAuthString, @PathParam("accountId") String accountId,
+	public ResponseEntity<LivestreamCreateLiveEventResponse> createEvent(@PathParam("accountId") String accountId,
 			@RequestBody LivestreamCreateLiveEventRequest livestreamCreateLiveEventRequest) throws Exception {
 
 		if (isUserAuthenticated(basicAuthString)) {

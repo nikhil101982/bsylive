@@ -1,6 +1,7 @@
 package com.bsy.live.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,10 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/live")
 public class EndLiveStreamingController {
 
-	private static final String AUTH_HEADER = "Authorization";
-
 	@Autowired
 	LiveStreamingService liveStreamingService;
+	
+	@Value("${vimeo.live.api.access.token}")
+	String token;
 
 	/*
 	 * End of live streaming
@@ -40,7 +42,7 @@ public class EndLiveStreamingController {
 	 */
 
 	@PostMapping(value = "/end/liveStreaming")
-	public void endLiveStreaming(@RequestHeader(value = AUTH_HEADER) String token) throws Exception {
+	public void endLiveStreaming() throws Exception {
 
 		liveStreamingService.endLiveStream(token);
 		log.debug("operation= End Live streaming");
