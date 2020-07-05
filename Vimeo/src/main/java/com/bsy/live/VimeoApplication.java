@@ -9,5 +9,7 @@ public class VimeoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VimeoApplication.class, args);
 	}
+	
+	
 
 }
