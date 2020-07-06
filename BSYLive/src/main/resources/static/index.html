@@ -3,24 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Get Started</title>
+<style type="text/css">
+	body{
+		background: url(./BSY-Munger.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+	}
+	.btn{
+		display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+		color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+	}
+	.btn-left{
+    position: fixed;
+    bottom: 0;
+	}
+	.btn-right{
+		position: fixed;
+    bottom: 0;
+		right: 0;
+	}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body style="background-color: rgb(179, 89, 25);">
+<body	>
 	<div>
-		<h1>Live Streaming</h1>
+		
 
 	</div>
 
-https://twitter.com/nirajnk11/status/1274600385726935040/photo/2
 
-	<button onclick="liveStreaming()">Live Start</button>
+	<button id="start" class="btn btn-left">Live Start</button>
 	
-		<button onclick="liveStreaming()">Live Stop</button>
+	<button id="stop" class="btn btn-right">Live Stop</button>
 	
+
 
 
 
 
 	<script>
+	
+		$(document).ready(function () {
+			
+			var strat={
+				name: "Donald Duck",
+				city: "Duckburg",
+				abc:{
+
+				}
+			}
+
+			$("#start").on('click', function () {
+					let url = "http://localhost:8081/v1/live/liveStreaming ";
+					$.post(url, function (resp) {
+						console.log ( resp );
+					})					
+			});
+			$("#stop").on('click', function () {
+			let url = "http://localhost:8081/v1/live/end/liveStreaming";
+					$.post(url, function (resp) {
+						console.log ( resp );
+					})					
+			});
+	
+		});
+		
+		
+		/*
 		function liveStreaming() {
 
 			URL = "http://localhost:8081/test";
@@ -33,7 +104,7 @@ https://twitter.com/nirajnk11/status/1274600385726935040/photo/2
 					+ xmlhttp.status + "<BR><textarea rows='100' cols='100'>"
 					+ xmlhttp.responseText + "</textarea>";
 
-		}
+		}*/
 	</script>
 </body>
 </html>
