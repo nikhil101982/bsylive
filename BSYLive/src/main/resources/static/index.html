@@ -4,93 +4,119 @@
 <meta charset="UTF-8">
 <title>Get Started</title>
 <style type="text/css">
-	body{
-		background: url(./BSY-Munger.jpg);
+body {
+	/* 		background: url(./BSY-Munger.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: white;
-	}
-	.btn{
-		display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-		color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-	}
-	.btn-left{
-    position: fixed;
-    bottom: 0;
-	}
-	.btn-right{
-		position: fixed;
-    bottom: 0;
-		right: 0;
-	}
+ */
+	
+}
+
+.btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
+
+.btn-left {
+	position: fixed;
+	bottom: 0;
+}
+
+.btn-right {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body	>
-	<div>
+<body>
+
+<!--     <form> <button id="files" onclick="show()">Files</button> </form>
+    <iframe id="iframe" src="files.html" width="200" height="100"></iframe>
+ -->
+
+
+<!-- 	<iframe width="100%" height="620px"
+		src="https://www.youtube.com/embed/live_stream?channel=UCgfPBntiJIuJ88UHfaxJwXw"
+		frameborder="0" allowfullscreen></iframe> -->
+		
+						<iframe width="100%" height="620px"
+					src="https://www.youtube.com/embed/live_stream?channel=UCH85JgalU5Dvs7Q4O2FFNNA"
+					frameborder="0" allowfullscreen></iframe>
 		
 
-	</div>
+
+	<div></div>
 
 
 	<button id="start" class="btn btn-left">Live Start</button>
-	
+
 	<button id="stop" class="btn btn-right">Live Stop</button>
-	
+
 
 
 
 
 
 	<script>
-	
-		$(document).ready(function () {
-			
-			var strat={
-				name: "Donald Duck",
-				city: "Duckburg",
-				abc:{
+		$(document).ready(function() {
+
+			var strat = {
+				name : "Donald Duck",
+				city : "Duckburg",
+				abc : {
 
 				}
 			}
 
-			$("#start").on('click', function () {
-					let url = "http://localhost:8081/v1/live/liveStreaming ";
-					$.post(url, function (resp) {
-						console.log ( resp );
-					})					
+
+			
+/* 			$("#start").on('click', function() {
+				let url = "http://localhost:8081/v1/live/liveStreaming ";
+				$.post(url, function(resp) {
+					console.log(resp);
+				})
+			}); */
+			
+			$("#stop").on('click', function() {
+				let url = "http://localhost:8081/v1/live/end/liveStreaming";
+				$.post(url, function(resp) {
+					console.log(resp);
+				})
 			});
-			$("#stop").on('click', function () {
-			let url = "http://localhost:8081/v1/live/end/liveStreaming";
-					$.post(url, function (resp) {
-						console.log ( resp );
-					})					
-			});
-	
+
 		});
 		
+		function show() {
+		    var iframe1 = document.getElementById('iframe');
+		    iframe1.style.display = 'block';
+		}
 		
+
 		/*
 		function liveStreaming() {
 
@@ -106,5 +132,7 @@
 
 		}*/
 	</script>
+	
+	
 </body>
 </html>
