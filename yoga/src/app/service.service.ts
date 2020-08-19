@@ -17,4 +17,9 @@ export class ServiceService {
     return this.http.get('./assets/jsons/course-details.json')
   }
 
+  getDetails() {
+    return this.http.get('./assets/jsons/details.json')
+  }
+
+
 }

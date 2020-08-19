@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ServiceService } from '../service.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-courses-details',
@@ -16,9 +17,10 @@ export class CoursesDetailsComponent implements OnInit {
   daysDetails: any;
   daysList: any;
   selectedDayName: string;
-  iFrameLink: any;
+  iFrameDynamicLink: any = '';
+  popupDetails: any;
 
-  constructor(private route: ActivatedRoute, private service: ServiceService) { }
+  constructor(private route: ActivatedRoute, private service: ServiceService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
 
@@ -27,6 +29,7 @@ export class CoursesDetailsComponent implements OnInit {
     });
 
     this.service.getDays().subscribe(data => {
+      console.log("aaaaaaaaaaaaaaaaaa", data)
       this.daysNames = data;
     })
 
@@ -35,17 +38,29 @@ export class CoursesDetailsComponent implements OnInit {
       this.onClickDay('Day 1');
     })
 
+    this.service.getDetails().subscribe(data => {
+      this.popupDetails = data;
+    })
+
   }
 
   onClickjoinLecture(index) {
-    // console.log("aaaaaaaaaaaa", index, this.daysList);
-    // this.iFrameLink = this.daysList[index].iFrameLink;
-    // var iframe1 = document.getElementById('iframe');
-    // iframe1.style.display = 'block';
-
+    this.daysList[index].disableJoinBtn = true;
+    let urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(this.daysList[index].iFrameLink);
+    this.iFrameDynamicLink = urlIframe;
     this.showIframe = true;
+    console.log("disable btn = ", this.daysList);
   }
 
+  onClickCancelLecture() {
+    this.showIframe = false;
+    console.log("disable btnqqqqqqqqqq = ", this.daysList);
+
+  }
+
+  onClickDetails() {
+    console.log("opening popup")
+  }
 
   convertDateFormat(date) {
     let pipe = new DatePipe('en-US');
@@ -66,6 +81,9 @@ export class CoursesDetailsComponent implements OnInit {
     }
     else if (dayname == 'Day 4') {
       this.daysList = this.daysDetails.day4;
+    }
+    else if (dayname == 'Day 5') {
+      this.daysList = this.daysDetails.day5;
     }
   }
 
