@@ -26,6 +26,42 @@
                     "content": "It might be awkward, but please don't scroll past this. This Wednesday we humbly ask you to defend Wikipedia's independence. 98% of our readers don't give; they simply look the other way. If you are an exceptional reader who has already donated, we sincerely thank you. If you donate just ₹ 150, Wikipedia could keep thriving for years.",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana - Day 1",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama - Day 1",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -54,6 +90,42 @@
                     "content": "It might be awkward",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana - Day 1",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama - Day 1",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -81,6 +153,42 @@
                     "instruction": "day 1 - s no 3",
                     "content": "It might be awkward, but please don't scroll past this.",
                     "assignment": "gggggggg"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         }
@@ -112,6 +220,42 @@
                     "content": "content day 2 - s no 1",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -139,6 +283,42 @@
                     "instruction": "day 2 - s no 2",
                     "content": "content day 2 - s no 2",
                     "assignment": "gggggggg"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -168,6 +348,42 @@
                     "content": "content day 2 - s no 3",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -196,6 +412,42 @@
                     "content": "content day 2 - s no 4",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         }
     ],
@@ -220,6 +472,42 @@
                     "content": "content day 3 - s no 1",
                     "assignment": "zzzzzzzzzz"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -235,6 +523,42 @@
                     "instruction": "day 3 - s no 2",
                     "content": "content day 3 - s no 2",
                     "assignment": "assignment"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -257,6 +581,42 @@
                     "instruction": "day 3 - s no 3",
                     "content": "content day 3 - s no 3",
                     "assignment": "zzzzzzzzzz"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -286,6 +646,42 @@
                     "content": "content day 3 - s no 4",
                     "assignment": "gggggggg"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         }
     ],
@@ -310,6 +706,42 @@
                     "content": "content day 1 - s no 1",
                     "assignment": "zzzzzzzzzz"
                 }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                }
             ]
         },
         {
@@ -325,6 +757,42 @@
                     "instruction": "day 4 - s no 2",
                     "content": "content day 4 - s no 2",
                     "assignment": "assignment"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         }
@@ -349,6 +817,42 @@
                     "instruction": "day 5 - s no 1",
                     "content": "content day 5 - s no 1",
                     "assignment": "assignment"
+                }
+            ],
+            "lectureList": [
+                {
+                    "asanaName": "Asana",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "PM 1",
+                            "bookname": "APMB",
+                            "booklink": "https://satyamyogaprasad.net/"
+                        },
+                        {
+                            "id": 2,
+                            "asan": "PM 2",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
+                },
+                {
+                    "asanaName": "Pranayama",
+                    "list": [
+                        {
+                            "id": 1,
+                            "asan": "Nadhi Shodana",
+                            "bookname": "",
+                            "booklink": ""
+                        },
+                        {
+                            "id": 2,
+                            "asan": "Bhramari",
+                            "bookname": "",
+                            "booklink": ""
+                        }
+                    ]
                 }
             ]
         }

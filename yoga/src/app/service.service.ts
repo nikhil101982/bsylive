@@ -17,4 +17,13 @@ export class ServiceService {
     return this.http.get('./assets/jsons/course-details.json')
   }
 
+  uploadFile(file: File) {
+
+    console.log("file upload in service  = ", file);
+    const endpoint = 'url';
+    const formData: FormData = new FormData();
+    formData.append('fileKey', file, file.name);
+    return this.http.post(endpoint, formData);
+  }
+
 }

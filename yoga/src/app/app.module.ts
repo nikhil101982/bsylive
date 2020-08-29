@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesDetailsComponent } from './courses-details/courses-details.component';
-
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -14,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     NavbarComponent,
     CoursesComponent,
-    CoursesDetailsComponent
+    CoursesDetailsComponent,
   ],
   imports: [
     BrowserModule,

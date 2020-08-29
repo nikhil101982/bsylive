@@ -1,15 +1,19 @@
 .bgColor {
     /* background-color: #2A73CC; */
-    background-color: #f4c430;
-    }
+    background-color: rgb(255, 82, 51);
+}
 
 .yogaTextStyle {
-    font-size: 25px;
-    font-weight: 600;
+    font-size: 35px;
+    font-weight: 400;
     color: white;
-    position: relative;
+    width: 100%;
+    text-align: center;
+    font-family: serif;
+    letter-spacing: 3px;
+    /* position: relative;
     left: 10px;
-    top: 5px;
+    top: 5px; */
 }
 
 .homeStyle {
@@ -29,6 +33,6 @@
 }
 
 .carosalPos {
-position: relative;
-top: 15px;
+    position: relative;
+    top: 15px;
 }

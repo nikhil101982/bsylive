@@ -8,21 +8,37 @@
     box-shadow: 0 0 0 0;
 }
 
-
 .accordionStyle {
     padding: 0px 40px;
 }
+
 .card-header {
     padding: 4px 12px;
 }
 
 .cardShadow:hover {
-    box-shadow: 0 0 11px rgba(33,33,33,.2) !important; 
-  }
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2) !important;
+}
 
 .detailsText {
     padding-left: 40px;
     font-size: 25px;
     font-weight: 500;
     color: #095fb7;
+}
+
+.yogaTextSty {
+    position: relative;
+    top: 30%;
+    font-style: italic;
+    font-size: 22px;
+}
+
+.bgStyle {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%), url("../../assets/images/guruji.jpeg");
+    opacity: 1;
+    background-repeat: no-repeat;
+    background-size: auto, cover;
+    background-position: bottom;
+    text-transform: none;
 }
