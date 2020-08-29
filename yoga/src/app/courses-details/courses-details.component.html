@@ -67,6 +67,7 @@
                 <!-- <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailsModal"
                   (click)="onClickDetails(i)" data-backdrop="static" data-keyboard="false"> Details</button></td>
             </tr> -->
+
             </tbody>
           </table>
         </div>
@@ -96,14 +97,11 @@
       <div class="modal-body pt-0">
 
 
-        <!-- Vimeo -->
+        <!-- VIMEO IFRAME CODE -->
 
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/452815983"
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/452877917"
             frameborder="0" allow="autoplay; fullscreen" allowfullscreen
             style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
-
-
-        <!-- Youtube -->
 
         <!-- <div *ngIf="showIframe">
           <iframe width="100%" height="500px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
@@ -161,14 +159,12 @@
   <div style="padding: 0px 15px;">
     <button class="btn btn-primary" routerLink="/dashboard"> Home</button>
     <button class="btn btn-primary ml-3" (click)="enableLecture()"> Back</button>
-  </div>
+    <button class="btn btn-primary ml-3" data-toggle="modal" data-target="#iframeModal" data-backdrop="static"
+      data-keyboard="false" (click)="onClickjoinLecture(indexIFrameLink)">Join Lecture</button>
 
+  </div>
   <div class="pt-3 col-md-12 f-20">
     {{selectedDayName}} - {{month}} {{day}}, {{year}}
-    <span class="pl-3">
-      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#iframeModal" data-backdrop="static"
-        data-keyboard="false" (click)="onClickjoinLecture(indexIFrameLink)">Join Lecture</button>
-    </span>
   </div>
 
   <div *ngFor="let lect of lectureData" class="col-md-12 pt-3">
@@ -192,7 +188,7 @@
   </div>
 
   <div class="col-md-12 pt-4 f-20">
-    <div class="fWeight">Assignment</div>
+    <div class="fWeight asanaSty">Assignment</div>
 
     <div style="padding: 30px">
       <div>Q1: Assginment on Hath Yoga</div>
@@ -201,9 +197,14 @@
       </div>
       <div class="pt-3">
         <div> Q2. Practice Pranayama</div>
-        <div class="pt-2">Ans:
-          <input type="file" id="file" class="f-15" (change)="handleFileInput($event.target.files)">
-          <span class="pl-3"><button type="button" class="btn btn-primary" (click)="uploadFile()">Upload</button></span>
+        <div class="pt-2 d-flex flex-row">
+          <div class="d-flex">Ans:
+            <input type="file" id="file" class="f-15 " (change)="handleFileInput($event.target.files)">
+          </div>
+          <div class="d-flex mx-auto" style="position: relative; left: 155px;">
+            <span class="pl-5"><button type="button" class="btn btn-primary"
+                (click)="uploadFile()">Upload</button></span>
+          </div>
         </div>
       </div>
     </div>
