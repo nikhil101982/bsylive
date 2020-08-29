@@ -2,7 +2,7 @@
     "day1": [
         {
             "sNo": 1,
-            "lectureName": "Yoga Asana - Day 1",
+            "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -29,7 +29,7 @@
             ],
             "lectureList": [
                 {
-                    "asanaName": "Asana - Day 1",
+                    "asanaName": "Asana",
                     "list": [
                         {
                             "id": 1,
@@ -46,7 +46,7 @@
                     ]
                 },
                 {
-                    "asanaName": "Pranayama - Day 1",
+                    "asanaName": "Pranayama",
                     "list": [
                         {
                             "id": 1,
@@ -66,7 +66,7 @@
         },
         {
             "sNo": 2,
-            "lectureName": "Yoga Nidra - Day 1",
+            "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
             "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
@@ -93,7 +93,7 @@
             ],
             "lectureList": [
                 {
-                    "asanaName": "Asana - Day 1",
+                    "asanaName": "Asana",
                     "list": [
                         {
                             "id": 1,
@@ -130,7 +130,7 @@
         },
         {
             "sNo": 3,
-            "lectureName": "Satsang - Day 1",
+            "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -196,7 +196,7 @@
     "day2": [
         {
             "sNo": 1,
-            "lectureName": "Yoga Asana - Day 2",
+            "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -260,7 +260,7 @@
         },
         {
             "sNo": 2,
-            "lectureName": "Yoga Nidra - Day 2",
+            "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
             "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
@@ -324,7 +324,7 @@
         },
         {
             "sNo": 3,
-            "lectureName": "Satsang - Day 2",
+            "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -388,7 +388,7 @@
         },
         {
             "sNo": 4,
-            "lectureName": "Satsang 123 - Day 2",
+            "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
             "iFrameLink": "https://www.youtube.com/embed/Yly6lxogjMc",
@@ -454,7 +454,7 @@
     "day3": [
         {
             "sNo": 1,
-            "lectureName": "Yoga Asana - Day 3",
+            "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -512,7 +512,7 @@
         },
         {
             "sNo": 2,
-            "lectureName": "Yoga Nidra - Day 3",
+            "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
             "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
@@ -564,7 +564,7 @@
         },
         {
             "sNo": 3,
-            "lectureName": "Satsang - Day 3",
+            "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -622,7 +622,7 @@
         },
         {
             "sNo": 4,
-            "lectureName": "Satsang 123 - Day 3",
+            "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
             "iFrameLink": "https://www.youtube.com/embed/Yly6lxogjMc",
@@ -688,7 +688,7 @@
     "day4": [
         {
             "sNo": 1,
-            "lectureName": "Yoga Asana - Day 4",
+            "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
@@ -746,7 +746,7 @@
         },
         {
             "sNo": 2,
-            "lectureName": "Yoga Nidra - Day 4",
+            "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
             "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
@@ -800,7 +800,7 @@
     "day5": [
         {
             "sNo": 1,
-            "lectureName": "Yoga Asana - Day 5",
+            "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
             "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",

@@ -95,10 +95,20 @@
       </div>
       <div class="modal-body pt-0">
 
-        <div *ngIf="showIframe">
+
+        <!-- Vimeo -->
+
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/452815983"
+            frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+
+
+        <!-- Youtube -->
+
+        <!-- <div *ngIf="showIframe">
           <iframe width="100%" height="500px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -152,6 +162,7 @@
     <button class="btn btn-primary" routerLink="/dashboard"> Home</button>
     <button class="btn btn-primary ml-3" (click)="enableLecture()"> Back</button>
   </div>
+
   <div class="pt-3 col-md-12 f-20">
     {{selectedDayName}} - {{month}} {{day}}, {{year}}
     <span class="pl-3">
@@ -189,7 +200,7 @@
         <span class="pl-3"><button type="button" class="btn btn-primary">Submit</button></span>
       </div>
       <div class="pt-3">
-        <div> 3. Practice Pranayama</div>
+        <div> Q2. Practice Pranayama</div>
         <div class="pt-2">Ans:
           <input type="file" id="file" class="f-15" (change)="handleFileInput($event.target.files)">
           <span class="pl-3"><button type="button" class="btn btn-primary" (click)="uploadFile()">Upload</button></span>
