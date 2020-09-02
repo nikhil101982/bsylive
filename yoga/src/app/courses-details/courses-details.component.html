@@ -1,7 +1,7 @@
 <div *ngIf="!enableLecturePage">
   <div class="row col-md-12 mb-4">
     <div class="col-md-2">
-      <div class="container pl-3 pt-3 pb-2">
+      <div class="container pl-1 pt-3 pb-2">
 
         <!-- <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -24,7 +24,8 @@
           <div class="card-header" id="headingOne2" (click)="onClickDay(day.dayName)">
             <h5 class="mb-0">
               <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true"
-                aria-controls="collapseOne2" [routerLink]="['/course-details', 'Hatha Yoga']">
+                aria-controls="collapseOne2" [ngClass]="{active: isActive(day.dayName)}"
+                [routerLink]="['/course-details', 'Hatha Yoga']">
                 {{day.dayName}}
               </button>
             </h5>
@@ -39,8 +40,8 @@
 
       <div class="container pt-5">
         <div style="text-align: center;">
-          <h3> {{courseName}} Details</h3>
-          <h3> {{selectedDayName}}</h3>
+          <h3>{{courseName}}</h3>
+          <!-- <h3> {{selectedDayName}}</h3> -->
         </div>
 
         <div class="pt-3" *ngIf="daysList">
@@ -67,7 +68,6 @@
                 <!-- <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailsModal"
                   (click)="onClickDetails(i)" data-backdrop="static" data-keyboard="false"> Details</button></td>
             </tr> -->
-
             </tbody>
           </table>
         </div>
@@ -96,17 +96,25 @@
       </div>
       <div class="modal-body pt-0">
 
-
-        <!-- VIMEO IFRAME CODE -->
-
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/452877917"
-            frameborder="0" allow="autoplay; fullscreen" allowfullscreen
-            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+        <!-- Youtube iFrame  -->
 
         <!-- <div *ngIf="showIframe">
           <iframe width="100%" height="500px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div> -->
+
+
+
+        <!-- Vimeo iFrame  start -->
+
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe [src]="iFrameDynamicLink"
+            frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+
+
+
+
+
 
       </div>
     </div>
@@ -196,12 +204,12 @@
         <span class="pl-3"><button type="button" class="btn btn-primary">Submit</button></span>
       </div>
       <div class="pt-3">
-        <div> Q2. Practice Pranayama</div>
+        <div> 3. Practice Pranayama</div>
         <div class="pt-2 d-flex flex-row">
           <div class="d-flex">Ans:
-            <input type="file" id="file" class="f-15 " (change)="handleFileInput($event.target.files)">
+            <input type="file" id="file" class="f-15" (change)="handleFileInput($event.target.files)">
           </div>
-          <div class="d-flex mx-auto" style="position: relative; left: 155px;">
+          <div class="d-flex mx-auto" style="position: relative; left: 145px;">
             <span class="pl-5"><button type="button" class="btn btn-primary"
                 (click)="uploadFile()">Upload</button></span>
           </div>

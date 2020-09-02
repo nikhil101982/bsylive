@@ -44,7 +44,6 @@ export class CoursesDetailsComponent implements OnInit {
 
     this.service.getDaysDetails().subscribe(data => {
       this.daysDetails = data;
-      console.log("eeeeeeeee", data)
       // this.lectureData = data;
       this.onClickDay('Day 1');
     });
@@ -56,8 +55,6 @@ export class CoursesDetailsComponent implements OnInit {
     this.day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
     this.month = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
     this.year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
-
-    console.log("date = ", this.day, this.month, this.year)
   }
 
   onClickjoinLecture(index) {
@@ -96,8 +93,11 @@ export class CoursesDetailsComponent implements OnInit {
     }
   }
 
+  isActive(item) {
+    return this.selectedDayName == item;
+  };
+
   onClickLectureName(index) {
-    console.log("inside lecture = ", index, this.daysList[index]);
     this.indexIFrameLink = index;
     this.lectureData = this.daysList[index].lectureList;
     this.enableLecturePage = true;
@@ -108,15 +108,12 @@ export class CoursesDetailsComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
-    console.log("upload file data = ", files)
     this.fileToUpload = files.item(0);
   }
 
   uploadFile() {
-    console.log("upload file data = ", this.fileToUpload);
     this.service.uploadFile(this.fileToUpload)
       .subscribe(data => {
-        console.log("file uploaded successfully", data)
       }, error => {
         console.log(error);
       }

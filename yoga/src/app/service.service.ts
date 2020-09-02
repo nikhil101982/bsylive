@@ -18,8 +18,6 @@ export class ServiceService {
   }
 
   uploadFile(file: File) {
-
-    console.log("file upload in service  = ", file);
     const endpoint = 'url';
     const formData: FormData = new FormData();
     formData.append('fileKey', file, file.name);

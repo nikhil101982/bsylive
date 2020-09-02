@@ -5,7 +5,7 @@
             "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -50,7 +50,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -69,7 +69,7 @@
             "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
-            "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -110,11 +110,11 @@
                     ]
                 },
                 {
-                    "asanaName": "Pranayama - Day 1",
+                    "asanaName": "Pranayama",
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -133,7 +133,7 @@
             "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -178,7 +178,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -199,7 +199,7 @@
             "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -244,7 +244,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -263,7 +263,7 @@
             "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
-            "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -308,7 +308,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -327,7 +327,7 @@
             "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -372,71 +372,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
-                            "bookname": "",
-                            "booklink": ""
-                        },
-                        {
-                            "id": 2,
-                            "asan": "Bhramari",
-                            "bookname": "",
-                            "booklink": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "sNo": 4,
-            "lectureName": "Satsang",
-            "startTime": "06:30 PM",
-            "endTime": "07:30 PM",
-            "iFrameLink": "https://www.youtube.com/embed/Yly6lxogjMc",
-            "disableJoinBtn": false,
-            "popupList": [
-                {
-                    "sNo": 1,
-                    "instruction": "day 2 - s no 4",
-                    "content": "content day 2 - s no 4",
-                    "assignment": "assignment"
-                },
-                {
-                    "sNo": 2,
-                    "instruction": "day 2 - s no 4",
-                    "content": "content day 2 - s no 4",
-                    "assignment": "zzzzzzzzzz"
-                },
-                {
-                    "sNo": 3,
-                    "instruction": "day 2 - s no 4",
-                    "content": "content day 2 - s no 4",
-                    "assignment": "gggggggg"
-                }
-            ],
-            "lectureList": [
-                {
-                    "asanaName": "Asana",
-                    "list": [
-                        {
-                            "id": 1,
-                            "asan": "PM 1",
-                            "bookname": "APMB",
-                            "booklink": "https://satyamyogaprasad.net/"
-                        },
-                        {
-                            "id": 2,
-                            "asan": "PM 2",
-                            "bookname": "",
-                            "booklink": ""
-                        }
-                    ]
-                },
-                {
-                    "asanaName": "Pranayama",
-                    "list": [
-                        {
-                            "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -457,7 +393,7 @@
             "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -496,7 +432,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -515,7 +451,7 @@
             "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
-            "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -548,7 +484,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -567,7 +503,7 @@
             "lectureName": "Satsang",
             "startTime": "06:30 PM",
             "endTime": "07:30 PM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -606,71 +542,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
-                            "bookname": "",
-                            "booklink": ""
-                        },
-                        {
-                            "id": 2,
-                            "asan": "Bhramari",
-                            "bookname": "",
-                            "booklink": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "sNo": 4,
-            "lectureName": "Satsang",
-            "startTime": "06:30 PM",
-            "endTime": "07:30 PM",
-            "iFrameLink": "https://www.youtube.com/embed/Yly6lxogjMc",
-            "disableJoinBtn": false,
-            "popupList": [
-                {
-                    "sNo": 1,
-                    "instruction": "day 3 - s no 4",
-                    "content": "content day 3 - s no 4",
-                    "assignment": "assignment"
-                },
-                {
-                    "sNo": 2,
-                    "instruction": "day 3 - s no 4",
-                    "content": "content day 3 - s no 4",
-                    "assignment": "zzzzzzzzzz"
-                },
-                {
-                    "sNo": 3,
-                    "instruction": "day 3 - s no 4",
-                    "content": "content day 3 - s no 4",
-                    "assignment": "gggggggg"
-                }
-            ],
-            "lectureList": [
-                {
-                    "asanaName": "Asana",
-                    "list": [
-                        {
-                            "id": 1,
-                            "asan": "PM 1",
-                            "bookname": "APMB",
-                            "booklink": "https://satyamyogaprasad.net/"
-                        },
-                        {
-                            "id": 2,
-                            "asan": "PM 2",
-                            "bookname": "",
-                            "booklink": ""
-                        }
-                    ]
-                },
-                {
-                    "asanaName": "Pranayama",
-                    "list": [
-                        {
-                            "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -691,7 +563,7 @@
             "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -730,7 +602,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -749,7 +621,7 @@
             "lectureName": "Yoga Nidra",
             "startTime": "01:00 PM",
             "endTime": "02:00 PM",
-            "iFrameLink": "https://www.youtube.com/embed/R2GRhAFplkI",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -782,7 +654,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
@@ -803,7 +675,7 @@
             "lectureName": "Yoga Asana",
             "startTime": "05:00 AM",
             "endTime": "06:30 AM",
-            "iFrameLink": "https://www.youtube.com/embed/RCyoMekJRps",
+            "iFrameLink": "https://player.vimeo.com/video/453875663",
             "disableJoinBtn": false,
             "popupList": [
                 {
@@ -842,7 +714,7 @@
                     "list": [
                         {
                             "id": 1,
-                            "asan": "Nadhi Shodana",
+                            "asan": "Nadi Shodhana",
                             "bookname": "",
                             "booklink": ""
                         },
