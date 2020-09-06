@@ -14,6 +14,7 @@ export class CoursesDetailsComponent implements OnInit {
   courseName: string;
   showIframe: boolean = false;
   enableLecturePage: boolean = false;
+  enableContentDiv: boolean = false;
   daysNames: any;
   daysDetails: any;
   daysList: any;
@@ -47,6 +48,10 @@ export class CoursesDetailsComponent implements OnInit {
       // this.lectureData = data;
       this.onClickDay('Day 1');
     });
+  }
+
+  showContent() {
+    this.enableContentDiv = !this.enableContentDiv;
   }
 
   setDateFormat() {

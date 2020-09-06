@@ -63,7 +63,7 @@
 
 .asanaSty {
     background-color: #e8e8e8;
-    padding: 0px 10px;
+    padding: 10px;
 }
 
 .cardShadow {
@@ -80,4 +80,28 @@
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+}
+
+.panel-title {
+    position: relative;
+}
+
+.panel-title::after {
+    content: "\f107";
+    color: #333;
+    font-size: 25px;
+    font-weight: 900;
+    top: 5px;
+    right: 20px;
+    position: absolute;
+    font-family: "FontAwesome";
+}
+
+.panel-title[aria-expanded="true"]::after {
+    content: "\f106";
+}
+
+.list-group-item {
+    border: 0px;
+    cursor: pointer;
 }
