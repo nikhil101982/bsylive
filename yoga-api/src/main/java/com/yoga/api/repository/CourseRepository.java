@@ -12,24 +12,21 @@ import com.yoga.api.entity.CourseEntity;
 @Component
 @Repository
 public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
-	
-	
+
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseId = ?1")
 	CourseEntity getCourseEntityByCourseId(Integer courseId);
-	
-	
+
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1")
-	CourseEntity getCourseEntityByCourseName( String courseName);
-	
+	CourseEntity getCourseEntityByCourseName(String courseName);
+
 	@Query("SELECT c FROM CourseEntity c")
 	List<CourseEntity> getAllCourses();
 
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1 and c.startDate = ?2")
-	CourseEntity getCourseByCourseNameAndStartDate( String courseName, String startDate);
-	
-	
+	CourseEntity getCourseByCourseNameAndStartDate(String courseName, String startDate);
 
-
-
+	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1 and c.startDate = ?2  and c.couseDuration = ?3")
+	CourseEntity getCourseByCourseNameAndStartDateAndCouseDuration(String courseName, String startDate,
+			String couseDuration);
 
 }

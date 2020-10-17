@@ -28,73 +28,75 @@ public class AddCourseService {
 
 	LecEntity lectureEntity = new LecEntity();
 
-
 	AddCourseResponse addCourseResponse;
-	
-	List<LecEntity> lecEntityList = new ArrayList<>();
 
+	List<LecEntity> lecEntityList = new ArrayList<>();
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
 
-		courseEntity = courseRepository.getCourseByCourseNameAndStartDate(course.getCourseName(),
-				course.getStartDate());
-		
+		String status = null;
+
+		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
+				course.getStartDate(), course.getCouseDuration());
+
 		addCourseResponse = new AddCourseResponse();
 
 		if (Objects.isNull(courseEntity)) {
 
-			for (Day day: course.getDay()) {
-				
-				
-				System.out.println("day.getCurrentDate().toUpperCase()  "+day.getCurrentDate().toUpperCase());
+			addLectures(course);
 
-				lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
-				lectureEntity.setDisableJoinBtn(false);
-				
-				System.out.println("day.getEndTime().toUpperCase()  "+ day.getEndTime().toUpperCase());
+			createCourse(course);
 
-				
-				lectureEntity.setEndTime(day.getEndTime().toUpperCase());
-				lectureEntity.setLectureName(day.getLectureName().toUpperCase());
-				lectureEntity.setStartTime(day.getStartTime().toUpperCase());
-				//lectureEntity.setLecId(lectureEntity.getLecId());
-								
-				lecEntityList.add(lectureEntity);
-			}
-		}
+			status = "Successfully added the course";
 
+			addCourseResponse(course, status);
 
-		if (!Objects.isNull(lecEntityList)) {
-			lectureRepository.saveAll(lecEntityList);
-		}
+			return addCourseResponse;
 
-		courseEntity = new CourseEntity();
+		} else {
 
-		courseEntity.setCourseName(course.getCourseName().toUpperCase());
-		courseEntity.setCouseDuration(course.getCouseDuration().toUpperCase());
-		courseEntity.setStartDate(course.getStartDate().toUpperCase());
-		//courseEntity.setLecId(courseEntity.getLecId());
+			status = "Not able to add the course";
 
-		if (!Objects.isNull(courseEntity)) {
-
-			courseRepository.save(courseEntity);
-			
-			addCourseResponse.setCourseName(course.getCourseName());
-			addCourseResponse.setCouseDuration(course.getCouseDuration());
-			addCourseResponse.setMessage("Successfully added the course");
-			addCourseResponse.setStartDate(course.getStartDate());
+			addCourseResponse(course, status);
 
 			return addCourseResponse;
 
 		}
 
+	}
+
+	private void createCourse(CourseResources course) {
+		courseEntity = new CourseEntity();
+		courseEntity.setCourseName(course.getCourseName().toUpperCase());
+		courseEntity.setCouseDuration(course.getCouseDuration().toUpperCase());
+		courseEntity.setStartDate(course.getStartDate().toUpperCase());
+
+		courseRepository.save(courseEntity);
+	}
+
+	private void addLectures(CourseResources course) {
+		for (Day day : course.getDay()) {
+
+			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
+			lectureEntity.setDisableJoinBtn(false);
+			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
+			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
+			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
+
+			lecEntityList.add(lectureEntity);
+		}
+
+		if (!Objects.isNull(lecEntityList)) {
+			lectureRepository.saveAll(lecEntityList);
+		}
+	}
+
+	private void addCourseResponse(CourseResources course, String status) {
 		addCourseResponse.setCourseName(course.getCourseName());
 		addCourseResponse.setCouseDuration(course.getCouseDuration());
-		addCourseResponse.setMessage("Not able to add the course");
+		addCourseResponse.setMessage(status);
 		addCourseResponse.setStartDate(course.getStartDate());
-
-		return addCourseResponse;
 	}
 
 }
