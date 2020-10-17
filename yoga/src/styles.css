@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.errorColor {
+    color: red;
+}
+
+.fontWeight500 {
+    font-weight: 500;
+}
+/* .swal2-popup {
+    padding: 0px !important;
+}
+.swal-title {
+    font-size: 20px !important;
+} */

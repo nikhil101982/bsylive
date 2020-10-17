@@ -8,10 +8,7 @@ package com.bsy.live.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- *
- * @author arunsm
- */
+
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class AMException extends Exception {
 

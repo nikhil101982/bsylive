@@ -1,6 +1,5 @@
 .bgColor {
-    /* background-color: #2A73CC; */
-    background-color: rgb(255, 82, 51);
+    background-color: #D26F31;
 }
 
 .yogaTextStyle {
@@ -21,11 +20,12 @@
     font-weight: 400;
     position: relative;
     right: 35px;
+    cursor: pointer;
 }
 
-.homeStyle:hover {
+/* .homeStyle:hover {
     text-decoration: underline;
-}
+} */
 
 .carousel-inner {
     float: none;
@@ -35,4 +35,55 @@
 .carosalPos {
     position: relative;
     top: 15px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.modal-content {
+    width: 360px !important;
+    position: relative;
+    top: 45px;
+}
+.modal-body {
+    padding: 0px 16px 2rem;
+}
+
+.modal-header {
+    border-bottom: 0px;
+}
+
+.modal-header .close {
+    padding: 8px;
+}
+
+
+/* horizantal line with words */
+.hrLine {
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+    margin: 10px 0 20px; 
+} 
+ 
+ .hrLine span { 
+     background:#fff; 
+     padding:0 10px; 
+}
+
+.fieldName {
+    font-weight: 500;
+    padding-bottom: 8px;
+}
+
+.forgotPass {
+    text-align: right;
+}
+
+.forgotPass span {
+    font-weight: 700;
+    color: #0F6BE6;
+    cursor: pointer;
 }

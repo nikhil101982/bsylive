@@ -1,17 +1,22 @@
 [
     {
-        "dayName": "Day 1"
+        "dayName": "Day1",
+        "dayId": "day1"
     },
     {
-        "dayName": "Day 2"
+        "dayName": "Day2",
+        "dayId": "day2"
     },
     {
-        "dayName": "Day 3"
+        "dayName": "Day3",
+        "dayId": "day3"
     },
     {
-        "dayName": "Day 4"
+        "dayName": "Day4",
+        "dayId": "day4"
     },
     {
-        "dayName": "Day 5"
+        "dayName": "Day5",
+        "dayId": "day5"
     }
 ]

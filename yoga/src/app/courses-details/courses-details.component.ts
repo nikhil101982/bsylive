@@ -39,15 +39,8 @@ export class CoursesDetailsComponent implements OnInit {
       this.courseName = param.course;
     });
 
-    this.service.getDays().subscribe(data => {
-      this.daysNames = data;
-    })
-
-    this.service.getDaysDetails().subscribe(data => {
-      this.daysDetails = data;
-      // this.lectureData = data;
-      this.onClickDay('Day 1');
-    });
+    this.getDays();
+    this.getDaysDetails();
   }
 
   showContent() {
@@ -60,6 +53,21 @@ export class CoursesDetailsComponent implements OnInit {
     this.day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
     this.month = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
     this.year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+  }
+
+
+  getDays() {
+    this.service.getDays().subscribe(data => {
+      this.daysNames = data;
+    })
+  }
+
+  getDaysDetails() {
+    this.service.getDaysDetails().subscribe(data => {
+      this.daysDetails = data;
+      // this.lectureData = data;
+      this.onClickDay({ "dayName": "Day1" });
+    });
   }
 
   onClickjoinLecture(index) {
@@ -78,24 +86,25 @@ export class CoursesDetailsComponent implements OnInit {
     this.popupDetails = this.daysList[index].popupList;
   }
 
-  onClickDay(dayname) {
-    this.selectedDayName = dayname;
+  onClickDay(day) {
+    this.selectedDayName = day.dayName;
     this.showIframe = false;
-    if (dayname == 'Day 1') {
-      this.daysList = this.daysDetails.day1;
-    }
-    else if (dayname == 'Day 2') {
-      this.daysList = this.daysDetails.day2;
-    }
-    else if (dayname == 'Day 3') {
-      this.daysList = this.daysDetails.day3;
-    }
-    else if (dayname == 'Day 4') {
-      this.daysList = this.daysDetails.day4;
-    }
-    else if (dayname == 'Day 5') {
-      this.daysList = this.daysDetails.day5;
-    }
+    this.daysList = this.daysDetails[day.dayName];
+    // if (dayname == 'day1') {
+    //   this.daysList = this.daysDetails[dayname];
+    // }
+    // else if (dayname == 'Day 2') {
+    //   this.daysList = this.daysDetails.day2;
+    // }
+    // else if (dayname == 'Day 3') {
+    //   this.daysList = this.daysDetails.day3;
+    // }
+    // else if (dayname == 'Day 4') {
+    //   this.daysList = this.daysDetails.day4;
+    // }
+    // else if (dayname == 'Day 5') {
+    //   this.daysList = this.daysDetails.day5;
+    // }
   }
 
   isActive(item) {

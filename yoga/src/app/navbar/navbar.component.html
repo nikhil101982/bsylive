@@ -17,15 +17,151 @@
   </div>
 
 
-  <!-- <div class="collapse navbar-collapse" id="collapsibleNavbar">
+  <!-- <div class="collapse navbar-collapse" id="collapsibleNavbar"> -->
+  <div class="" id="collapsibleNavbar">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link homeStyle" [routerLink]="['/dashboard']">Home</a>
-      </li>
+      <!-- <li class="nav-item"> <a class="nav-link homeStyle" [routerLink]="['/courses']">Home</a> </li> -->
+      <li class="nav-item" *ngIf="showLogIn"><a class="nav-link homeStyle" data-toggle="modal" data-target="#logInModal"
+          data-backdrop="static" data-keyboard="false" (click)="resetData()"> LogIn</a></li>
     </ul>
-  </div> -->
+  </div>
 </nav>
 
+<!-- <nav>
+  <a class="" href="#">
+    <img alt="Angular Logo" src="../../assets/images/header-bihar-yoga.jpg" style="height: 110px;    width:100%;">
+  </a>
+</nav> -->
+
+
+<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <!-- <app-login></app-login> -->
+
+        <div class="col-md-12">
+          <!-- log in div -->
+          <div *ngIf="showLoginSection">
+            <div class="d-flex flex-column pt-1">
+              <div class="fieldName">
+                EMAIL
+              </div>
+              <div>
+                <input class="w-100" type="text" placeholder="Enter Email" [(ngModel)]="logInParams.userEmail">
+              </div>
+            </div>
+
+            <div class="d-flex flex-column pt-3">
+              <div class="fieldName">
+                PASSWORD
+              </div>
+              <div>
+                <input class="w-100" type="password" placeholder="Enter Password" [(ngModel)]="logInParams.password">
+              </div>
+            </div>
+
+            <div class="forgotPass pt-2"> <span (click)="showForgotPasswordDiv()">Forgot password?</span></div>
+            <div class="pt-3 pb-2">
+              <button class="btn btn-primary w-100" data-dismiss="modal" id="submitApprove" (click)="onClickLogIn()">LOG
+                IN</button>
+            </div>
+            <div class="hrLine pt-3">
+              <span>OR</span>
+            </div>
+            <div class="pt-3 pb-2">
+              <button class="btn btn-primary w-100" (click)="showCreateAccDiv()">CREATE ACCOUNT</button>
+            </div>
+          </div>
+
+          <!-- Create Account -->
+
+          <div *ngIf="showCreateAccSection">
+
+            <div class="d-flex flex-column pt-3">
+              <div class="fieldName">
+                FULL NAME
+              </div>
+              <div>
+                <input class="w-100" type="text" placeholder="Enter Name" [(ngModel)]="createNewParams.userName">
+              </div>
+            </div>
+
+            <div class="d-flex flex-column pt-1">
+              <div class="fieldName">
+                EMAIL
+              </div>
+              <div>
+                <input class="w-100" type="text" placeholder="Enter Email" [(ngModel)]="createNewParams.userEmail">
+              </div>
+            </div>
+
+            <div class="d-flex flex-column pt-3">
+              <div class="fieldName">
+                PASSWORD
+              </div>
+              <div>
+                <input class="w-100" type="password" placeholder="Enter Password"
+                  [(ngModel)]="createNewParams.password">
+              </div>
+            </div>
+
+            <div class="pt-4 pb-2">
+              <button class="btn btn-primary w-100" (click)="onClickJoinFree()" data-dismiss="modal">JOIN HERE </button>
+            </div>
+            <div class="hrLine pt-3">
+              <span>OR</span>
+            </div>
+            <div class="pt-3 pb-2">
+              <button class="btn btn-primary w-100" (click)="showLoginDiv()">BACK TO LOGIN</button>
+            </div>
+          </div>
+
+
+          <!-- forgot password sectopn -->
+
+          <div *ngIf="showForgotpassSection">
+
+            <div class="text-center">
+              <h4>Reset your password</h4>
+            </div>
+            <div style="font-size: 15px;" class="pt-2">
+              Enter your email address below. We'll look for your account and send you a password reset email.
+            </div>
+
+            <div class="d-flex flex-column pt-3">
+              <div class="fieldName">
+                EMAIL
+              </div>
+              <div>
+                <input class="w-100" type="text" placeholder="Enter Email" [(ngModel)]="forgotPassParams.userEmail">
+              </div>
+            </div>
+            <div class="pt-4 pb-2">
+              <button class="btn btn-primary w-100" (click)="onClickResetPassword()" data-dismiss="modal">SEND PASSWORD
+                RESET</button>
+            </div>
+
+            <div class="pt-3 pb-2">
+              <button class="btn btn-primary w-100" (click)="showLoginDiv()">BACK TO LOGIN</button>
+            </div>
+
+          </div>
+
+          <!--  -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- <div id="carouselExampleIndicators" class="carousel slide carosalPos" data-ride="carousel">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceService } from '../service.service';
 
 @Component({
   selector: 'app-courses',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ServiceService) { }
+
+  coursesList: any;
 
   ngOnInit() {
+    this.getCoursesList();
+  }
+
+  getCoursesList() {
+    this.service.getCoursesData().subscribe(res => {
+      this.coursesList = res['courses'];
+      console.log("courses list", res);
+    })
   }
 
 }

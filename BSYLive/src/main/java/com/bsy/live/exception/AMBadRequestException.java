@@ -8,10 +8,7 @@ package com.bsy.live.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- *
- * @author arunsm
- */
+
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class AMBadRequestException extends AMException{
     	public AMBadRequestException(String message) {

@@ -16,12 +16,12 @@
 
     </li>
   </ol> -->
-        <button class="btn btn-primary" routerLink="/dashboard">Home</button>
+        <button class="btn btn-primary" routerLink="/courses">Home</button>
       </div>
 
       <div class="accordion accordionStyle2 pt-2" id="accordionExample275">
         <div class="card z-depth-0 bordered cardShadow" style="cursor: pointer;" *ngFor="let day of daysNames">
-          <div class="card-header" id="headingOne2" (click)="onClickDay(day.dayName)">
+          <div class="card-header" id="headingOne2" (click)="onClickDay(day)">
             <h5 class="mb-0">
               <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true"
                 aria-controls="collapseOne2" [ngClass]="{active: isActive(day.dayName)}"
@@ -107,14 +107,12 @@
 
         <!-- Vimeo iFrame  start -->
 
-        <!-- <div style="padding:56.25% 0 0 0;position:relative;"><iframe [src]="iFrameDynamicLink" frameborder="0"
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe [src]="iFrameDynamicLink" frameborder="0"
             allow="autoplay; fullscreen" allowfullscreen
-            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
-
-
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/455172102"
-            frameborder="0" allow="autoplay; fullscreen" allowfullscreen
             style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+
+
+
 
 
 
@@ -167,7 +165,7 @@
 <div *ngIf="enableLecturePage" class="ro col-md-12 pt-4 pb-5">
 
   <div style="padding: 0px 15px;">
-    <button class="btn btn-primary" routerLink="/dashboard"> Home</button>
+    <button class="btn btn-primary" routerLink="/courses"> Home</button>
     <button class="btn btn-primary ml-3" (click)="enableLecture()"> Back</button>
     <button class="btn btn-primary ml-3" data-toggle="modal" data-target="#iframeModal" data-backdrop="static"
       data-keyboard="false" (click)="onClickjoinLecture(indexIFrameLink)">Join Lecture</button>
