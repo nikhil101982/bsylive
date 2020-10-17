@@ -15,7 +15,7 @@ public class AllUserCourses {
 
 	
 	private String courseName;
-	private int couseDurations;
+	private String couseDurations;
 	private String startDate;
 	private Integer courseId;
 

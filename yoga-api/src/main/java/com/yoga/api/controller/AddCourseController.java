@@ -33,27 +33,14 @@ public class AddCourseController {
 			@PathVariable("userEmail") String userEmail) throws Exception {
 		return addCourseByUserNameService.subscribeTheCourse(subscribeCourses, userEmail);
 	}
-
-	/*
-	 * Admin Add Courses API: Admin will use to add course in database (Register the
-	 * course)
-	 */
-
-//	@PostMapping("/addCourse")
-//	public CourseEntity addCourse(@RequestBody Course course) throws Exception {
-//		return addCourseService.addCourse(course);
-//	}
-
-	
 	
 	/*
 	 * Admin Add Courses API: Admin will use to add course in database (Register the
 	 * course)
 	 */
 	
-	
 
-	@PostMapping("/addCourseNew")
+	@PostMapping("/addCourse")
 	public AddCourseResponse addCourseNew(@RequestBody CourseResources course) throws Exception {
 		
 		return addCourseService.addCourse(course);
