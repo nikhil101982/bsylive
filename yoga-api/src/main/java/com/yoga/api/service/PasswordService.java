@@ -80,7 +80,6 @@ public class PasswordService {
 				statusMessageResponse.setMessage("send password securely via email");
 				return statusMessageResponse;
 			} catch (MessagingException e) {
-
 				e.printStackTrace();
 			}
 

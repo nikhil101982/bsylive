@@ -8,5 +8,7 @@ import lombok.Setter;
 public class DaysResponse {
 
 	String dayName;
+	Integer dayId;
+
 	
 }

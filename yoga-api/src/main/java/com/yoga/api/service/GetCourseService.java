@@ -246,4 +246,28 @@ public class GetCourseService {
 
 	}
 
+	// Get Days
+	
+	public List<DaysResponse> findDays(Integer courseId) {
+		
+		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		
+		DaysResponse daysResponse = new DaysResponse();
+		
+		List<DaysResponse>  daysResponseDayListD = new ArrayList<DaysResponse>();
+		
+	for(DayEntity dayEntityDays : courseEntity.getDayEntity()) {
+		
+		daysResponse.setDayId(dayEntityDays.getDayId());
+		daysResponse.setDayName(dayEntityDays.getDayName());		
+		daysResponseDayListD.add(daysResponse);
+		
+	}
+		
+		
+
+		
+		return daysResponseDayListD;
+	}
+
 }
