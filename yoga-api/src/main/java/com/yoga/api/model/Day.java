@@ -1,5 +1,5 @@
 
-package com.yoga.api.model.add;
+package com.yoga.api.model;
 
 import java.io.Serializable;
 

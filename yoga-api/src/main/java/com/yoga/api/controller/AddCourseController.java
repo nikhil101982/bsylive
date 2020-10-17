@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoga.api.model.CreateAccountReq;
+import com.yoga.api.model.AddCourseResponse;
+import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
-import com.yoga.api.model.add.AddCourseResponse;
-import com.yoga.api.model.add.CourseResources;
 import com.yoga.api.service.AddCourseByUserNameService;
 import com.yoga.api.service.AddCourseService;
-import com.yoga.api.service.AddService;
 
 @RestController
 @CrossOrigin
@@ -26,9 +24,6 @@ public class AddCourseController {
 	@Autowired
 	AddCourseService addCourseService;
 	
-	@Autowired
-	AddService addService;
-
 	/*
 	 * Add Courses by user in their account
 	 */

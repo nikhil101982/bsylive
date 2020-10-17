@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.LecEntity;
-import com.yoga.api.model.add.AddCourseResponse;
-import com.yoga.api.model.add.CourseResources;
-import com.yoga.api.model.add.Day;
+import com.yoga.api.model.AddCourseResponse;
+import com.yoga.api.model.CourseResources;
+import com.yoga.api.model.Day;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.LecRepository;
 
