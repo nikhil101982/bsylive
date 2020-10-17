@@ -58,7 +58,7 @@ public class AddCourseByUserNameService {
 		}
 
 		if (!Objects.isNull(userAccountCourseIdList)) {
-			userAccountEntity.setCourseId(userAccountCourseIdList);
+			//userAccountEntity.setCourseId(userAccountCourseIdList);
 			userAccountRepository.save(userAccountEntity);
 			statusResponse.setStatus("success");
 

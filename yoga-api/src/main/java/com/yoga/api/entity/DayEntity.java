@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,20 +24,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "yoga_course")
-public class CourseEntity {
+@Table(name = "yoga_day")
+public class DayEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer courseId;
-	public String courseName;
-	public String couseDuration;
-	public String startDate;
+	public Integer dayId;
+
+	public String dayName;
 
 	@Embedded
 	@ElementCollection
-	@OneToMany(targetEntity = DayEntity.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cd_fk", referencedColumnName = "courseId")
-	private List<DayEntity> dayEntity;
+	@OneToMany(targetEntity = LecEntity.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "dl_fk", referencedColumnName = "dayId")
+	private List<LecEntity> lecEntity;
 
 }

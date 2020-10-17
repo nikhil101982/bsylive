@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_yoga_user_account")
+@Table(name = "yoga_user_account")
 public class UserAccountEntity {
 
 	@Id
@@ -40,6 +40,6 @@ public class UserAccountEntity {
 	@ElementCollection
 	@OneToMany(targetEntity = CourseEntity.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "uc_fk", referencedColumnName = "userAccountId")
-	private List<Integer> courseId;;
+	private List<CourseEntity> courseEntity;;
 
 }

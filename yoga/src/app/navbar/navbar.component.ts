@@ -96,7 +96,7 @@ export class NavbarComponent implements OnInit {
           sessionStorage.setItem('userName', res['userName']);
           this.router.navigate(['/courses']);
         }
-        if (res['status'] === 'error') {
+        if (res['status'] === 'failure') {
           this.showLogInError = true;
           this.showAlert('error', 'user name or password mismatch');
         }

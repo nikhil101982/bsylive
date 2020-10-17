@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.CourseResources;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.service.AddCourseByUserNameService;
 import com.yoga.api.service.AddCourseService;
+import com.yoga.api.service.CourseService;
 
 @RestController
 @CrossOrigin
@@ -23,6 +26,16 @@ public class AddCourseController {
 
 	@Autowired
 	AddCourseService addCourseService;
+	
+	
+	@Autowired
+	CourseService qeryService;
+	
+	
+	@PostMapping("/addCourseFromAdmin")
+	public StatusMessageResponse getCourseByDayIDAndByCourseId(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
+		return qeryService.addCourse(addCourseByDayId);
+	}
 	
 	/*
 	 * Add Courses by user in their account
@@ -41,8 +54,7 @@ public class AddCourseController {
 	
 
 	@PostMapping("/addCourse")
-	public AddCourseResponse addCourseNew(@RequestBody CourseResources course) throws Exception {
-		
+	public AddCourseResponse addCourseNew(@RequestBody CourseResources course) throws Exception {	
 		return addCourseService.addCourse(course);
 	}
 
