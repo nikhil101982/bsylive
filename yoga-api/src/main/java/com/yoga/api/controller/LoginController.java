@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.model.ChangePasswordRequest;
-import com.yoga.api.model.ChangePasswordResponse;
 import com.yoga.api.model.ForgotPasswordRequest;
 import com.yoga.api.model.LoginRequest;
 import com.yoga.api.model.LoginResponse;
 import com.yoga.api.model.LogoutRequest;
-import com.yoga.api.model.StatusResponse;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.service.LoginService;
 import com.yoga.api.service.PasswordService;
 
@@ -42,7 +41,7 @@ public class LoginController {
 	 */
 	
 	@PostMapping("/forgotPassword")
-	public LoginResponse forgotPassword(final @RequestBody ForgotPasswordRequest forgotPasswordRequest)
+	public StatusMessageResponse forgotPassword(final @RequestBody ForgotPasswordRequest forgotPasswordRequest)
 			throws Exception {
 		return passwordService.fotgotPassword(forgotPasswordRequest);
 	}
@@ -52,10 +51,10 @@ public class LoginController {
 	 */
 	
 	@PostMapping("/logout")
-	public ChangePasswordResponse logout(final @RequestBody LogoutRequest logoutRequest)
+	public StatusMessageResponse logout(final @RequestBody LogoutRequest logoutRequest)
 			throws Exception {
 		
-		ChangePasswordResponse logoutResponse =  loginService.logout(logoutRequest);
+		StatusMessageResponse logoutResponse =  loginService.logout(logoutRequest);
 		
 		return logoutResponse;
 	}
@@ -66,7 +65,7 @@ public class LoginController {
 	 */
 	
 	@PostMapping("/changePassword")
-	public ChangePasswordResponse changePassword(final @RequestBody ChangePasswordRequest changePasswordRequest)
+	public StatusMessageResponse changePassword(final @RequestBody ChangePasswordRequest changePasswordRequest)
 			throws Exception {
 		return passwordService.changePassword(changePasswordRequest);
 	}

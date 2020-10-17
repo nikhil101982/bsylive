@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.UserAccountEntity;
-import com.yoga.api.model.ChangePasswordResponse;
 import com.yoga.api.model.LoginRequest;
 import com.yoga.api.model.LoginResponse;
 import com.yoga.api.model.LogoutRequest;
+import com.yoga.api.model.StatusMessageResponse;
+import com.yoga.api.model.UserDetail;
 import com.yoga.api.repository.UserAccountRepository;
 
 @Service
@@ -22,6 +23,10 @@ public class LoginService {
 
 	UserAccountEntity userAccountEntity;
 
+	UserDetail userDetail;
+	
+	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
+
 	/*
 	 * Login API
 	 */
@@ -32,42 +37,50 @@ public class LoginService {
 
 	public LoginResponse validate(LoginRequest loginRequest) {
 
+		userDetail = new UserDetail();
+		loginResponse = new LoginResponse();
+
 		String emailFromLoginRequest = loginRequest.getUserEmail();
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
 
 		if (!Objects.isNull(userAccountEntity) && !userAccountEntity.isLogin()) {
 
-				String emailFromEntity = userAccountEntity.getEmailId();			// password
-				String passwordToLoginFromUser = loginRequest.getPassword();
-				String passwordFromEntity = userAccountEntity.getPassword();
-				boolean userIsLogin = userAccountEntity.isLogin();
-				
-				if (emailFromLoginRequest.equals(emailFromEntity) && passwordToLoginFromUser.equals(passwordFromEntity)
-						&& !userIsLogin) {
+			String emailFromEntity = userAccountEntity.getEmailId(); // password
+			String passwordToLoginFromUser = loginRequest.getPassword();
+			String passwordFromEntity = userAccountEntity.getPassword();
+			boolean userIsLogin = userAccountEntity.isLogin();
 
-					userAccountEntity.setLogin(true);
-					userAccountRepository.save(userAccountEntity);
-					loginResponse = new LoginResponse();
-					loginResponse.setStatus("success");
-					loginResponse.setUserEmail(loginRequest.getUserEmail());
-					loginResponse.setMessage("you have successfully logged in");
-					return loginResponse;
-				}
+			if (emailFromLoginRequest.equals(emailFromEntity) && passwordToLoginFromUser.equals(passwordFromEntity)
+					&& !userIsLogin) {
+
+				userAccountEntity.setLogin(true);
+				userAccountRepository.save(userAccountEntity);
+
+				userDetail.setUserEmail(loginRequest.getUserEmail());
+				userDetail.setUserName(userAccountEntity.getUserName());
+
+				loginResponse.setStatus("success");
+				loginResponse.setUserDetails(userDetail);
+				loginResponse.setMessage("you have successfully logged in");
+
+				return loginResponse;
+			}
 
 		} else {
 
+			userDetail.setUserEmail(loginRequest.getUserEmail());
+			userDetail.setUserName(userAccountEntity.getUserName());
+
 			loginResponse.setStatus("failure");
-			loginResponse.setUserEmail(loginRequest.getUserEmail());
-			loginResponse.setMessage("Wrong username or password or user is already logged in");
+			loginResponse.setUserDetails(userDetail);
+			loginResponse.setMessage("wrong username or password or user is already logged in");
 		}
 		return loginResponse;
 
 	}
 
-	public ChangePasswordResponse logout(LogoutRequest logoutRequest) {
-
-		ChangePasswordResponse logoutResponse = new ChangePasswordResponse();
+	public StatusMessageResponse logout(LogoutRequest logoutRequest) {
 
 		if (logoutRequest.isLogoutStatus()) {
 
@@ -75,18 +88,16 @@ public class LoginService {
 			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(logoutRequest.getUserEmail());
 			userAccountEntity.setLogin(false);
 			userAccountRepository.save(userAccountEntity);
-			logoutResponse.setStatus("success");
-			logoutResponse.setMessage("You have successfully logged out");
-			logoutResponse.setUserEmail(logoutRequest.getUserEmail());
+			statusMessageResponse.setStatus("success");
+			statusMessageResponse.setMessage("You have successfully logged out");
 
-			return logoutResponse;
+			return statusMessageResponse;
 
 		}
 
-		logoutResponse.setStatus("fail");
-		logoutResponse.setMessage("You have already logged out");
-		logoutResponse.setUserEmail(logoutRequest.getUserEmail());
-		return logoutResponse;
+		statusMessageResponse.setStatus("fail");
+		statusMessageResponse.setMessage("You have already logged out");
+		return statusMessageResponse;
 
 	}
 

@@ -12,11 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.ChangePasswordRequest;
-import com.yoga.api.model.ChangePasswordResponse;
 import com.yoga.api.model.ForgotPasswordRequest;
-import com.yoga.api.model.LoginRequest;
-import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.LoginResponse;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.UserAccountRepository;
 
 @Service
@@ -37,6 +35,12 @@ public class PasswordService {
 	UserAccountRepository userAccountRepository;
 
 	UserAccountEntity userAccountEntity;
+	
+	StatusMessageResponse forgotPasswordResponse;
+	
+	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
+
+
 
 	private void sendEmail(String userPassword, String emailId) throws MessagingException {
 
@@ -53,11 +57,10 @@ public class PasswordService {
 	 * Forgot Password API
 	 */
 
-	public LoginResponse fotgotPassword(ForgotPasswordRequest forgotPasswordRequest) {
+	public StatusMessageResponse fotgotPassword(ForgotPasswordRequest forgotPasswordRequest) {
 
 		try {
-
-			loginResponse = new LoginResponse();
+			
 			String emailId = forgotPasswordRequest.getEmailId();
 
 			try {
@@ -66,39 +69,38 @@ public class PasswordService {
 			} catch (Exception e) {
 				System.out.println("Entity is not unique");
 				e.printStackTrace();
-				loginResponse.setStatus("fail");
-				loginResponse.setMessage("unable to send password");
-				return loginResponse;
+				forgotPasswordResponse.setStatus("fail");
+				forgotPasswordResponse.setMessage("unable to send password");
+				return forgotPasswordResponse;
 			}
 
 			try {
 				sendEmail(userAccountEntity.getPassword(), emailId);
-				loginResponse.setStatus("success");
-				loginResponse.setMessage("send password securely via email");
-				return loginResponse;
+				statusMessageResponse.setStatus("success");
+				statusMessageResponse.setMessage("send password securely via email");
+				return statusMessageResponse;
 			} catch (MessagingException e) {
 
 				e.printStackTrace();
 			}
 
-			loginResponse.setStatus("fail");
-			loginResponse.setMessage("unable to send password");
+			statusMessageResponse.setStatus("fail");
+			statusMessageResponse.setMessage("unable to send password");
 
-			return loginResponse;
+			return statusMessageResponse;
 
 		} catch (NullPointerException e) {
 			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getEmailId()
 					+ " or user account is not present in UserAccountEntity " + userAccountEntity);
 		}
 
-		return null;
+		return statusMessageResponse;
 
 	}
 
-	public ChangePasswordResponse changePassword(ChangePasswordRequest changePasswordRequest) {
+	public StatusMessageResponse changePassword(ChangePasswordRequest changePasswordRequest) {
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
-		ChangePasswordResponse changePasswordResponse = new ChangePasswordResponse();
 
 		boolean passwordCheck = userAccountEntity.getPassword().equals(changePasswordRequest.getPassword());
 
@@ -108,19 +110,17 @@ public class PasswordService {
 			userAccountEntity.setPassword(changePasswordRequest.getNewPassword());
 			userAccountRepository.save(userAccountEntity);
 
-			changePasswordResponse.setStatus("success");
-			changePasswordResponse.setUserEmail(changePasswordRequest.getUserEmail());
-			changePasswordResponse.setMessage("Your password has been changed successfully! ");
+			statusMessageResponse.setStatus("success");
+			statusMessageResponse.setMessage("Your password has been changed successfully! ");
 
-			return changePasswordResponse;
+			return statusMessageResponse;
 
 		} else {
 
-			changePasswordResponse.setStatus("failure");
-			changePasswordResponse.setUserEmail(changePasswordRequest.getUserEmail());
-			changePasswordResponse.setMessage("Your password could not be changed! ");
+			statusMessageResponse.setStatus("failure");
+			statusMessageResponse.setMessage("Your password could not be changed! ");
 
-			return changePasswordResponse;
+			return statusMessageResponse;
 
 		}
 

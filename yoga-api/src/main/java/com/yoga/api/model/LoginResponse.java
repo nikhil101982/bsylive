@@ -13,8 +13,9 @@ import lombok.Setter;
 @Setter
 public class LoginResponse {
 	
-	String userEmail;
 	String status;
 	String message;
+	
+	UserDetail userDetails;
 
 }

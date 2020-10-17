@@ -11,11 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ChangePasswordResponse {
+public class UserDetail {
 
-	String status;
-	String message;
-	String userEmail;
-
-
+	public String userName;
+	public String userEmail;
 }
