@@ -82,10 +82,10 @@ public class LoginService {
 
 	public StatusMessageResponse logout(LogoutRequest logoutRequest) {
 
-		if (logoutRequest.isLogoutStatus()) {
+		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(logoutRequest.getUserEmail());
 
-			userAccountEntity = new UserAccountEntity();
-			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(logoutRequest.getUserEmail());
+		if (userAccountEntity.isLogin()) {
+
 			userAccountEntity.setLogin(false);
 			userAccountRepository.save(userAccountEntity);
 			statusMessageResponse.setStatus("success");

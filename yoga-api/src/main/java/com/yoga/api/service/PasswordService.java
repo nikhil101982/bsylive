@@ -47,7 +47,7 @@ public class PasswordService {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(emailId);
 		message.setFrom(forgotPasswordSendEmailFrom);
-		message.setText("Bihar yoga login password: " + userPassword);
+		message.setText("password: " + userPassword);
 		message.setSubject("Bihar yoga login password");
 
 		javaMailSender.send(message);

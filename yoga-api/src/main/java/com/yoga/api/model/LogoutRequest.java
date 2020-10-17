@@ -14,6 +14,5 @@ import lombok.Setter;
 public class LogoutRequest {
 
 	private String userEmail;
-	private boolean logoutStatus;
 
 }
