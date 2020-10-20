@@ -1,0 +1,19 @@
+<div class="container-fluid settings-page">
+    <div class="d-flex flex-row">
+
+        <div class="col-md-3">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" [ngClass]="{'active-section' : accounts}"> <span class="label"
+                        (click)="onClickAccounts()">Account</span>
+                </li>
+                <!-- <li class="nav-item dropdown active" [ngClass]="{'active-section' : payment}">
+                    <span class="label" (click)="onClickPayment()"> Payment</span>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="col-md-9 body-section">
+            <app-account-settings></app-account-settings>
+        </div>
+    </div>
+</div>

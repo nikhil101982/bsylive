@@ -87,3 +87,17 @@
     color: #0F6BE6;
     cursor: pointer;
 }
+
+
+.dropdown-menu {
+    left: calc(100% - 175px);
+}
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #a6a6a6;
+}

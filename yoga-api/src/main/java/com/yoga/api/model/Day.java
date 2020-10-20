@@ -17,6 +17,8 @@ public class Day implements Serializable
     public String currentDate;
     public String disableJoinBtn;
     
+    
+    
     private final static long serialVersionUID = 2177644673242063512L;
     
     

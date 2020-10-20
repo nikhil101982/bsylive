@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class CoursesDetailsComponent implements OnInit {
 
   courseName: string;
+  courseId: any;
   showIframe: boolean = false;
   enableLecturePage: boolean = false;
   enableContentDiv: boolean = false;
@@ -37,10 +38,9 @@ export class CoursesDetailsComponent implements OnInit {
 
     this.route.params.subscribe((param) => {
       this.courseName = param.course;
+      this.courseId = param.courseId
     });
-
     this.getDays();
-    this.getDaysDetails();
   }
 
   showContent() {
@@ -57,16 +57,21 @@ export class CoursesDetailsComponent implements OnInit {
 
 
   getDays() {
-    this.service.getDays().subscribe(data => {
+    this.service.getDays(this.courseId).subscribe(data => {
       this.daysNames = data;
+      this.onClickDay(this.daysNames[0])
     })
   }
 
-  getDaysDetails() {
-    this.service.getDaysDetails().subscribe(data => {
+  getDaysDetails(day) {
+    let obj = {
+      courseId: this.courseId,
+      dayId: day.dayId
+    }
+    this.service.getDaysDetails(obj).subscribe(data => {
       this.daysDetails = data;
+      this.daysList = data['lecture'];
       // this.lectureData = data;
-      this.onClickDay({ "dayName": "Day1" });
     });
   }
 
@@ -89,7 +94,8 @@ export class CoursesDetailsComponent implements OnInit {
   onClickDay(day) {
     this.selectedDayName = day.dayName;
     this.showIframe = false;
-    this.daysList = this.daysDetails[day.dayName];
+    // this.daysList = this.daysDetails[day.dayName];
+    this.getDaysDetails(this.selectedDayName);
     // if (dayname == 'day1') {
     //   this.daysList = this.daysDetails[dayname];
     // }

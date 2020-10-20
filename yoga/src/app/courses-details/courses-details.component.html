@@ -24,8 +24,7 @@
           <div class="card-header" id="headingOne2" (click)="onClickDay(day)">
             <h5 class="mb-0">
               <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true"
-                aria-controls="collapseOne2" [ngClass]="{active: isActive(day.dayName)}"
-                [routerLink]="['/course-details', 'Hatha Yoga']">
+                aria-controls="collapseOne2" [ngClass]="{active: isActive(day.dayName)}">
                 {{day.dayName}}
               </button>
             </h5>
@@ -106,16 +105,14 @@
 
 
         <!-- Vimeo iFrame  start -->
-<!-- 
+
         <div style="padding:56.25% 0 0 0;position:relative;"><iframe [src]="iFrameDynamicLink" frameborder="0"
             allow="autoplay; fullscreen" allowfullscreen
-            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
 
 
-<!-- <div style="padding:56.25% 0 0 0;position:relative;"> <iframe src="https://player.vimeo.com/video/469220771" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
- -->
 
- <div style="padding:56.25% 0 0 0;position:relative;">  <iframe src="https://player.vimeo.com/video/469220771"  frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+
 
 
       </div>

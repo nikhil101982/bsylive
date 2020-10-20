@@ -24,26 +24,28 @@ export class ServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getUserName() {
-    return sessionStorage.getItem('userName');
+  getUserData() {
+    return JSON.parse(localStorage.getItem('userDetails'));
   }
 
   logInButtonUpdate(val) {
     this.updateLogInOption.next(val);
   }
 
-  getDays() {
-    let link = `${this.url}getDays/${this.getUserName()}`
+  getDays(id) {
+    let link = `${this.url}getDays/${id}`
     return this.http.get(link, this.requestHeaders);
     // return this.http.get('./assets/jsons/days.json')
   }
 
-  getDaysDetails() {
-    return this.http.get('./assets/jsons/course-details.json')
+  getDaysDetails(params) {
+    let link = `${this.url}getDays/${params.courseId}/${params.dayId}`
+    return this.http.post(link, this.requestHeaders)
+    // return this.http.get('./assets/jsons/course-details.json')
   }
 
   getCoursesData() {
-    let link = `${this.url}coursesBasedOnUserName/${this.getUserName()}`
+    let link = `${this.url}coursesBasedOnUserName/${this.getUserData().userName}`
     return this.http.get(link, this.requestHeaders);
     // return this.http.get('./assets/jsons/courses.json')
   }
@@ -67,5 +69,12 @@ export class ServiceService {
     return this.http.post(this.url + 'createAccount', params, this.requestHeaders);
   }
 
+  logout(params) {
+    return this.http.post(this.url + 'logout', params, this.requestHeaders)
+  }
+
+  updatePassword(params) {
+    return this.http.post(this.url + 'changePassword', params, this.requestHeaders)
+  }
 
 }

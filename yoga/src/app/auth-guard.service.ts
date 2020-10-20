@@ -11,7 +11,7 @@ export class AuthGuardService {
 
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    let val = sessionStorage.getItem('userName');
+    let val = localStorage.getItem('userName');
     console.log("auth value = ", val);
     if (val) {
       return true;

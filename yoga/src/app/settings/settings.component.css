@@ -1,0 +1,22 @@
+.settings-page {
+    margin: 52px auto;
+    max-width: 1000px;   
+}
+
+.nav-item {
+    padding: 10px;
+}
+
+.body-section {
+    padding: 45px;
+    background: white;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+.active-section {
+    font-weight: bold;
+}
+
+.label {
+    cursor: pointer;
+}

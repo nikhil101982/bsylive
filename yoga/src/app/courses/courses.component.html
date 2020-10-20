@@ -6,28 +6,29 @@
     <div class="col-md-12 pt-2">
       <div class="p-2" *ngFor="let course of coursesList">
         <div class="courseBox">
-          <div class="pb-3 boxText">
-            COURSE
+          <div class="boxText">
+            <span class="text-fs-12">COURSE</span>
           </div>
-          <div class="d-flex pb-3">
+          <div class="d-flex pt-4 pb-3">
             <div>
-              <div class="courseNameSty">
+              <div class="courseNameSty pt-1">
                 {{course.courseName}}
               </div>
 
             </div>
             <div class="ml-auto pr-5">
-              <button class="btn btn-primary" [routerLink]="['/course-details', course.courseName]">Go to
+              <button class="btn btn-primary" [routerLink]="['/course-details', course.courseName, course.courseId]">Go
+                to
                 Course</button>
             </div>
           </div>
           <hr>
-          <div class="d-flex flex-row">
-            <div class="boxText">
+          <div class="d-flex flex-row pt-4">
+            <div class="boxText text-fs-12">
               BIHAR SCHOOL OF YOGA
             </div>
-            <div class="ml-auto pr-5">
-              {{course.startDate}} - {{course.courseDuration}} days
+            <div class="ml-auto pr-5 text-fs-12">
+              FROM {{course.startDate}}, {{course.courseDuration}} days
             </div>
           </div>
         </div>
