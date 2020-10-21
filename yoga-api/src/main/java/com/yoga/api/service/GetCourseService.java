@@ -260,13 +260,13 @@ public class GetCourseService {
 	public List<DaysResponse> findDays(Integer courseId) {
 
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-		dayEntityList = courseEntity.getDayEntity();
+		//dayEntityList = courseEntity.getDayEntity();
 
 		DaysResponse daysResponse = new DaysResponse();
 
 		List<DaysResponse> daysResponseDayListD = new ArrayList<DaysResponse>();
 
-		List<DaysResponse> daysResponseDayList = new ArrayList<DaysResponse>();
+		//List<DaysResponse> daysResponseDayList = new ArrayList<DaysResponse>();
 
 		for (DayEntity dayEntityDays : courseEntity.getDayEntity()) {
 
@@ -274,12 +274,8 @@ public class GetCourseService {
 
 			daysResponse = new DaysResponse();
 			daysResponse.setDayId(dayEntityDays.getDayId());
-			daysResponse.setDayName(dayEntityDays.getDayName());
+			daysResponse.setDayName(dayEntityDays.getDayName().toUpperCase());
 			daysResponseDayListD.add(daysResponse);
-
-		}
-
-		for (DaysResponse daysResponse2 : daysResponseDayListD) {
 
 		}
 
