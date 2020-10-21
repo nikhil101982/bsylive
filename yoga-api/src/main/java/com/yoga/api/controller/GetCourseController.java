@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AllUserCoursesResponse;
@@ -17,6 +18,7 @@ import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.service.GetCourseService;
+import com.yoga.api.service.GetCourseService2;
 
 @RestController
 @CrossOrigin
@@ -34,6 +36,9 @@ public class GetCourseController {
 	
 	@Autowired
 	DayRepository dayRepository;
+	
+	@Autowired
+	GetCourseService2 getCourseService2;
 
 	DayEntity dayEntity;
 	
@@ -42,10 +47,11 @@ public class GetCourseController {
 	
 	
 	@GetMapping("/getCourseByAdmin/{courseId}/{dayId}")
-	public DayByCourseId getCourseFirDay(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
+	@CrossOrigin(origins="*" , allowedHeaders="*")
+	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
 		
 		
-		DayByCourseId dayByCourseIdByDayID = getCourseService.getCourseForDay(courseId , dayId );
+		DayByCourseId dayByCourseIdByDayID = getCourseService2.getCourseByAdmin(courseId , dayId );
 		
 		return dayByCourseIdByDayID;
 		
@@ -65,12 +71,12 @@ public class GetCourseController {
 	 * Get Courses Details for single courses API
 	 */
 	
-//	@GetMapping("/courseDetailsBasedOnCourseId/{courseId}")
-//	public Course courseDetails(@PathVariable("courseId") Integer courseId) throws Exception {		
-//		return getCourseService.coursesByCourseId(courseId);
-//
-//	}
-//	
+	@GetMapping("/courseDetailsBasedOnCourseId/{courseId}")
+	public CourseEntity courseDetails(@PathVariable("courseId") Integer courseId) throws Exception {		
+		return getCourseService.coursesByCourseId(courseId);
+
+	}
+	
 	
 	/*
 	 * Get All Courses by UserName without lecture details.

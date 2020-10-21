@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit {
   showLogInError: boolean = false;
 
   userDetails: any;
+  userName: string;
 
   logInParams: LogInParams = new LogInParams();
   forgotPassParams: ForgotPasswordParams = new ForgotPasswordParams();
@@ -49,6 +50,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.showLogInOption();
     this.userDetails = this.service.getUserData();
+    this.userName = this.userDetails.userName
+    console.log("logged in details = ", this.userDetails);  
   }
 
   resetData() {
@@ -92,16 +95,19 @@ export class NavbarComponent implements OnInit {
       userEmail: this.logInParams.userEmail,
       password: btoa(this.logInParams.password)
     }
-    localStorage.setItem('userDetails', JSON.stringify({ userEmail: this.logInParams.userEmail }));
+    sessionStorage.setItem('userDetails', JSON.stringify({ userEmail: this.logInParams.userEmail }));
 
     this.service.getLogInData(obj)
       .subscribe((res) => {
         console.log("log in res = ", res);
         if (res['status'] === 'success') {
-          localStorage.setItem('userDetails', res['userDetails']);
+        console.log("success", res, res['status'])
+
+          sessionStorage.setItem('userDetails', JSON.stringify(res['userDetails']));
           this.router.navigate(['/courses']);
         }
-        if (res['status'] === 'error') {
+        if (res['status'] === 'failure') {
+        console.log("error", res, res['status'])
           this.showLogInError = true;
           this.showAlert('error', 'user name or password mismatch');
         }
@@ -158,7 +164,7 @@ export class NavbarComponent implements OnInit {
     this.service.logout(obj).subscribe(res => {
       if (res) {
         this.router.navigate(['login']);
-        localStorage.clear();
+        sessionStorage.clear();
       }
     })
   }

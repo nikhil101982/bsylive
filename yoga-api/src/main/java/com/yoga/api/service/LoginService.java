@@ -65,15 +65,23 @@ public class LoginService {
 				loginResponse.setMessage("you have successfully logged in");
 
 				return loginResponse;
+			}else {
+				
+				loginResponse.setStatus("failure");
+				//loginResponse.setUserDetails(userDetail);
+				loginResponse.setMessage("wrong username or password or user is already logged in");
+				return loginResponse;
+
+
 			}
 
 		} else {
 
 			userDetail.setUserEmail(loginRequest.getUserEmail());
-			userDetail.setUserName(userAccountEntity.getUserName());
+			userDetail.setUserName("");
 
 			loginResponse.setStatus("failure");
-			loginResponse.setUserDetails(userDetail);
+			//loginResponse.setUserDetails(userDetail);
 			loginResponse.setMessage("wrong username or password or user is already logged in");
 		}
 		return loginResponse;

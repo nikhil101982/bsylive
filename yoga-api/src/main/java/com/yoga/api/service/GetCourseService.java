@@ -11,7 +11,6 @@ import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LecEntity;
 import com.yoga.api.entity.UserAccountEntity;
-import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AllUserCourses;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.model.Course;
@@ -40,11 +39,17 @@ public class GetCourseService {
 
 	List<LecEntity> lecEntityList;
 
+	List<DayEntity> dayEntityList;
+
 	LecEntity lecEntity;
 
 	CourseEntity courseEntity;
 
 	Lecture lecture;
+	
+	LectureByDay lectureByDay;
+
+	List<LectureByDay> lectureByDayList = new ArrayList<>();
 
 	UserAccountEntity userAccountEntity;
 
@@ -207,67 +212,87 @@ public class GetCourseService {
 		return allUserCoursesResponse;
 	}
 
-	public DayByCourseId getCourseForDay(Integer courseId, Integer dayId) {
-		
-		DayByCourseId dayByCourseId = new DayByCourseId();
-		
-		LectureByDay lectureByDay;
-		
-		List<LectureByDay> lecEntityList = new ArrayList<>();
-
-		
-		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-		dayEntity = dayRepository.getDayEntityByDayId(dayId);
-	
-		lecEntity = lecRepository.getLecEntityByLecId(dayId);
-		
-		
-		for(LecEntity lectureEntity:dayEntity.getLecEntity()) {
-			
-			lectureByDay = new LectureByDay();
-			
-			lectureByDay.setCurrentDate(lectureEntity.getCurrDate());
-			lectureByDay.setDisableJoinBtn(false);
-			lectureByDay.setEndTime(lectureEntity.getEndTime());
-			lectureByDay.setIFrameDynamicLink(lectureEntity.getIFrameDynamicLink());
-			lectureByDay.setLectureName(lectureEntity.getLectureName());
-			lectureByDay.setStartTime(lectureEntity.getStartTime());
-			
-			lecEntityList.add(lectureByDay);
-			
-		}
-		
-		
-		dayByCourseId.setDayName(dayEntity.getDayName());
-		dayByCourseId.setDayId(dayEntity.getDayId());
-		dayByCourseId.setLecture(lecEntityList);
-		 
-		return dayByCourseId;
-
-	}
+//	public DayByCourseId getCourseByAdmin(Integer courseId, Integer dayId) {
+//		
+//		DayByCourseId dayByCourseId = new DayByCourseId();
+//
+//		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+//
+//		dayEntityList = courseEntity.getDayEntity();
+//
+//		//dayEntity = dayRepository.getDayEntityByDayId(dayId);
+//
+//		for (DayEntity dayEntity1 : dayEntityList) {
+//
+//			System.out.println("dayEntity1.getDayId()  " + dayEntity1.getDayId());
+//			
+//			if (dayEntity1.getDayId().equals(dayId)) {
+//
+//				for (LecEntity lectureEntity : dayEntity1.getLecEntity()) {
+//
+//					lectureByDay = new LectureByDay();
+//
+//					lectureByDay.setCurrentDate(lectureEntity.getCurrDate());
+//					lectureByDay.setDisableJoinBtn(false);
+//					lectureByDay.setEndTime(lectureEntity.getEndTime());
+//					lectureByDay.setIFrameDynamicLink(lectureEntity.getIFrameDynamicLink());
+//					lectureByDay.setLectureName(lectureEntity.getLectureName());
+//					lectureByDay.setStartTime(lectureEntity.getStartTime());
+//					lectureByDayList.add(lectureByDay);
+//
+//				}
+//
+//				dayByCourseId.setDayName(dayEntity1.getDayName());
+//				dayByCourseId.setDayId(dayEntity1.getDayId());
+//				dayByCourseId.setLecture(lectureByDayList);
+//
+//			}
+//			
+//
+//		}
+//
+//		return dayByCourseId;
+//
+//	}
 
 	// Get Days
-	
+
 	public List<DaysResponse> findDays(Integer courseId) {
-		
+
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-		
+		dayEntityList = courseEntity.getDayEntity();
+
 		DaysResponse daysResponse = new DaysResponse();
-		
-		List<DaysResponse>  daysResponseDayListD = new ArrayList<DaysResponse>();
-		
-	for(DayEntity dayEntityDays : courseEntity.getDayEntity()) {
-		
-		daysResponse.setDayId(dayEntityDays.getDayId());
-		daysResponse.setDayName(dayEntityDays.getDayName());		
-		daysResponseDayListD.add(daysResponse);
-		
+
+		List<DaysResponse> daysResponseDayListD = new ArrayList<DaysResponse>();
+
+		List<DaysResponse> daysResponseDayList = new ArrayList<DaysResponse>();
+
+		for (DayEntity dayEntityDays : courseEntity.getDayEntity()) {
+
+			// dayEntityDays = new DayEntity();
+
+			daysResponse = new DaysResponse();
+			daysResponse.setDayId(dayEntityDays.getDayId());
+			daysResponse.setDayName(dayEntityDays.getDayName());
+			daysResponseDayListD.add(daysResponse);
+
+		}
+
+		for (DaysResponse daysResponse2 : daysResponseDayListD) {
+
+		}
+
+		return daysResponseDayListD;
 	}
-		
-		
+
+	// Get course By course ID
+	public CourseEntity coursesByCourseId(Integer courseId) {
+
+		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 
 		
-		return daysResponseDayListD;
+		return courseEntity;
 	}
 
 }

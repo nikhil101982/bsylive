@@ -25,7 +25,7 @@ export class ServiceService {
   constructor(private http: HttpClient) { }
 
   getUserData() {
-    return JSON.parse(localStorage.getItem('userDetails'));
+    return JSON.parse(sessionStorage.getItem('userDetails'));
   }
 
   logInButtonUpdate(val) {
@@ -39,8 +39,8 @@ export class ServiceService {
   }
 
   getDaysDetails(params) {
-    let link = `${this.url}getDays/${params.courseId}/${params.dayId}`
-    return this.http.post(link, this.requestHeaders)
+    let link = `${this.url}getCourseByAdmin/${params.courseId}/${params.dayId}`
+    return this.http.get(link, this.requestHeaders)
     // return this.http.get('./assets/jsons/course-details.json')
   }
 

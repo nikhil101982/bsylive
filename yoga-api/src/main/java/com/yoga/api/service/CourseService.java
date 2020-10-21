@@ -42,15 +42,78 @@ public class CourseService {
 	LecEntity lectureEntity;
 	List<LecEntity> lecEntityList;
 
+	List<List<LecEntity>> lecEntityListOfList;
+
 	// Add Course api
-	public StatusMessageResponse addCourse(AddCourseByDayId course) {
+	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) {
 
 		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
 				course.getStartDate(), course.getCouseDuration());
 
 		if (Objects.isNull(courseEntity)) {
 
-			addLecturesDay(course);
+			lecEntityListOfList = new ArrayList<>();
+
+			int index = 0;
+
+			dayEntityList = new ArrayList<>();
+
+			for (DayByCourseId day : course.getDay()) {
+				
+				lecEntityList = new ArrayList<>();
+
+
+	
+				for (LectureByDay LectByDay : day.getLecture()) {
+										
+					//lecEntityList = new ArrayList<>();
+
+					lectureEntity = new LecEntity();
+					
+					lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
+					lectureEntity.setDisableJoinBtn(false);
+					lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
+					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
+					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
+					lectureEntity.setIFrameDynamicLink(LectByDay.getIFrameDynamicLink());
+					// lectureRepository.save(lectureEntity);
+					lecEntityList.add(lectureEntity);
+					
+					lecEntityListOfList.add(lecEntityList);
+
+				}
+				
+				lectureRepository.saveAll(lecEntityList);
+
+
+				dayEntity = new DayEntity();
+				dayEntity.setLecEntity(lecEntityList);
+				dayEntity.setDayName(day.getDayName());
+				
+				dayEntityList.add(dayEntity);
+
+				// lectureRepository.save(dayEntity);
+
+				
+
+
+				// dayRepository.save(dayEntity);
+
+				// lecEntityList = new ArrayList<>();
+
+				// dayEntityList = new ArrayList<>();
+				
+				index = index+1;
+
+			}
+
+			// if (!Objects.isNull(dayEntityList)) {
+			//
+			dayRepository.saveAll(dayEntityList);
+			//
+			// }
+
+			// addLecturesDay(course);
 
 			courseEntity = new CourseEntity();
 			courseEntity.setCourseName(course.getCourseName());
@@ -64,7 +127,7 @@ public class CourseService {
 
 			statusMessageResponse.setMessage("course have created successfully ");
 			statusMessageResponse.setStatus("success");
-			
+
 			return statusMessageResponse;
 
 		} else {
@@ -79,52 +142,6 @@ public class CourseService {
 	}
 
 	private void addLecturesDay(AddCourseByDayId course) {
-
-		lecEntityList = new ArrayList<>();
-
-		dayEntityList = new ArrayList<>();
-
-		for (DayByCourseId day : course.getDay()) {
-
-			//int number = 1;
-
-			for (LectureByDay LectByDay : day.getLecture()) {
-
-				lectureEntity = new LecEntity();
-
-				lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
-				lectureEntity.setDisableJoinBtn(false);
-				lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
-				lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
-				lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
-				lectureEntity.setIFrameDynamicLink(LectByDay.getIFrameDynamicLink());
-				lecEntityList.add(lectureEntity);
-
-			}
-			
-			
-			
-			dayEntity = new DayEntity();
-			//dayEntity.setDayName("Day " + number);
-			dayEntity.setLecEntity(lecEntityList);
-			dayEntity.setDayName(day.getDayName());
-
-			dayEntityList.add(dayEntity);
-			//number++;
-
-		}
-
-		if (!Objects.isNull(lecEntityList)) {
-
-			lectureRepository.saveAll(lecEntityList);
-
-		}
-
-		if (!Objects.isNull(dayEntityList)) {
-
-			dayRepository.saveAll(dayEntityList);
-
-		}
 
 	}
 }

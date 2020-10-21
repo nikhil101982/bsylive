@@ -12,8 +12,8 @@ export class HomeComponent implements OnInit {
   constructor(private service: ServiceService, private router: Router) { }
 
   ngOnInit() {
-    console.log("login", localStorage.getItem('userDetails'));
-    if (localStorage.getItem('userDetails')) {
+    console.log("login", sessionStorage.getItem('userDetails'));
+    if (sessionStorage.getItem('userDetails')) {
       console.log("local storage has data");
       this.router.navigate(['courses']);
     }

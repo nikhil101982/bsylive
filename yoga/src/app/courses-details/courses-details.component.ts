@@ -76,9 +76,9 @@ export class CoursesDetailsComponent implements OnInit {
   }
 
   onClickjoinLecture(index) {
-    console.log("index = ", index)
+    console.log("index = ", index, this.daysList, this.daysDetails)
     // this.daysList[index].disableJoinBtn = true;
-    let urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(this.daysList[index].iFrameLink);
+    let urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(this.daysList[index].iFrameDynamicLink);
     this.iFrameDynamicLink = urlIframe;
     this.showIframe = true;
   }
@@ -95,7 +95,7 @@ export class CoursesDetailsComponent implements OnInit {
     this.selectedDayName = day.dayName;
     this.showIframe = false;
     // this.daysList = this.daysDetails[day.dayName];
-    this.getDaysDetails(this.selectedDayName);
+    this.getDaysDetails(day);
     // if (dayname == 'day1') {
     //   this.daysList = this.daysDetails[dayname];
     // }

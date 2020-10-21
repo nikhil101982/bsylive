@@ -34,7 +34,7 @@ public class AddCourseController {
 	
 	@PostMapping("/addCourseFromAdmin")
 	public StatusMessageResponse getCourseByDayIDAndByCourseId(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
-		return qeryService.addCourse(addCourseByDayId);
+		return qeryService.addCourseFromAdmin(addCourseByDayId);
 	}
 	
 	/*

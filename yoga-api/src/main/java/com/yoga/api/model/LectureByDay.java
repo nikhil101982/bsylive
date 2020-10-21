@@ -30,6 +30,8 @@ public class LectureByDay {
 	boolean disableJoinBtn;
 	Integer lectureByDayId;
 	String iFrameDynamicLink;
+	public int sNo;
+
 }
 
 
