@@ -16,7 +16,7 @@ public class Day implements Serializable
     public String endTime;
     public String currentDate;
     public String disableJoinBtn;
-    
+    public String  iframeDynamicLink;
     
     
     private final static long serialVersionUID = 2177644673242063512L;

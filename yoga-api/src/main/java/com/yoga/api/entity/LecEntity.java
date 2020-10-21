@@ -28,6 +28,9 @@ public class LecEntity {
 	public String endTime;
 	public String currDate;
 	boolean disableJoinBtn;
-	String iFrameDynamicLink;
+	String iframeDynamicLink;
+	int sNo;
+
+	
 	
 }

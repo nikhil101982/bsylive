@@ -54,7 +54,6 @@ public class CourseService {
 
 			lecEntityListOfList = new ArrayList<>();
 
-			int index = 0;
 
 			dayEntityList = new ArrayList<>();
 
@@ -67,19 +66,26 @@ public class CourseService {
 				for (LectureByDay LectByDay : day.getLecture()) {
 										
 					//lecEntityList = new ArrayList<>();
+					
+					int sNo = 1;
+
 
 					lectureEntity = new LecEntity();
 					
+					lectureEntity.setSNo(LectByDay.getSNo());
 					lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
 					lectureEntity.setDisableJoinBtn(false);
 					lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
 					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
 					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
-					lectureEntity.setIFrameDynamicLink(LectByDay.getIFrameDynamicLink());
+					lectureEntity.setIframeDynamicLink(LectByDay.getIFrameDynamicLink());
 					// lectureRepository.save(lectureEntity);
 					lecEntityList.add(lectureEntity);
-					
+					//lectureEntity.setSNo(sNo);
 					lecEntityListOfList.add(lecEntityList);
+					
+					sNo = sNo+1;
+
 
 				}
 				
@@ -103,7 +109,6 @@ public class CourseService {
 
 				// dayEntityList = new ArrayList<>();
 				
-				index = index+1;
 
 			}
 

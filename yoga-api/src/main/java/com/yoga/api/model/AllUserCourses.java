@@ -12,12 +12,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AllUserCourses {
-
 	
 	private String courseName;
 	private String couseDurations;
 	private String startDate;
 	private Integer courseId;
-
-
+	
 }

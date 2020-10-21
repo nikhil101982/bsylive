@@ -80,10 +80,11 @@ public class GetCourseService2 {
 
 						lectureByDay = new LectureByDay();
 
+						lectureByDay.setSNo(lectureEntity.getSNo());
 						lectureByDay.setCurrentDate(lectureEntity.getCurrDate());
 						lectureByDay.setDisableJoinBtn(false);
 						lectureByDay.setEndTime(lectureEntity.getEndTime());
-						lectureByDay.setIFrameDynamicLink(lectureEntity.getIFrameDynamicLink());
+						lectureByDay.setIFrameDynamicLink(lectureEntity.getIframeDynamicLink());
 						lectureByDay.setLectureName(lectureEntity.getLectureName());
 						lectureByDay.setStartTime(lectureEntity.getStartTime());
 						lectureByDayList.add(lectureByDay);
