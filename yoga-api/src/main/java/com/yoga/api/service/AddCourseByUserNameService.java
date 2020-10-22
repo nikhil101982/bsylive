@@ -12,6 +12,7 @@ import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.repository.CourseRepository;
+import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
 
@@ -26,6 +27,9 @@ public class AddCourseByUserNameService {
 
 	@Autowired
 	LectureRepository lectureEntityRepository;
+	
+	@Autowired
+	DayRepository dayRepository;
 
 	CourseEntity courseEntity;
 
@@ -75,6 +79,8 @@ public class AddCourseByUserNameService {
 		courseRepository.deleteAll();
 		userAccountRepository.deleteAll();
 		lectureEntityRepository.deleteAll();
+		dayRepository.deleteAll();
+		
 
 	}
 

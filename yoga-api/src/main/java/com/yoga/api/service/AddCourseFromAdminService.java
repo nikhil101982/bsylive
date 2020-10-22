@@ -45,7 +45,7 @@ public class AddCourseFromAdminService {
 	List<List<LectureEntity>> lecEntityListOfList;
 
 	// Add Course api
-	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) {
+	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
 		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
 				course.getStartDate(), course.getCouseDuration());
@@ -53,14 +53,12 @@ public class AddCourseFromAdminService {
 		if (Objects.isNull(courseEntity)) {
 
 			lecEntityListOfList = new ArrayList<>();
-
-
 			dayEntityList = new ArrayList<>();
 
 			for (DayByCourseId day : course.getDay()) {
 				
 				lecEntityList = new ArrayList<>();
-
+			//Thread.sleep(1000);
 
 	
 				for (LectureByDay LectByDay : day.getLecture()) {
@@ -74,19 +72,27 @@ public class AddCourseFromAdminService {
 					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
 					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
 					lectureEntity.setIframeDynamicLink(LectByDay.getIFrameDynamicLink());
+					//Thread.sleep(1000);
 					lecEntityList.add(lectureEntity);
 					lecEntityListOfList.add(lecEntityList);
 
 				}
+				//Thread.sleep(1000);
+
 				
 				lectureRepository.saveAll(lecEntityList);
 
+				//Thread.sleep(1000);
 
 				dayEntity = new DayEntity();
 				dayEntity.setLecEntity(lecEntityList);
+				System.out.println("Day name "+day.getDayName());
 				dayEntity.setDayName(day.getDayName());
-				
+				//Thread.sleep(1000);
+
 				dayEntityList.add(dayEntity);
+				
+				System.out.println(dayEntity.getDayName());
 			}
 
 			if (!Objects.isNull(dayEntityList)) {
@@ -104,6 +110,14 @@ public class AddCourseFromAdminService {
 			if (!Objects.isNull(courseEntity)) {
 				courseRepository.save(courseEntity);
 			}
+			
+			
+//			courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
+//					course.getStartDate(), course.getCouseDuration());
+//			
+//			courseEntity = courseRepository.getCourseEntityByCourseId(courseEntity.getCourseId());
+
+
 
 			statusMessageResponse.setMessage("course have created successfully ");
 			statusMessageResponse.setStatus("success");

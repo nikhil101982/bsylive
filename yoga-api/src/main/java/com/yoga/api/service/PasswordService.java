@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.mail.MessagingException;
@@ -100,8 +101,13 @@ public class PasswordService {
 	public StatusMessageResponse changePassword(ChangePasswordRequest changePasswordRequest) {
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
+		
+		byte[] result = Base64.getDecoder().decode(userAccountEntity.getPassword());
+		
+		String passwordFromDB = new String(result);
 
-		boolean passwordCheck = userAccountEntity.getPassword().equals(changePasswordRequest.getPassword());
+
+		boolean passwordCheck = passwordFromDB.equals(changePasswordRequest.getPassword());
 
 		if (!Objects.isNull(userAccountEntity) && passwordCheck) {
 

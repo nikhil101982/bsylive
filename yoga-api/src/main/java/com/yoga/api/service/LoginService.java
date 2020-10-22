@@ -24,7 +24,7 @@ public class LoginService {
 	UserAccountEntity userAccountEntity;
 
 	UserDetail userDetail;
-	
+
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
 	/*
@@ -65,13 +65,12 @@ public class LoginService {
 				loginResponse.setMessage("you have successfully logged in");
 
 				return loginResponse;
-			}else {
-				
+			} else {
+
 				loginResponse.setStatus("failure");
-				//loginResponse.setUserDetails(userDetail);
+				// loginResponse.setUserDetails(userDetail);
 				loginResponse.setMessage("wrong username or password or user is already logged in");
 				return loginResponse;
-
 
 			}
 
@@ -81,7 +80,7 @@ public class LoginService {
 			userDetail.setUserName("");
 
 			loginResponse.setStatus("failure");
-			//loginResponse.setUserDetails(userDetail);
+			// loginResponse.setUserDetails(userDetail);
 			loginResponse.setMessage("wrong username or password or user is already logged in");
 		}
 		return loginResponse;
@@ -92,19 +91,25 @@ public class LoginService {
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(logoutRequest.getUserEmail());
 
-		if (userAccountEntity.isLogin()) {
+		if (!Objects.isNull(userAccountEntity)) {
 
-			userAccountEntity.setLogin(false);
-			userAccountRepository.save(userAccountEntity);
-			statusMessageResponse.setStatus("success");
-			statusMessageResponse.setMessage("You have successfully logged out");
+			if (userAccountEntity.isLogin()) {
 
-			return statusMessageResponse;
+				userAccountEntity.setLogin(false);
+				userAccountRepository.save(userAccountEntity);
+				statusMessageResponse.setStatus("success");
+				statusMessageResponse.setMessage("You have successfully logged out");
+
+				return statusMessageResponse;
+
+			} else {
+
+				statusMessageResponse.setStatus("fail");
+				statusMessageResponse.setMessage("You have already logged out");
+				return statusMessageResponse;
+			}
 
 		}
-
-		statusMessageResponse.setStatus("fail");
-		statusMessageResponse.setMessage("You have already logged out");
 		return statusMessageResponse;
 
 	}

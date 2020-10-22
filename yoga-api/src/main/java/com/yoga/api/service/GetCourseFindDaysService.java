@@ -33,10 +33,11 @@ public class GetCourseFindDaysService {
 	public List<DaysResponse> findDays(Integer courseId) {
 
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		
 		daysResponseList = new ArrayList<DaysResponse>();
-
+		
 		for (DayEntity dayEntityDays : courseEntity.getDayEntity()) {
-
+			
 			daysResponse = new DaysResponse();
 
 			daysResponse.setDayId(dayEntityDays.getDayId());
