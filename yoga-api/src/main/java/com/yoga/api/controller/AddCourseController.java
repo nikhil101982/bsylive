@@ -15,7 +15,7 @@ import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.service.AddCourseByUserNameService;
 import com.yoga.api.service.AddCourseService;
-import com.yoga.api.service.CourseService;
+import com.yoga.api.service.AddCourseFromAdminService;
 
 @RestController
 @CrossOrigin
@@ -29,12 +29,12 @@ public class AddCourseController {
 	
 	
 	@Autowired
-	CourseService qeryService;
+	AddCourseFromAdminService addCourseFromAdminService;
 	
 	
 	@PostMapping("/addCourseFromAdmin")
 	public StatusMessageResponse getCourseByDayIDAndByCourseId(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
-		return qeryService.addCourseFromAdmin(addCourseByDayId);
+		return addCourseFromAdminService.addCourseFromAdmin(addCourseByDayId);
 	}
 	
 	/*

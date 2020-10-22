@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoga.api.entity.LecEntity;
-import com.yoga.api.repository.LecRepository;
+import com.yoga.api.entity.LectureEntity;
+import com.yoga.api.repository.LectureRepository;
 
 @RestController
 @CrossOrigin
 public class LectureController {
 
 	@Autowired
-	LecRepository lecRepository;
+	LectureRepository lecRepository;
 
 
 	/*
@@ -23,7 +23,7 @@ public class LectureController {
 	 */
 
 	@GetMapping(value = "/getLectures")
-	public List<LecEntity> getLectures() throws Exception {
+	public List<LectureEntity> getLectures() throws Exception {
 		return lecRepository.findAll();
 	}
 

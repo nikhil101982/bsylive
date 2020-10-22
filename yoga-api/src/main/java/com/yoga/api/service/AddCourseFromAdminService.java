@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
-import com.yoga.api.entity.LecEntity;
+import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.model.LectureByDay;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
-import com.yoga.api.repository.LecRepository;
+import com.yoga.api.repository.LectureRepository;
 
 @Service
-public class CourseService {
+public class AddCourseFromAdminService {
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -28,7 +28,7 @@ public class CourseService {
 	DayRepository dayRepository;
 
 	@Autowired
-	LecRepository lectureRepository;
+	LectureRepository lectureRepository;
 
 	CourseEntity courseEntity;
 
@@ -39,10 +39,10 @@ public class CourseService {
 	List<DayEntity> dayEntityList;
 
 	LectureByDay LectureByDay;
-	LecEntity lectureEntity;
-	List<LecEntity> lecEntityList;
+	LectureEntity lectureEntity;
+	List<LectureEntity> lecEntityList;
 
-	List<List<LecEntity>> lecEntityListOfList;
+	List<List<LectureEntity>> lecEntityListOfList;
 
 	// Add Course api
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) {
@@ -64,13 +64,8 @@ public class CourseService {
 
 	
 				for (LectureByDay LectByDay : day.getLecture()) {
-										
-					//lecEntityList = new ArrayList<>();
-					
-					int sNo = 1;
 
-
-					lectureEntity = new LecEntity();
+					lectureEntity = new LectureEntity();
 					
 					lectureEntity.setSNo(LectByDay.getSNo());
 					lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
@@ -79,13 +74,8 @@ public class CourseService {
 					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
 					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
 					lectureEntity.setIframeDynamicLink(LectByDay.getIFrameDynamicLink());
-					// lectureRepository.save(lectureEntity);
 					lecEntityList.add(lectureEntity);
-					//lectureEntity.setSNo(sNo);
 					lecEntityListOfList.add(lecEntityList);
-					
-					sNo = sNo+1;
-
 
 				}
 				
@@ -97,28 +87,13 @@ public class CourseService {
 				dayEntity.setDayName(day.getDayName());
 				
 				dayEntityList.add(dayEntity);
-
-				// lectureRepository.save(dayEntity);
-
-				
-
-
-				// dayRepository.save(dayEntity);
-
-				// lecEntityList = new ArrayList<>();
-
-				// dayEntityList = new ArrayList<>();
-				
-
 			}
 
-			// if (!Objects.isNull(dayEntityList)) {
-			//
-			dayRepository.saveAll(dayEntityList);
-			//
-			// }
+			if (!Objects.isNull(dayEntityList)) {
 
-			// addLecturesDay(course);
+			dayRepository.saveAll(dayEntityList);
+			
+			 }
 
 			courseEntity = new CourseEntity();
 			courseEntity.setCourseName(course.getCourseName());
@@ -146,7 +121,4 @@ public class CourseService {
 
 	}
 
-	private void addLecturesDay(AddCourseByDayId course) {
-
-	}
 }

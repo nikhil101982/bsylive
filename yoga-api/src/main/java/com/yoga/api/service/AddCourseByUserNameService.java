@@ -12,7 +12,7 @@ import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.repository.CourseRepository;
-import com.yoga.api.repository.LecRepository;
+import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
 
 @Service
@@ -25,7 +25,7 @@ public class AddCourseByUserNameService {
 	UserAccountRepository userAccountRepository;
 
 	@Autowired
-	LecRepository lectureEntityRepository;
+	LectureRepository lectureEntityRepository;
 
 	CourseEntity courseEntity;
 

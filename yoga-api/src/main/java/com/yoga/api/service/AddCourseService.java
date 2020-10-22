@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.CourseEntity;
-import com.yoga.api.entity.LecEntity;
+import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.Day;
 import com.yoga.api.repository.CourseRepository;
-import com.yoga.api.repository.LecRepository;
+import com.yoga.api.repository.LectureRepository;
 
 @Service
 public class AddCourseService {
@@ -22,15 +22,15 @@ public class AddCourseService {
 	CourseRepository courseRepository;
 
 	@Autowired
-	LecRepository lectureRepository;
+	LectureRepository lectureRepository;
 
 	CourseEntity courseEntity;
 
-	LecEntity lectureEntity = new LecEntity();
+	LectureEntity lectureEntity = new LectureEntity();
 
 	AddCourseResponse addCourseResponse;
 
-	List<LecEntity> lecEntityList = new ArrayList<>();
+	List<LectureEntity> lecEntityList = new ArrayList<>();
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {

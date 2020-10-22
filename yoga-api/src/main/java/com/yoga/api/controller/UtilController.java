@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.model.DaysResponse;
 import com.yoga.api.service.AddCourseByUserNameService;
+import com.yoga.api.service.GetCourseFindDaysService;
 import com.yoga.api.service.GetCourseService;
 
 @RestController
@@ -21,7 +22,7 @@ public class UtilController {
 	AddCourseByUserNameService courseService;
 	
 	@Autowired
-	GetCourseService getCourseService;
+	GetCourseFindDaysService getCourseFindDaysService;
 	
 
 
@@ -40,7 +41,7 @@ public class UtilController {
 	
 	@GetMapping("/getDays/{CourseId}")
 	public List<DaysResponse> getDays(@PathVariable("CourseId") Integer CourseId) throws Exception {
-		return getCourseService.findDays(CourseId);
+		return getCourseFindDaysService.findDays(CourseId);
 		
 
 	}

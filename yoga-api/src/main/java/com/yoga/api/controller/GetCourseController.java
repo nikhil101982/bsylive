@@ -18,7 +18,8 @@ import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.service.GetCourseService;
-import com.yoga.api.service.GetCourseService2;
+import com.yoga.api.service.GetCourseBasedOnUserNameService;
+import com.yoga.api.service.GetCourseByAdminService;
 
 @RestController
 @CrossOrigin
@@ -30,6 +31,8 @@ public class GetCourseController {
 	@Autowired
 	CourseRepository courseRepository;
 	
+	@Autowired
+	GetCourseBasedOnUserNameService getCourseBasedOnUserNameService;
 	
 	@Autowired
 	UserAccountRepository userAccountRepository;
@@ -38,7 +41,7 @@ public class GetCourseController {
 	DayRepository dayRepository;
 	
 	@Autowired
-	GetCourseService2 getCourseService2;
+	GetCourseByAdminService getCourseByAdminService;
 
 	DayEntity dayEntity;
 	
@@ -51,7 +54,7 @@ public class GetCourseController {
 	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
 		
 		
-		DayByCourseId dayByCourseIdByDayID = getCourseService2.getCourseByAdmin(courseId , dayId );
+		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService.getCourseByAdmin(courseId , dayId );
 		
 		return dayByCourseIdByDayID;
 		
@@ -81,11 +84,11 @@ public class GetCourseController {
 	/*
 	 * Get All Courses by UserName without lecture details.
 	 */
-//	@GetMapping("/coursesBasedOnUserNameTemp/{nameOfTheCours}")
-//	public AllUserCoursesResponse coursesByUserName(@PathVariable("userName") String userName) throws Exception {
-//		return getCourseService.coursesByUserName(userName);
-//
-//	}
+	@GetMapping("/coursesBasedOnUserNameTemp/{nameOfTheCours}")
+	public AllUserCoursesResponse coursesByUserName(@PathVariable("userName") String userName) throws Exception {
+		return getCourseBasedOnUserNameService.coursesByUserName(userName);
+
+	}
 
 	
 	/*

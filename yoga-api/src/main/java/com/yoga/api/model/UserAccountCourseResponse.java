@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.yoga.api.entity.CourseEntity;
-import com.yoga.api.entity.LecEntity;
+import com.yoga.api.entity.LectureEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,7 +30,7 @@ public class UserAccountCourseResponse {
 
     @Embedded
     @ElementCollection
-    @OneToMany(targetEntity = LecEntity.class,cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = LectureEntity.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="uc_fk",referencedColumnName = "userAccountId")
     private List<CourseEntity> courseEntity;
 	

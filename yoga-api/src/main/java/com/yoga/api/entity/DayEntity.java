@@ -35,8 +35,8 @@ public class DayEntity {
 
 	@Embedded
 	@ElementCollection
-	@OneToMany(targetEntity = LecEntity.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = LectureEntity.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dl_fk", referencedColumnName = "dayId")
-	private List<LecEntity> lecEntity;
+	private List<LectureEntity> lecEntity;
 
 }

@@ -9,39 +9,33 @@ import org.springframework.stereotype.Service;
 
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
-import com.yoga.api.entity.LecEntity;
-import com.yoga.api.entity.UserAccountEntity;
-import com.yoga.api.model.AllUserCourses;
-import com.yoga.api.model.AllUserCoursesResponse;
+import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.model.Lecture;
 import com.yoga.api.model.LectureByDay;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
-import com.yoga.api.repository.LecRepository;
-import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.repository.LectureRepository;
 
 @Service
-public class GetCourseService2 {
+public class GetCourseByAdminService {
 
 	@Autowired
 	CourseRepository courseRepository;
 
 	@Autowired
-	UserAccountRepository userAccountRepository;
+	LectureRepository lecRepository;
 
 	@Autowired
-	LecRepository lecRepository;
+	DayRepository dayRepository;
 
 	List<CourseEntity> courseEntityList;
 
-	List<LecEntity> lecEntityList;
-
-	List<DayEntity> dayEntityList;
-
-	LecEntity lecEntity;
-
 	CourseEntity courseEntity;
+
+	List<LectureEntity> lecEntityList;
+
+	LectureEntity lecEntity;
 
 	Lecture lecture;
 
@@ -49,12 +43,7 @@ public class GetCourseService2 {
 
 	List<LectureByDay> lectureByDayList;
 
-	UserAccountEntity userAccountEntity;
-
-	List<String> courseNameInUserAccount;
-
-	@Autowired
-	DayRepository dayRepository;
+	List<DayEntity> dayEntityList;
 
 	DayEntity dayEntity;
 
@@ -66,8 +55,6 @@ public class GetCourseService2 {
 
 		dayEntityList = courseEntity.getDayEntity();
 
-		// dayEntity = dayRepository.getDayEntityByDayId(dayId);
-
 		for (DayEntity dayEntity : dayEntityList) {
 
 			if (dayEntity.getDayId().equals(dayId)) {
@@ -76,7 +63,7 @@ public class GetCourseService2 {
 
 				if (dayEntity.getDayId().equals(dayId) && !Objects.isNull(courseEntity)) {
 
-					for (LecEntity lectureEntity : dayEntity.getLecEntity()) {
+					for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
 
 						lectureByDay = new LectureByDay();
 
