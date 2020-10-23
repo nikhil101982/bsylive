@@ -9,6 +9,5 @@ public class DaysResponse {
 
 	String dayName;
 	Integer dayId;
-
 	
 }

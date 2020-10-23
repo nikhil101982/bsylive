@@ -133,7 +133,10 @@ export class NavbarComponent implements OnInit {
   }
 
   onClickResetPassword() {
-    this.service.getForgotPasswordData(this.forgotPassParams)
+  let obj = {
+    userEmail: this.forgotPassParams.userEmail
+  }
+    this.service.getForgotPasswordData(obj)
       .subscribe((res) => {
         console.log("reset password res= ", res);
         if (res['status'] === 'success') {

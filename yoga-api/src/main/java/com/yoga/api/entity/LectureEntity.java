@@ -22,15 +22,15 @@ public class LectureEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer lecId;
-	
+
 	public String lectureName;
 	public String startTime;
 	public String endTime;
 	public String currDate;
 	boolean disableJoinBtn;
-	String iframeDynamicLink;
+	String videoIframeDynamicLink;
+	String liveIframeDynamicLink;
+
 	int sNo;
 
-	
-	
 }

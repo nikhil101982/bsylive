@@ -21,7 +21,7 @@ public class DayByCourseId {
 
 	public Integer dayId;;
 	public String dayName;
-	List<LectureByDay> lecture;
+	List<LectureByDay> lecture = new ArrayList<>();
 
 	private final static long serialVersionUID = 2177644673242063512L;
 

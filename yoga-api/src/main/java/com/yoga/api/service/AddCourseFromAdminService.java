@@ -56,50 +56,52 @@ public class AddCourseFromAdminService {
 			dayEntityList = new ArrayList<>();
 
 			for (DayByCourseId day : course.getDay()) {
-				
-				lecEntityList = new ArrayList<>();
-			//Thread.sleep(1000);
 
-	
+				lecEntityList = new ArrayList<>();
+
 				for (LectureByDay LectByDay : day.getLecture()) {
 
 					lectureEntity = new LectureEntity();
-					
+
+					if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
+						lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
+					}else {
+						lectureEntity.setVideoIframeDynamicLink(null);
+
+					}
+
+					if (!Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+						lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
+
+					}else {
+						lectureEntity.setLiveIframeDynamicLink(null);
+
+					}
+
 					lectureEntity.setSNo(LectByDay.getSNo());
 					lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
 					lectureEntity.setDisableJoinBtn(false);
 					lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
 					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
 					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
-					lectureEntity.setIframeDynamicLink(LectByDay.getIFrameDynamicLink());
-					//Thread.sleep(1000);
 					lecEntityList.add(lectureEntity);
 					lecEntityListOfList.add(lecEntityList);
 
 				}
-				//Thread.sleep(1000);
 
-				
 				lectureRepository.saveAll(lecEntityList);
-
-				//Thread.sleep(1000);
 
 				dayEntity = new DayEntity();
 				dayEntity.setLecEntity(lecEntityList);
-				System.out.println("Day name "+day.getDayName());
 				dayEntity.setDayName(day.getDayName());
-				//Thread.sleep(1000);
-
 				dayEntityList.add(dayEntity);
-				
-				System.out.println(dayEntity.getDayName());
 			}
 
 			if (!Objects.isNull(dayEntityList)) {
 
-			dayRepository.saveAll(dayEntityList);
-			
-			 }
+				dayRepository.saveAll(dayEntityList);
+
+			}
 
 			courseEntity = new CourseEntity();
 			courseEntity.setCourseName(course.getCourseName());
@@ -110,14 +112,6 @@ public class AddCourseFromAdminService {
 			if (!Objects.isNull(courseEntity)) {
 				courseRepository.save(courseEntity);
 			}
-			
-			
-//			courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
-//					course.getStartDate(), course.getCouseDuration());
-//			
-//			courseEntity = courseRepository.getCourseEntityByCourseId(courseEntity.getCourseId());
-
-
 
 			statusMessageResponse.setMessage("course have created successfully ");
 			statusMessageResponse.setStatus("success");

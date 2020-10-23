@@ -35,6 +35,8 @@ public class UserAccountEntity {
 	String emailId;
 	boolean isLogin;
 	String role;
+	String loginStartDate;
+
 
 	@Embedded
 	@ElementCollection

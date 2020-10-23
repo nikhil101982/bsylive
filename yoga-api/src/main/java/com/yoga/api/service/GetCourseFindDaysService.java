@@ -1,6 +1,8 @@
 package com.yoga.api.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,31 @@ public class GetCourseFindDaysService {
 	public List<DaysResponse> findDays(Integer courseId) {
 
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+
+		daysResponseList = new ArrayList<>();
+
+		int size = courseEntity.getDayEntity().size();
+
+		int[] numCount = new int[size];
 		
-		daysResponseList = new ArrayList<DaysResponse>();
+		int count =0;
 		
 		for (DayEntity dayEntityDays : courseEntity.getDayEntity()) {
 			
+			numCount[count] = dayEntityDays.getDayId();		
+			count = count+1;
+		}
+
+		Arrays.sort(numCount);
+		
+		for(int i=0;i<size;i++) {
+			
 			daysResponse = new DaysResponse();
 
-			daysResponse.setDayId(dayEntityDays.getDayId());
-			daysResponse.setDayName(dayEntityDays.getDayName().toUpperCase());
+			daysResponse.setDayId(numCount[i]);
+			dayEntity = dayRepository.getDayEntityByDayId(numCount[i]);
+			daysResponse.setDayName(dayEntity.getDayName().toUpperCase());
 			daysResponseList.add(daysResponse);
-
 		}
 
 		return daysResponseList;

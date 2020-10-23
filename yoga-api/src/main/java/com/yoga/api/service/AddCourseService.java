@@ -83,7 +83,8 @@ public class AddCourseService {
 			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
 			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
 			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
-			lectureEntity.setIframeDynamicLink(day.getIframeDynamicLink());
+			lectureEntity.setVideoIframeDynamicLink(day.getVideoIframeDynamicLink());
+			lectureEntity.setLiveIframeDynamicLink(day.getLiveIframeDynamicLink());
 
 			lecEntityList.add(lectureEntity);
 		}

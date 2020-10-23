@@ -32,6 +32,7 @@ public class DayEntity {
 	public Integer dayId;
 
 	public String dayName;
+	
 
 	@Embedded
 	@ElementCollection

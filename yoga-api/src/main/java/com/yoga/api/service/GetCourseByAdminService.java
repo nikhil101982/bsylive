@@ -67,11 +67,30 @@ public class GetCourseByAdminService {
 
 						lectureByDay = new LectureByDay();
 
+						if (Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
+								&& Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+							
+							lectureByDay.setDisableJoinBtn(true);
+							lectureByDay.setVideoIframeDynamicLink("");				
+							lectureByDay.setLiveIframeDynamicLink("");
+
+
+						} else {
+							lectureByDay.setDisableJoinBtn(false);
+
+							if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
+								lectureByDay.setVideoIframeDynamicLink(lectureEntity.getVideoIframeDynamicLink());
+
+							} else {
+								lectureByDay.setLiveIframeDynamicLink(lectureEntity.getLiveIframeDynamicLink());
+
+							}
+
+						}
+
 						lectureByDay.setSNo(lectureEntity.getSNo());
 						lectureByDay.setCurrentDate(lectureEntity.getCurrDate());
-						lectureByDay.setDisableJoinBtn(false);
 						lectureByDay.setEndTime(lectureEntity.getEndTime());
-						lectureByDay.setIFrameDynamicLink(lectureEntity.getIframeDynamicLink());
 						lectureByDay.setLectureName(lectureEntity.getLectureName());
 						lectureByDay.setStartTime(lectureEntity.getStartTime());
 						lectureByDayList.add(lectureByDay);
