@@ -20,6 +20,7 @@ import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.service.GetCourseService;
 import com.yoga.api.service.GetCourseBasedOnUserNameService;
 import com.yoga.api.service.GetCourseByAdminService;
+import com.yoga.api.service.GetCourseByAdminService2;
 
 @RestController
 @CrossOrigin
@@ -42,6 +43,10 @@ public class GetCourseController {
 	
 	@Autowired
 	GetCourseByAdminService getCourseByAdminService;
+	
+	@Autowired
+	GetCourseByAdminService2 getCourseByAdminService2;
+
 
 	DayEntity dayEntity;
 	
@@ -54,7 +59,7 @@ public class GetCourseController {
 	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
 		
 		
-		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService.getCourseByAdmin(courseId , dayId );
+		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService2.getCourseByAdmin(courseId , dayId );
 		
 		return dayByCourseIdByDayID;
 		
