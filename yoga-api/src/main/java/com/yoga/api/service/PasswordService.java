@@ -62,7 +62,7 @@ public class PasswordService {
 
 		try {
 			
-			String emailId = forgotPasswordRequest.getEmailId();
+			String emailId = forgotPasswordRequest.getEmailid();
 
 			try {
 				userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailId);
@@ -90,7 +90,7 @@ public class PasswordService {
 			return statusMessageResponse;
 
 		} catch (NullPointerException e) {
-			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getEmailId()
+			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getEmailid()
 					+ " or user account is not present in UserAccountEntity " + userAccountEntity);
 		}
 

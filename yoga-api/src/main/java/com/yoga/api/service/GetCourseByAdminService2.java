@@ -18,7 +18,7 @@ import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 
 @Service
-public class GetCourseByAdminService {
+public class GetCourseByAdminService2 {
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -54,6 +54,13 @@ public class GetCourseByAdminService {
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 
 		dayEntityList = courseEntity.getDayEntity();
+		
+		int size = dayEntityList.size();
+
+		int[] numCount = new int[size];
+		
+		int count =0;
+
 
 		for (DayEntity dayEntity : dayEntityList) {
 

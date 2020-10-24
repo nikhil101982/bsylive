@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 public class ForgotPasswordRequest {
 
-	String emailId;
+	String emailid;
 }
