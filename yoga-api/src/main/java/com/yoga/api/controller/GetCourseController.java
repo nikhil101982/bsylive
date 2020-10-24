@@ -10,17 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
-import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AllUserCoursesResponse;
-import com.yoga.api.model.Course;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
-import com.yoga.api.service.GetCourseService;
 import com.yoga.api.service.GetCourseBasedOnUserNameService;
 import com.yoga.api.service.GetCourseByAdminService;
-import com.yoga.api.service.GetCourseByAdminService2;
+import com.yoga.api.service.GetCourseService;
 
 @RestController
 @CrossOrigin
@@ -44,10 +41,6 @@ public class GetCourseController {
 	@Autowired
 	GetCourseByAdminService getCourseByAdminService;
 	
-	@Autowired
-	GetCourseByAdminService2 getCourseByAdminService2;
-
-
 	DayEntity dayEntity;
 	
 	List<DayEntity> dayEntityList;
@@ -59,7 +52,7 @@ public class GetCourseController {
 	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
 		
 		
-		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService2.getCourseByAdmin(courseId , dayId );
+		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService.getCourseByAdmin(courseId , dayId );
 		
 		return dayByCourseIdByDayID;
 		

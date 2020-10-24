@@ -15,7 +15,7 @@ public class AddCourseResponse {
 
 	
 	public String courseName;
-	public String couseDuration;
+	public int couseDuration;
 	public String startDate;
 	public String message;
 }

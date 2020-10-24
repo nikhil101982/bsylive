@@ -38,7 +38,7 @@ public class AddCourseService {
 		String status = null;
 
 		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
-				course.getStartDate(), course.getCouseDuration());
+				course.getStartDate(), course.getDay().size());
 
 		addCourseResponse = new AddCourseResponse();
 
@@ -69,7 +69,7 @@ public class AddCourseService {
 	private void createCourse(CourseResources course) {
 		courseEntity = new CourseEntity();
 		courseEntity.setCourseName(course.getCourseName().toUpperCase());
-		courseEntity.setCouseDuration(course.getCouseDuration().toUpperCase());
+		courseEntity.setCouseDuration(course.getDay().size());
 		courseEntity.setStartDate(course.getStartDate().toUpperCase());
 
 		courseRepository.save(courseEntity);
@@ -96,7 +96,7 @@ public class AddCourseService {
 
 	private void addCourseResponse(CourseResources course, String status) {
 		addCourseResponse.setCourseName(course.getCourseName());
-		addCourseResponse.setCouseDuration(course.getCouseDuration());
+		addCourseResponse.setCouseDuration(course.getDay().size());
 		addCourseResponse.setMessage(status);
 		addCourseResponse.setStartDate(course.getStartDate());
 	}

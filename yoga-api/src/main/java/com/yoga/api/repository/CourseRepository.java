@@ -27,9 +27,9 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
 
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1 and c.startDate = ?2  and c.couseDuration = ?3")
 	CourseEntity getCourseByCourseNameAndStartDateAndCouseDuration(String courseName, String startDate,
-			String couseDuration);
+			int couseDuration);
 
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1 and c.startDate = ?2  and c.couseDuration = ?3")
-	CourseEntity getCourse(String courseName, String startDate, String couseDuration);
+	CourseEntity getCourse(String courseName, String startDate, int couseDuration);
 
 }

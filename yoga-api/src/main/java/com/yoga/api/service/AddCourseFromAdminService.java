@@ -48,7 +48,7 @@ public class AddCourseFromAdminService {
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
 		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
-				course.getStartDate(), course.getCouseDuration());
+				course.getStartDate(), course.getDay().size());
 
 		if (Objects.isNull(courseEntity)) {
 
@@ -105,7 +105,8 @@ public class AddCourseFromAdminService {
 
 			courseEntity = new CourseEntity();
 			courseEntity.setCourseName(course.getCourseName());
-			courseEntity.setCouseDuration(course.getCouseDuration());
+			courseEntity.setCouseDuration(dayEntityList.size());
+
 			courseEntity.setDayEntity(dayEntityList);
 			courseEntity.setStartDate(course.getStartDate());
 

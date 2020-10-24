@@ -65,7 +65,7 @@ public class GetCourseService {
 				allUserCourses.setCourseName(courseEntity.getCourseName());
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setCourseId(courseEntity.getCourseId());
-				allUserCourses.setCouseDurations(courseEntity.getCouseDuration());
+				allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
 
 				allUserCoursesList.add(allUserCourses);
 

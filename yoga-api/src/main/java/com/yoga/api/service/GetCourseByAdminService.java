@@ -1,6 +1,7 @@
 package com.yoga.api.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,6 +38,8 @@ public class GetCourseByAdminService {
 
 	LectureEntity lecEntity;
 
+	LectureEntity lecEntity2;
+
 	Lecture lecture;
 
 	LectureByDay lectureByDay;
@@ -55,56 +58,70 @@ public class GetCourseByAdminService {
 
 		dayEntityList = courseEntity.getDayEntity();
 
-		for (DayEntity dayEntity : dayEntityList) {
+		lectureByDayList = new ArrayList<>();
 
-			if (dayEntity.getDayId().equals(dayId)) {
+		// Day
+		dayEntity = dayRepository.getDayEntityByDayId(dayId);
 
-				lectureByDayList = new ArrayList<>();
+		lecEntityList = dayEntity.getLecEntity();
 
-				if (dayEntity.getDayId().equals(dayId) && !Objects.isNull(courseEntity)) {
+		if (!Objects.isNull(dayEntity)) {
 
-					for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
+			int numberOfLecture = dayEntity.getLecEntity().size();
 
-						lectureByDay = new LectureByDay();
+			int[] arrayOfLectureId = new int[numberOfLecture];
 
-						if (Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
-								&& Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
-							
-							lectureByDay.setDisableJoinBtn(true);
-							lectureByDay.setVideoIframeDynamicLink("");				
-							lectureByDay.setLiveIframeDynamicLink("");
+			int count = 0;
 
+			for (LectureEntity lectureEntity : lecEntityList) {
 
-						} else {
-							lectureByDay.setDisableJoinBtn(false);
+				arrayOfLectureId[count] = lectureEntity.getLecId();
+				count = count + 1;
+			}
 
-							if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-								lectureByDay.setVideoIframeDynamicLink(lectureEntity.getVideoIframeDynamicLink());
+			Arrays.sort(arrayOfLectureId);
 
-							} else {
-								lectureByDay.setLiveIframeDynamicLink(lectureEntity.getLiveIframeDynamicLink());
+			for (int i = 0; i < numberOfLecture; i++) {
 
-							}
+				lectureByDay = new LectureByDay();
+				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
 
-						}
+				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
 
-						lectureByDay.setSNo(lectureEntity.getSNo());
-						lectureByDay.setCurrentDate(lectureEntity.getCurrDate());
-						lectureByDay.setEndTime(lectureEntity.getEndTime());
-						lectureByDay.setLectureName(lectureEntity.getLectureName());
-						lectureByDay.setStartTime(lectureEntity.getStartTime());
-						lectureByDayList.add(lectureByDay);
-					}
+				if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
+						&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 
-					dayByCourseId.setDayName(dayEntity.getDayName());
-					dayByCourseId.setDayId(dayEntity.getDayId());
-					dayByCourseId.setLecture(lectureByDayList);
+					lectureByDay.setDisableJoinBtn(true);
+					lectureByDay.setVideoIframeDynamicLink("");
+					lectureByDay.setLiveIframeDynamicLink("");
 
 				} else {
-					System.out.println(" Day id is not present in Course ");
+
+					lectureByDay.setDisableJoinBtn(false);
+
+					if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
+						lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+
+					} else {
+						lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+
+					}
+
 				}
 
+				lectureByDay.setSNo(lectureEntity2.getSNo());
+				lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
+				lectureByDay.setEndTime(lectureEntity2.getEndTime());
+				lectureByDay.setLectureName(lectureEntity2.getLectureName());
+				lectureByDay.setStartTime(lectureEntity2.getStartTime());
+
+				lectureByDayList.add(lectureByDay);
+
 			}
+
+			dayByCourseId.setDayName(dayEntity.getDayName());
+			dayByCourseId.setDayId(dayEntity.getDayId());
+			dayByCourseId.setLecture(lectureByDayList);
 
 		}
 
@@ -112,6 +129,4 @@ public class GetCourseByAdminService {
 
 	}
 
-	
-	
 }

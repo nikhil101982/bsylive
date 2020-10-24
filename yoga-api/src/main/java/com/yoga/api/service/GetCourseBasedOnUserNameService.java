@@ -51,7 +51,7 @@ public class GetCourseBasedOnUserNameService {
 
 					allUserCourses = new AllUserCourses();
 
-					allUserCourses.setCouseDurations(courseEntity.getCouseDuration());
+					allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
 					allUserCourses.setCourseName(courseEntity.getCourseName());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());

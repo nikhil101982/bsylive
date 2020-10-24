@@ -109,7 +109,7 @@ public class PasswordService {
 
 		boolean passwordCheck = passwordFromDB.equals(changePasswordRequest.getPassword());
 
-		if (!Objects.isNull(userAccountEntity) && passwordCheck) {
+		if (!Objects.isNull(userAccountEntity) && passwordCheck && userAccountEntity.isLogin() ) {
 
 			userAccountEntity = new UserAccountEntity();
 			userAccountEntity.setPassword(changePasswordRequest.getNewPassword());

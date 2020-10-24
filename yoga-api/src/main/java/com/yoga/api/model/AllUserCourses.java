@@ -14,7 +14,7 @@ import lombok.Setter;
 public class AllUserCourses {
 	
 	private String courseName;
-	private String couseDurations;
+	private int couseDurations;
 	private String startDate;
 	private Integer courseId;
 	

@@ -30,7 +30,7 @@ public class CourseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer courseId;
 	public String courseName;
-	public String couseDuration;
+	public int couseDuration;
 	public String startDate;
 
 	@Embedded
