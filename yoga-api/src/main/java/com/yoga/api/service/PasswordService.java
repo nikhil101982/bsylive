@@ -100,21 +100,20 @@ public class PasswordService {
 
 	public StatusMessageResponse changePassword(ChangePasswordRequest changePasswordRequest) {
 
-		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
+		UserAccountEntity	userAccEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
 		
-		byte[] result = Base64.getDecoder().decode(userAccountEntity.getPassword());
-		
+		byte[] result = Base64.getDecoder().decode(userAccEntity.getPassword());	
 		String passwordFromDB = new String(result);
 
 
 		boolean passwordCheck = passwordFromDB.equals(changePasswordRequest.getPassword());
 
-		if (!Objects.isNull(userAccountEntity) && passwordCheck && userAccountEntity.isLogin() ) {
-
-			userAccountEntity = new UserAccountEntity();
-			userAccountEntity.setPassword(changePasswordRequest.getNewPassword());
-			userAccountRepository.save(userAccountEntity);
-
+		if (!Objects.isNull(userAccEntity) && passwordCheck && userAccEntity.isLogin() ) {			
+			
+			String encodedPassword = Base64.getEncoder().encodeToString(changePasswordRequest.getNewPassword().getBytes());		
+			userAccEntity.setPassword(encodedPassword);
+			userAccEntity.setLogin(false);
+			userAccountRepository.save(userAccEntity);
 			statusMessageResponse.setStatus("success");
 			statusMessageResponse.setMessage("Your password has been changed successfully! ");
 
