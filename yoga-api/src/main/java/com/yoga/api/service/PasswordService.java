@@ -102,8 +102,14 @@ public class PasswordService {
 
 		UserAccountEntity	userAccEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
 		
+		boolean passwordCheck = false;
+		if(!Objects.isNull(userAccEntity) && !Objects.isNull(changePasswordRequest) ) {
+			
+			passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
+
+			
+		}
 		
-		boolean passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
 		
 		if (  !Objects.isNull(userAccEntity) && passwordCheck && userAccEntity.isLogin() ) {			
 			
