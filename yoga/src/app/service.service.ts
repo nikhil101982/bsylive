@@ -25,7 +25,7 @@ export class ServiceService {
   constructor(private http: HttpClient) { }
 
   getUserData() {
-    return JSON.parse(sessionStorage.getItem('userDetails'));
+    return JSON.parse(localStorage.getItem('userDetails'));
   }
 
   logInButtonUpdate(val) {

@@ -43,6 +43,7 @@ public class GetCourseBasedOnUserNameService {
 		if (!Objects.isNull(userAccountEntity)) {
 
 			allUserCoursesResponse = new AllUserCoursesResponse();
+			
 			allUserCoursesList = new ArrayList<>();
 
 			for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {

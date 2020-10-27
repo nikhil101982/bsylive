@@ -11,9 +11,10 @@ export class AuthGuardService {
 
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    let val = sessionStorage.getItem('userDetails');
+    let val = localStorage.getItem('timestamp');
+    let currentTime = new Date().getTime()
     console.log("auth value = ", val);
-    if (val) {
+    if (Number(val) > Number(currentTime)) {
       return true;
     }
     else {

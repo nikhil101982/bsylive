@@ -62,7 +62,7 @@ public class PasswordService {
 
 		try {
 			
-			String emailId = forgotPasswordRequest.getEmailid();
+			String emailId = forgotPasswordRequest.getUserEmail();
 
 			try {
 				userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailId);
@@ -90,7 +90,7 @@ public class PasswordService {
 			return statusMessageResponse;
 
 		} catch (NullPointerException e) {
-			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getEmailid()
+			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getUserEmail()
 					+ " or user account is not present in UserAccountEntity " + userAccountEntity);
 		}
 
@@ -102,16 +102,12 @@ public class PasswordService {
 
 		UserAccountEntity	userAccEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
 		
-		byte[] result = Base64.getDecoder().decode(userAccEntity.getPassword());	
-		String passwordFromDB = new String(result);
-
-
-		boolean passwordCheck = passwordFromDB.equals(changePasswordRequest.getPassword());
-
-		if (!Objects.isNull(userAccEntity) && passwordCheck && userAccEntity.isLogin() ) {			
+		
+		boolean passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
+		
+		if (  !Objects.isNull(userAccEntity) && passwordCheck && userAccEntity.isLogin() ) {			
 			
-			String encodedPassword = Base64.getEncoder().encodeToString(changePasswordRequest.getNewPassword().getBytes());		
-			userAccEntity.setPassword(encodedPassword);
+			userAccEntity.setPassword(changePasswordRequest.getNewPassword());
 			userAccEntity.setLogin(false);
 			userAccountRepository.save(userAccEntity);
 			statusMessageResponse.setStatus("success");

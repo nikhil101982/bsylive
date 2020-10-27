@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service.service';
+import Swal from 'sweetalert2'
+import { Router } from '@angular/router';
+
 
 class ChangePasswordParams {
   oldPassword: string = "";
@@ -19,12 +22,14 @@ export class AccountSettingsComponent implements OnInit {
   showRetypePassword: boolean = false;
 
   passwordMismatch: boolean = false;
+  enableSuccessMsg: boolean = false;
 
   userDetails: any;
+  successMsgText: any;
 
   changePasswordParams: ChangePasswordParams = new ChangePasswordParams();
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: ServiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.userDetails = this.service.getUserData();
@@ -44,6 +49,7 @@ export class AccountSettingsComponent implements OnInit {
 
   onClickChangePassword() {
     console.log("aaaaaaaaaa", this.changePasswordParams);
+    this.enableSuccessMsg = false;
     this.passwordMismatch = false;
     if (this.changePasswordParams.newPassword !== this.changePasswordParams.retypePassword) {
       this.passwordMismatch = true;
@@ -52,11 +58,26 @@ export class AccountSettingsComponent implements OnInit {
       console.log("hit change password api");
       let obj = {
         userEmail: this.userDetails.userEmail,
-        password: this.changePasswordParams.oldPassword,
-        newPassword: this.changePasswordParams.retypePassword
+        password: btoa(this.changePasswordParams.oldPassword),
+        newPassword: btoa(this.changePasswordParams.retypePassword)
       }
       this.service.updatePassword(obj).subscribe(res => {
         console.log("change password completed = ", res)
+        if (res) {
+          if (res['status'] === 'success') {
+            this.enableSuccessMsg = true;
+            this.successMsgText = res['message'];
+            Swal.fire({
+              // position: 'top-end',
+              icon: 'success',
+              title: res['message'],
+              showConfirmButton: false,
+              timer: 1500
+            })
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        }
       })
     }
   }

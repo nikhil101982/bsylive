@@ -50,8 +50,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.showLogInOption();
     this.userDetails = this.service.getUserData();
-    this.userName = this.userDetails.userName
-    console.log("logged in details = ", this.userDetails);  
+    this.userName = this.userDetails['userName'];
   }
 
   resetData() {
@@ -95,19 +94,21 @@ export class NavbarComponent implements OnInit {
       userEmail: this.logInParams.userEmail,
       password: btoa(this.logInParams.password)
     }
-    sessionStorage.setItem('userDetails', JSON.stringify({ userEmail: this.logInParams.userEmail }));
+    // localStorage.setItem('userDetails', JSON.stringify({ userEmail: this.logInParams.userEmail }));
+    var oneHr = 60 * 60 * 1000;
 
     this.service.getLogInData(obj)
       .subscribe((res) => {
         console.log("log in res = ", res);
         if (res['status'] === 'success') {
-        console.log("success", res, res['status'])
-
-          sessionStorage.setItem('userDetails', JSON.stringify(res['userDetails']));
+          console.log("success", res, res['status'])
+          this.userName = res['userDetails'].userName;
+          localStorage.setItem('timestamp', JSON.stringify(new Date().getTime() + oneHr))
+          localStorage.setItem('userDetails', JSON.stringify(res['userDetails']));
           this.router.navigate(['/courses']);
         }
         if (res['status'] === 'failure') {
-        console.log("error", res, res['status'])
+          console.log("error", res, res['status'])
           this.showLogInError = true;
           this.showAlert('error', 'user name or password mismatch');
         }
@@ -133,10 +134,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onClickResetPassword() {
-  let obj = {
-    userEmail: this.forgotPassParams.userEmail
-  }
-    this.service.getForgotPasswordData(obj)
+    this.service.getForgotPasswordData(this.forgotPassParams)
       .subscribe((res) => {
         console.log("reset password res= ", res);
         if (res['status'] === 'success') {
@@ -167,7 +165,7 @@ export class NavbarComponent implements OnInit {
     this.service.logout(obj).subscribe(res => {
       if (res) {
         this.router.navigate(['login']);
-        sessionStorage.clear();
+        localStorage.clear();
       }
     })
   }

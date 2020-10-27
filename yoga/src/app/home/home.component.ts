@@ -12,11 +12,15 @@ export class HomeComponent implements OnInit {
   constructor(private service: ServiceService, private router: Router) { }
 
   ngOnInit() {
-    console.log("login", sessionStorage.getItem('userDetails'));
-    if (sessionStorage.getItem('userDetails')) {
-      console.log("local storage has data");
+    console.log("login", localStorage.getItem('userDetails'));
+    let val = localStorage.getItem('timestamp');
+    let currentTime = new Date().getTime()
+    if (Number(val) > Number(currentTime)) {
       this.router.navigate(['courses']);
     }
+    // if (localStorage.getItem('userDetails')) {
+    //   console.log("local storage has data");
+    // }
     this.service.logInButtonUpdate(true);
   }
 

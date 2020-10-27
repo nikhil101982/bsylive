@@ -76,9 +76,9 @@ export class CoursesDetailsComponent implements OnInit {
   }
 
   onClickjoinLecture(index) {
-    console.log("index = ", index, this.daysList, this.daysDetails)
+    console.log("index = ", index)
     // this.daysList[index].disableJoinBtn = true;
-    let urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(this.daysList[index].iFrameDynamicLink);
+    let urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(this.daysList[index].iFrameLink);
     this.iFrameDynamicLink = urlIframe;
     this.showIframe = true;
   }
