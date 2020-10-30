@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.AddCourseResponse;
@@ -73,7 +74,7 @@ public class AddCourseService {
 
 	private AddCourseResponse errorResponse() {
 		addCourseResponse.setMessage("course not added !");
-		addCourseResponse.setStatus("failure");
+		addCourseResponse.setStatus(ApiConstants.FAILURE);
 		return addCourseResponse;
 	}
 
@@ -111,7 +112,7 @@ public class AddCourseService {
 		addCourseResponse.setCouseDuration(course.getDay().size());
 		addCourseResponse.setMessage("course added !");
 		addCourseResponse.setStartDate(course.getStartDate());
-		addCourseResponse.setStatus("success");
+		addCourseResponse.setStatus(ApiConstants.SUCCESS);
 		return addCourseResponse;
 	}
 

@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.AllUserCourses;
@@ -38,40 +39,54 @@ public class GetCourseBasedOnUserNameService {
 
 	public AllUserCoursesResponse coursesByUserName(String userName) {
 
-		userAccountEntity = userAccountRepository.findByUserName(userName);
+		allUserCoursesResponse = new AllUserCoursesResponse();
 
-		if (!Objects.isNull(userAccountEntity)) {
+		try {
+			userAccountEntity = userAccountRepository.findByUserName(userName);
+		} catch (Exception e) {
+			return errorResponse();
+		}
 
-			allUserCoursesResponse = new AllUserCoursesResponse();
-			
-			allUserCoursesList = new ArrayList<>();
+		if (Objects.isNull(userAccountEntity)) {
+			return errorResponse();
+		}
 
-			for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {
+		allUserCoursesList = new ArrayList<>();
 
-				if (!Objects.isNull(courseEntity)) {
+		for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {
 
-					allUserCourses = new AllUserCourses();
+			if (!Objects.isNull(courseEntity)) {
 
-					allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
-					allUserCourses.setCourseName(courseEntity.getCourseName());
-					allUserCourses.setStartDate(courseEntity.getStartDate());
-					allUserCourses.setCourseId(courseEntity.getCourseId());
-					allUserCoursesList.add(allUserCourses);
+				allUserCourses = new AllUserCourses();
 
-				}
+				allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
+				allUserCourses.setCourseName(courseEntity.getCourseName());
+				allUserCourses.setStartDate(courseEntity.getStartDate());
+				allUserCourses.setCourseId(courseEntity.getCourseId());
+				allUserCoursesList.add(allUserCourses);
 
 			}
-
-			if (!Objects.isNull(allUserCoursesList)) {
-				allUserCoursesResponse.setCourses(allUserCoursesList);
-			}
-			return allUserCoursesResponse;
-
-		} else {
-			return allUserCoursesResponse;
 
 		}
 
+		if (!Objects.isNull(allUserCoursesList)) {
+			allUserCoursesResponse.setCourses(allUserCoursesList);
+		}
+		return successResponse();
+
+	}
+
+	private AllUserCoursesResponse errorResponse() {
+		allUserCoursesResponse.setStatus(ApiConstants.FAILURE);
+		allUserCoursesResponse.setMessage("Course is not present");
+		return allUserCoursesResponse;
+	}
+
+	private AllUserCoursesResponse successResponse() {
+		allUserCoursesResponse.setStatus(ApiConstants.SUCCESS);
+		allUserCoursesResponse.setMessage("Course is not present");
+		allUserCoursesResponse.setCourses(allUserCoursesList);
+		return allUserCoursesResponse;
 	}
 
 }

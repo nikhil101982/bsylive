@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
@@ -43,7 +44,8 @@ public class AddCourseFromAdminService {
 	List<LectureEntity> lecEntityList;
 
 	List<List<LectureEntity>> lecEntityListOfList;
-
+	
+	
 	// Add Course api
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
@@ -101,7 +103,7 @@ public class AddCourseFromAdminService {
 		saveCourse(course);
 
 		statusMessageResponse.setMessage("course have created successfully ! ");
-		statusMessageResponse.setStatus("success");
+		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
 
 		return statusMessageResponse;
 
@@ -166,7 +168,7 @@ public class AddCourseFromAdminService {
 
 	private StatusMessageResponse errorResponse() {
 		statusMessageResponse.setMessage("course is not created");
-		statusMessageResponse.setStatus("failure");
+		statusMessageResponse.setStatus(ApiConstants.FAILURE);
 		return statusMessageResponse;
 	}
 

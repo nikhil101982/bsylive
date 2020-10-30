@@ -16,4 +16,8 @@ import lombok.Setter;
 public class AllUserCoursesResponse {
 
 	List<AllUserCourses> courses;
+	
+	String status;
+	String message;
+
 }

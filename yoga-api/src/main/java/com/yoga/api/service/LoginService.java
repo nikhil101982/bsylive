@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.LoginRequest;
 import com.yoga.api.model.LoginResponse;
@@ -31,23 +32,32 @@ public class LoginService {
 	 * Login API
 	 */
 
-	/*
-	 * Login API
-	 */
 
 	public LoginResponse validate(LoginRequest loginRequest) {
+		
+		
+		if(Objects.isNull(loginRequest)) {
+			return failureResponse();
+
+		}
 
 		userDetail = new UserDetail();
 		loginResponse = new LoginResponse();
-
+	
 		String emailFromLoginRequest = loginRequest.getUserEmail();
 
-		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
-		
-		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
+		//userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
 
-
+		try {
+			userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
+		} catch (Exception e) {
+			return failureResponse();
+		}
 		
+		if(Objects.isNull(userAccountEntity) || userAccountEntity.isLogin()) {
+			return failureResponse();
+		}
+
 		if (!Objects.isNull(userAccountEntity) && !userAccountEntity.isLogin()) {
 
 			String emailFromEntity = userAccountEntity.getEmailId(); // password
@@ -59,19 +69,20 @@ public class LoginService {
 					&& !userIsLogin) {
 
 				userAccountEntity.setLogin(true);
-				userAccountRepository.save(userAccountEntity);
+				try {
+					userAccountRepository.save(userAccountEntity);
+				} catch (Exception e) {
+					return failureResponse();
+				}
 
 				userDetail.setUserEmail(loginRequest.getUserEmail());
 				userDetail.setUserName(userAccountEntity.getUserName());
 
-				loginResponse.setStatus("success");
-				loginResponse.setUserDetails(userDetail);
-				loginResponse.setMessage("you have successfully logged in");
+				return successResponse();
 
-				return loginResponse;
 			} else {
 
-				loginResponse.setStatus("failure");
+				loginResponse.setStatus(ApiConstants.FAILURE);
 				// loginResponse.setUserDetails(userDetail);
 				loginResponse.setMessage("wrong username or password or user is already logged in");
 				return loginResponse;
@@ -91,14 +102,26 @@ public class LoginService {
 
 	}
 
+	private LoginResponse successResponse() {
+		loginResponse.setStatus("success");
+		loginResponse.setUserDetails(userDetail);
+		loginResponse.setMessage("you have successfully logged in");
+		return loginResponse;
+	}
+	
+	private LoginResponse failureResponse() {
+		loginResponse.setStatus(ApiConstants.FAILURE);
+		loginResponse.setMessage("Login failed");
+		return loginResponse;
+	}
+
 	public StatusMessageResponse logout(LogoutRequest logoutRequest) {
 
 		String emailFromLoginRequest = logoutRequest.getUserEmail();
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
-		
-		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
 
+		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
 
 		if (!Objects.isNull(userAccountEntity)) {
 

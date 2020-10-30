@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.StatusResponse;
@@ -95,14 +96,14 @@ public class SubscribeCourseByUser {
 	}
 
 	private StatusResponse errorResponse(String userEmail) {
-		statusResponse.setStatus("failure");
+		statusResponse.setStatus(ApiConstants.FAILURE);
 		statusResponse.setMessage("not able to subscribe the course!");
 		statusResponse.setUserEmail(userEmail);
 		return statusResponse;
 	}
 
 	private StatusResponse successResponse(String userEmail) {
-		statusResponse.setStatus("success");
+		statusResponse.setStatus(ApiConstants.SUCCESS);
 		statusResponse.setMessage("courses subscribed!");
 		statusResponse.setUserEmail(userEmail);
 		return statusResponse;

@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.CreateAccountReq;
 import com.yoga.api.model.CreateAccountRequest;
@@ -59,13 +60,13 @@ public class UserAccountService {
 
 			userAccountRepository.save(userAccountEntity);
 
-			createAccountResponse.setStatus("success");
+			createAccountResponse.setStatus(ApiConstants.SUCCESS);
 			createAccountResponse.setMessage("Account created successfully");
 
 			return createAccountResponse;
 
 		} else {
-			createAccountResponse.setStatus("failure");
+			createAccountResponse.setStatus(ApiConstants.FAILURE);
 			createAccountResponse.setMessage("Not able to create account");
 
 			return createAccountResponse;

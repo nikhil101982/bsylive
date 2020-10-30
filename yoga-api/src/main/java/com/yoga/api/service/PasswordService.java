@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.ChangePasswordRequest;
 import com.yoga.api.model.ForgotPasswordRequest;
@@ -84,7 +85,7 @@ public class PasswordService {
 				e.printStackTrace();
 			}
 
-			statusMessageResponse.setStatus("fail");
+			statusMessageResponse.setStatus(ApiConstants.FAIL);
 			statusMessageResponse.setMessage("unable to send password");
 
 			return statusMessageResponse;
@@ -116,14 +117,14 @@ public class PasswordService {
 			userAccEntity.setPassword(changePasswordRequest.getNewPassword());
 			userAccEntity.setLogin(false);
 			userAccountRepository.save(userAccEntity);
-			statusMessageResponse.setStatus("success");
+			statusMessageResponse.setStatus(ApiConstants.SUCCESS);
 			statusMessageResponse.setMessage("Your password has been changed successfully! ");
 
 			return statusMessageResponse;
 
 		} else {
 
-			statusMessageResponse.setStatus("failure");
+			statusMessageResponse.setStatus(ApiConstants.FAILURE);
 			statusMessageResponse.setMessage("Your password could not be changed! ");
 
 			return statusMessageResponse;
