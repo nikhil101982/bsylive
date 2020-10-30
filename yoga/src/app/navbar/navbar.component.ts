@@ -101,6 +101,7 @@ export class NavbarComponent implements OnInit {
       .subscribe((res) => {
         console.log("log in res = ", res);
         if (res['status'] === 'success') {
+          this.showAlert('success', res['message']);
           console.log("success", res, res['status'])
           this.userName = res['userDetails'].userName;
           localStorage.setItem('timestamp', JSON.stringify(new Date().getTime() + oneHr))
@@ -110,7 +111,7 @@ export class NavbarComponent implements OnInit {
         if (res['status'] === 'failure') {
           console.log("error", res, res['status'])
           this.showLogInError = true;
-          this.showAlert('error', 'user name or password mismatch');
+          this.showAlert('error', res['message']);
         }
       });
   }
@@ -125,23 +126,31 @@ export class NavbarComponent implements OnInit {
       .subscribe((res) => {
         console.log("create account res = ", res);
         if (res['status'] === 'success') {
+          this.showAlert('success', res['message']);
         }
         if (res['status'] === 'failure') {
           this.showLogInError = true;
-          this.showAlert('error', 'Something went wrong, Please try again');
+          this.showAlert('error', res['message']);
         }
       });
   }
 
   onClickResetPassword() {
+    let text = "We are sending instrauctions to reset your password. If you do not receive an email, check your spam folder or make sure this email address is registered with Bihar Yoga"
+
     this.service.getForgotPasswordData(this.forgotPassParams)
       .subscribe((res) => {
         console.log("reset password res= ", res);
         if (res['status'] === 'success') {
+          Swal.fire({
+            icon: 'info',
+            title: res['message'],
+            showConfirmButton: true,
+          })
         }
         if (res['status'] === 'failure') {
           this.showLogInError = true;
-          this.showAlert('error', 'Something went wrong, Please try again');
+          this.showAlert('error', res['message']);
         }
       });
   }
@@ -164,6 +173,7 @@ export class NavbarComponent implements OnInit {
     }
     this.service.logout(obj).subscribe(res => {
       if (res) {
+        this.showAlert('success', res['message']);
         this.router.navigate(['login']);
         localStorage.clear();
       }

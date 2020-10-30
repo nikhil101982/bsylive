@@ -67,18 +67,26 @@ export class AccountSettingsComponent implements OnInit {
           if (res['status'] === 'success') {
             this.enableSuccessMsg = true;
             this.successMsgText = res['message'];
-            Swal.fire({
-              // position: 'top-end',
-              icon: 'success',
-              title: res['message'],
-              showConfirmButton: false,
-              timer: 1500
-            })
+            this.showAlert('success', res['message'])
             localStorage.clear();
             this.router.navigate(['/login']);
+          }
+          if (res['status'] === 'failure') {
+            this.showAlert('error', res['message'])
           }
         }
       })
     }
+  }
+
+  showAlert(type, text) {
+    console.log("type, text = ", type, text);
+    Swal.fire({
+      // position: 'top-end',
+      icon: type,
+      title: text,
+      showConfirmButton: false,
+      timer: 2000
+    })
   }
 }

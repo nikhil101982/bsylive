@@ -47,40 +47,77 @@ public class AddCourseFromAdminService {
 	// Add Course api
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
+		if (Objects.isNull(course)) {
+
+			statusMessageResponse.setMessage("course is not created");
+			statusMessageResponse.setStatus("fail");
+
+			return statusMessageResponse;
+
+		}
+
 		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
 				course.getStartDate(), course.getDay().size());
 
-		if (Objects.isNull(courseEntity)) {
+		if (!Objects.isNull(courseEntity)) {
 
-			lecEntityListOfList = new ArrayList<>();
-			dayEntityList = new ArrayList<>();
+			statusMessageResponse.setMessage("course is not created");
+			statusMessageResponse.setStatus("fail");
+			return statusMessageResponse;
 
-			for (DayByCourseId day : course.getDay()) {
+		}
 
-				lecEntityList = new ArrayList<>();
+		lecEntityListOfList = new ArrayList<>();
 
-				for (LectureByDay LectByDay : day.getLecture()) {
+		dayEntityList = new ArrayList<>();
 
-					lectureEntity = new LectureEntity();
+		if (Objects.isNull(course.getDay())) {
+			statusMessageResponse.setMessage("course is not created");
+			statusMessageResponse.setStatus("fail");
+			return statusMessageResponse;
 
-					if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-						lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
-					}else {
+		}
+
+		for (DayByCourseId day : course.getDay()) {
+
+			lecEntityList = new ArrayList<>();
+
+			for (LectureByDay LectByDay : day.getLecture()) {
+
+				lectureEntity = new LectureEntity();
+
+				if (!Objects.isNull(LectByDay)) {
+
+					if (Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
+							&& Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+						lectureEntity.setDisableJoinBtn(true);
+						lectureEntity.setLiveIframeDynamicLink(null);
 						lectureEntity.setVideoIframeDynamicLink(null);
 
-					}
+					} else if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
+							&& !Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
 
-					if (!Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+						lectureEntity.setDisableJoinBtn(false);
 						lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
+						lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
 
-					}else {
+					} else if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
+						lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
+						lectureEntity.setDisableJoinBtn(false);
 						lectureEntity.setLiveIframeDynamicLink(null);
+
+					} else {
+						lectureEntity.setVideoIframeDynamicLink(null);
+						lectureEntity.setDisableJoinBtn(false);
+						lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
 
 					}
 
 					lectureEntity.setSNo(LectByDay.getSNo());
 					lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
-					lectureEntity.setDisableJoinBtn(false);
+
+					lectureEntity.setDisableJoinBtn(LectByDay.isDisableJoinBtn());
+
 					lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
 					lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
 					lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
@@ -89,44 +126,41 @@ public class AddCourseFromAdminService {
 
 				}
 
+			}
+
+			dayEntity = new DayEntity();
+
+			if (!Objects.isNull(lecEntityList)) {
 				lectureRepository.saveAll(lecEntityList);
-
-				dayEntity = new DayEntity();
 				dayEntity.setLecEntity(lecEntityList);
-				dayEntity.setDayName(day.getDayName());
-				dayEntityList.add(dayEntity);
-			}
-
-			if (!Objects.isNull(dayEntityList)) {
-
-				dayRepository.saveAll(dayEntityList);
 
 			}
 
-			courseEntity = new CourseEntity();
-			courseEntity.setCourseName(course.getCourseName());
-			courseEntity.setCouseDuration(dayEntityList.size());
+			dayEntity.setDayName(day.getDayName());
+			dayEntityList.add(dayEntity);
+		}
 
-			courseEntity.setDayEntity(dayEntityList);
-			courseEntity.setStartDate(course.getStartDate());
+		if (!Objects.isNull(dayEntityList)) {
 
-			if (!Objects.isNull(courseEntity)) {
-				courseRepository.save(courseEntity);
-			}
-
-			statusMessageResponse.setMessage("course have created successfully ");
-			statusMessageResponse.setStatus("success");
-
-			return statusMessageResponse;
-
-		} else {
-
-			statusMessageResponse.setMessage("course is not created");
-			statusMessageResponse.setStatus("fail");
-
-			return statusMessageResponse;
+			dayRepository.saveAll(dayEntityList);
 
 		}
+
+		courseEntity = new CourseEntity();
+		courseEntity.setCourseName(course.getCourseName());
+		courseEntity.setCouseDuration(dayEntityList.size());
+
+		courseEntity.setDayEntity(dayEntityList);
+		courseEntity.setStartDate(course.getStartDate());
+
+		if (!Objects.isNull(courseEntity)) {
+			courseRepository.save(courseEntity);
+		}
+
+		statusMessageResponse.setMessage("course have created successfully ! ");
+		statusMessageResponse.setStatus("success");
+
+		return statusMessageResponse;
 
 	}
 

@@ -43,7 +43,11 @@ public class LoginService {
 		String emailFromLoginRequest = loginRequest.getUserEmail();
 
 		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		
+		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
 
+
+		
 		if (!Objects.isNull(userAccountEntity) && !userAccountEntity.isLogin()) {
 
 			String emailFromEntity = userAccountEntity.getEmailId(); // password
@@ -89,7 +93,12 @@ public class LoginService {
 
 	public StatusMessageResponse logout(LogoutRequest logoutRequest) {
 
-		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(logoutRequest.getUserEmail());
+		String emailFromLoginRequest = logoutRequest.getUserEmail();
+
+		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		
+		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
+
 
 		if (!Objects.isNull(userAccountEntity)) {
 
