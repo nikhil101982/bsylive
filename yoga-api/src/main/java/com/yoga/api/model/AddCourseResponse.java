@@ -18,4 +18,6 @@ public class AddCourseResponse {
 	public int couseDuration;
 	public String startDate;
 	public String message;
+	public String status;
+
 }

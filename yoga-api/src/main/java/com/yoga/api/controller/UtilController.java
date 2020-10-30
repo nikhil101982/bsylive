@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.model.DaysResponse;
-import com.yoga.api.service.AddCourseByUserNameService;
+import com.yoga.api.service.SubscribeCourseByUser;
 import com.yoga.api.service.GetCourseFindDaysService;
 import com.yoga.api.service.GetCourseService;
 
@@ -19,7 +19,7 @@ import com.yoga.api.service.GetCourseService;
 public class UtilController {
 
 	@Autowired
-	AddCourseByUserNameService courseService;
+	SubscribeCourseByUser courseService;
 	
 	@Autowired
 	GetCourseFindDaysService getCourseFindDaysService;

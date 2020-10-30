@@ -16,6 +16,7 @@ public class StatusResponse {
 	String status;
 	String courseName;
 	String userEmail;
+	String message;
 
 
 }

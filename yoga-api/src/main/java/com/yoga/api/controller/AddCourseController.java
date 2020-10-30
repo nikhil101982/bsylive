@@ -13,7 +13,7 @@ import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.StatusResponse;
 import com.yoga.api.model.SubscribeCourses;
-import com.yoga.api.service.AddCourseByUserNameService;
+import com.yoga.api.service.SubscribeCourseByUser;
 import com.yoga.api.service.AddCourseService;
 import com.yoga.api.service.AddCourseFromAdminService;
 
@@ -22,7 +22,7 @@ import com.yoga.api.service.AddCourseFromAdminService;
 public class AddCourseController {
 
 	@Autowired
-	AddCourseByUserNameService addCourseByUserNameService;
+	SubscribeCourseByUser subscribeCourseByUser;
 
 	@Autowired
 	AddCourseService addCourseService;
@@ -44,7 +44,7 @@ public class AddCourseController {
 	@PostMapping("/subscribeTheCourse/{userEmail}")
 	public StatusResponse subscribeTheCourse(@RequestBody SubscribeCourses subscribeCourses,
 			@PathVariable("userEmail") String userEmail) throws Exception {
-		return addCourseByUserNameService.subscribeTheCourse(subscribeCourses, userEmail);
+		return subscribeCourseByUser.subscribeTheCourse(subscribeCourses, userEmail);
 	}
 	
 	/*

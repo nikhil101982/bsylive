@@ -35,35 +35,46 @@ public class AddCourseService {
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
 
-		String status = null;
-
-		courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
-				course.getStartDate(), course.getDay().size());
-
 		addCourseResponse = new AddCourseResponse();
 
-		if (Objects.isNull(courseEntity)) {
+		String status = null;
 
-			addLectures(course);
+		if (Objects.isNull(course)) {
+			return errorResponse();
+		}
 
-			createCourse(course);
+		try {
+			courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
+					course.getStartDate(), course.getDay().size());
+		} catch (Exception e) {
+			return errorResponse();
+		}
 
-			status = "Successfully added the course";
-
-			addCourseResponse(course, status);
-
-			return addCourseResponse;
-
-		} else {
-
-			status = "Not able to add the course";
-
-			addCourseResponse(course, status);
-
-			return addCourseResponse;
+		if (!Objects.isNull(courseEntity)) {
+			return errorResponse();
 
 		}
 
+		try {
+			addLectures(course);
+		} catch (Exception e) {
+			return errorResponse();
+		}
+
+		try {
+			createCourse(course);
+		} catch (Exception e) {
+			return errorResponse();
+		}
+
+		return addCourseResponse(course, status);
+
+	}
+
+	private AddCourseResponse errorResponse() {
+		addCourseResponse.setMessage("course not added !");
+		addCourseResponse.setStatus("failure");
+		return addCourseResponse;
 	}
 
 	private void createCourse(CourseResources course) {
@@ -76,6 +87,7 @@ public class AddCourseService {
 	}
 
 	private void addLectures(CourseResources course) {
+
 		for (Day day : course.getDay()) {
 
 			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
@@ -94,11 +106,13 @@ public class AddCourseService {
 		}
 	}
 
-	private void addCourseResponse(CourseResources course, String status) {
+	private AddCourseResponse addCourseResponse(CourseResources course, String status) {
 		addCourseResponse.setCourseName(course.getCourseName());
 		addCourseResponse.setCouseDuration(course.getDay().size());
-		addCourseResponse.setMessage(status);
+		addCourseResponse.setMessage("course added !");
 		addCourseResponse.setStartDate(course.getStartDate());
+		addCourseResponse.setStatus("success");
+		return addCourseResponse;
 	}
 
 }
