@@ -48,7 +48,6 @@ public class AddCourseFromAdminService {
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
 		// condition for error response
-		
 		if (Objects.isNull(course)) {
 			return errorResponse();
 		}
@@ -99,6 +98,16 @@ public class AddCourseFromAdminService {
 			dayRepository.saveAll(dayEntityList);
 		}
 
+		saveCourse(course);
+
+		statusMessageResponse.setMessage("course have created successfully ! ");
+		statusMessageResponse.setStatus("success");
+
+		return statusMessageResponse;
+
+	}
+
+	private void saveCourse(AddCourseByDayId course) {
 		courseEntity = new CourseEntity();
 		courseEntity.setCourseName(course.getCourseName());
 		courseEntity.setCouseDuration(dayEntityList.size());
@@ -109,12 +118,6 @@ public class AddCourseFromAdminService {
 		if (!Objects.isNull(courseEntity)) {
 			courseRepository.save(courseEntity);
 		}
-
-		statusMessageResponse.setMessage("course have created successfully ! ");
-		statusMessageResponse.setStatus("success");
-
-		return statusMessageResponse;
-
 	}
 
 	private void createLectureList(LectureByDay LectByDay) {
