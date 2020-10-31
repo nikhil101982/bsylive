@@ -23,6 +23,10 @@ public class DayByCourseId {
 	public String dayName;
 	List<LectureByDay> lecture = new ArrayList<>();
 
+	public String status;;
+	public String message;
+
+	
 	private final static long serialVersionUID = 2177644673242063512L;
 
 }

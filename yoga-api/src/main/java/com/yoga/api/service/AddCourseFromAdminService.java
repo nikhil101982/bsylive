@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
@@ -18,6 +17,7 @@ import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class AddCourseFromAdminService {
@@ -44,31 +44,38 @@ public class AddCourseFromAdminService {
 	List<LectureEntity> lecEntityList;
 
 	List<List<LectureEntity>> lecEntityListOfList;
-	
-	
+
+	UtilMethods utilMethods = new UtilMethods();
+
 	// Add Course api
 	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
 
+		final String failureMessage = "course is not created !";
+		final String successMessage = " course have created successfully !";
+
 		// condition for error response
 		if (Objects.isNull(course)) {
-			return errorResponse();
+
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		try {
 			courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDuration(course.getCourseName(),
 					course.getStartDate(), course.getDay().size());
 		} catch (Exception e) {
-			return errorResponse();
+
+			return utilMethods.errorResponse(failureMessage);
+
 		}
 
 		if (!Objects.isNull(courseEntity)) {
-			return errorResponse();
+			return utilMethods.errorResponse(failureMessage);
+
 		}
 
-		// condition for error response
 		if (Objects.isNull(course.getDay())) {
-			statusMessageResponse = errorResponse();
-			return statusMessageResponse;
+
+			return utilMethods.errorResponse(failureMessage);
 
 		}
 
@@ -102,23 +109,24 @@ public class AddCourseFromAdminService {
 
 		saveCourse(course);
 
-		statusMessageResponse.setMessage("course have created successfully ! ");
-		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
-
-		return statusMessageResponse;
+		return utilMethods.successResponse(successMessage);
 
 	}
 
 	private void saveCourse(AddCourseByDayId course) {
-		courseEntity = new CourseEntity();
-		courseEntity.setCourseName(course.getCourseName());
-		courseEntity.setCouseDuration(dayEntityList.size());
+		try {
+			courseEntity = new CourseEntity();
+			courseEntity.setCourseName(course.getCourseName());
+			courseEntity.setCouseDuration(dayEntityList.size());
 
-		courseEntity.setDayEntity(dayEntityList);
-		courseEntity.setStartDate(course.getStartDate());
+			courseEntity.setDayEntity(dayEntityList);
+			courseEntity.setStartDate(course.getStartDate());
 
-		if (!Objects.isNull(courseEntity)) {
-			courseRepository.save(courseEntity);
+			if (!Objects.isNull(courseEntity)) {
+				courseRepository.save(courseEntity);
+			}
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -164,12 +172,6 @@ public class AddCourseFromAdminService {
 			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
 
 		}
-	}
-
-	private StatusMessageResponse errorResponse() {
-		statusMessageResponse.setMessage("course is not created");
-		statusMessageResponse.setStatus(ApiConstants.FAILURE);
-		return statusMessageResponse;
 	}
 
 }

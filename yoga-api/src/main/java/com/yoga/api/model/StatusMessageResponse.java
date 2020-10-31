@@ -9,5 +9,8 @@ public class StatusMessageResponse {
 
 	String status;
 	String message;
+	
+	
+
 
 }

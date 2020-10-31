@@ -12,5 +12,7 @@ import lombok.Setter;
 public class UserAccountResponse {
 
 	List<CreateAccountRequest> userAccounts;
+	String status;
+	String message;
 
 }

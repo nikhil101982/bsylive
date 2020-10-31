@@ -1,12 +1,12 @@
 package com.yoga.api.service;
 
-import java.util.Base64;
 import java.util.Objects;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import com.yoga.api.model.ForgotPasswordRequest;
 import com.yoga.api.model.LoginResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class PasswordService {
@@ -37,22 +38,29 @@ public class PasswordService {
 	UserAccountRepository userAccountRepository;
 
 	UserAccountEntity userAccountEntity;
-	
-	StatusMessageResponse forgotPasswordResponse;
-	
+
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
+	String successResponseMessage = null;
+	String failureResponseMessage = null;
 
+	UtilMethods utilMethods = new UtilMethods();
 
-	private void sendEmail(String userPassword, String emailId) throws MessagingException {
+	private StatusMessageResponse sendEmail(String userPassword, String emailId) throws MessagingException {
 
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(emailId);
-		message.setFrom(forgotPasswordSendEmailFrom);
-		message.setText("password: " + userPassword);
-		message.setSubject("Bihar yoga login password");
+		try {
+			message.setTo(emailId);
+			message.setFrom(forgotPasswordSendEmailFrom);
+			message.setText("password: " + userPassword);
+			message.setSubject("Bihar yoga login password");
+			javaMailSender.send(message);
+			return utilMethods.successResponse(successResponseMessage);
+		} catch (MailException e) {
 
-		javaMailSender.send(message);
+			return utilMethods.errorResponse(failureResponseMessage);
+
+		}
 	}
 
 	/*
@@ -61,75 +69,83 @@ public class PasswordService {
 
 	public StatusMessageResponse fotgotPassword(ForgotPasswordRequest forgotPasswordRequest) {
 
-		try {
-			
-			String emailId = forgotPasswordRequest.getUserEmail();
+		successResponseMessage = "send password successfully via email !";
+		failureResponseMessage = "unable to send password !";
 
-			try {
-				userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailId);
-				userAccountEntity.getPassword();
-			} catch (Exception e) {
-				System.out.println("Entity is not unique");
-				e.printStackTrace();
-				forgotPasswordResponse.setStatus("fail");
-				forgotPasswordResponse.setMessage("unable to send password");
-				return forgotPasswordResponse;
-			}
-
-			try {
-				sendEmail(userAccountEntity.getPassword(), emailId);
-				statusMessageResponse.setStatus("success");
-				statusMessageResponse.setMessage("send password securely via email");
-				return statusMessageResponse;
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-
-			statusMessageResponse.setStatus(ApiConstants.FAIL);
-			statusMessageResponse.setMessage("unable to send password");
-
-			return statusMessageResponse;
-
-		} catch (NullPointerException e) {
-			System.out.println("ForgotPasswordRequest don't have emailId " + forgotPasswordRequest.getUserEmail()
-					+ " or user account is not present in UserAccountEntity " + userAccountEntity);
+		if (Objects.isNull(forgotPasswordRequest)) {
+			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
-		return statusMessageResponse;
+		String emailId = forgotPasswordRequest.getUserEmail();
+
+		try {
+			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailId);
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		if (Objects.isNull(userAccountEntity)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		try {
+
+			return sendEmail(userAccountEntity.getPassword(), emailId);
+
+		} catch (MessagingException e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+
+		}
 
 	}
 
+	/*
+	 * Change Password API
+	 */
+
 	public StatusMessageResponse changePassword(ChangePasswordRequest changePasswordRequest) {
 
-		UserAccountEntity	userAccEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
-		
+		successResponseMessage = "changed password success !";
+
+		failureResponseMessage = "changed password failed !";
+
+		if (Objects.isNull(changePasswordRequest)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		UserAccountEntity userAccEntity;
+
+		try {
+			userAccEntity = userAccountRepository.getUserAccountEntityByEmail(changePasswordRequest.getUserEmail());
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+
+		}
+
+		if (Objects.isNull(userAccEntity)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
 		boolean passwordCheck = false;
-		if(!Objects.isNull(userAccEntity) && !Objects.isNull(changePasswordRequest) ) {
-			
-			passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
 
-			
-		}
-		
-		
-		if (  !Objects.isNull(userAccEntity) && passwordCheck && userAccEntity.isLogin() ) {			
-			
-			userAccEntity.setPassword(changePasswordRequest.getNewPassword());
-			userAccEntity.setLogin(false);
-			userAccountRepository.save(userAccEntity);
-			statusMessageResponse.setStatus(ApiConstants.SUCCESS);
-			statusMessageResponse.setMessage("Your password has been changed successfully! ");
+		passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
 
-			return statusMessageResponse;
+		try {
+			if (passwordCheck && userAccEntity.isLogin()) {
 
-		} else {
+				userAccEntity.setPassword(changePasswordRequest.getNewPassword());
+				userAccEntity.setLogin(false);
+				userAccountRepository.save(userAccEntity);
 
-			statusMessageResponse.setStatus(ApiConstants.FAILURE);
-			statusMessageResponse.setMessage("Your password could not be changed! ");
+				return utilMethods.successResponse(successResponseMessage);
 
-			return statusMessageResponse;
+			}
+		} catch (Exception e) {
+
+			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
+		return statusMessageResponse;
 
 	}
 

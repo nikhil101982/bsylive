@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
@@ -50,22 +51,43 @@ public class GetCourseByAdminService {
 
 	DayEntity dayEntity;
 
+	DayByCourseId dayByCourseId = new DayByCourseId();
+
+	
 	public DayByCourseId getCourseByAdmin(Integer courseId, Integer dayId) {
+		
+		if (Objects.isNull(courseId) ||Objects.isNull(dayId) ) {
+			return errorResponse();
+		}
+		
 
-		DayByCourseId dayByCourseId = new DayByCourseId();
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return errorResponse();
+		}
 
-		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-
+		if (Objects.isNull(courseEntity)) {
+			return errorResponse();
+		}
+		
 		dayEntityList = courseEntity.getDayEntity();
 
 		lectureByDayList = new ArrayList<>();
 
 		// Day
-		dayEntity = dayRepository.getDayEntityByDayId(dayId);
+		try {
+			dayEntity = dayRepository.getDayEntityByDayId(dayId);
+		} catch (Exception e) {
+			return errorResponse();
+		}
+		
+		if (Objects.isNull(dayEntity)) {
+			return errorResponse();
+		}
 
 		lecEntityList = dayEntity.getLecEntity();
 
-		if (!Objects.isNull(dayEntity)) {
 
 			int numberOfLecture = dayEntity.getLecEntity().size();
 
@@ -83,50 +105,69 @@ public class GetCourseByAdminService {
 
 			for (int i = 0; i < numberOfLecture; i++) {
 
-				lectureByDay = new LectureByDay();
-				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
+				try {
+					lectureByDay = new LectureByDay();
+					lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
 
-				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
+					LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
 
-				if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-						&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
+					if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
+							&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 
-					lectureByDay.setDisableJoinBtn(true);
-					lectureByDay.setVideoIframeDynamicLink("");
-					lectureByDay.setLiveIframeDynamicLink("");
-
-				} else {
-
-					lectureByDay.setDisableJoinBtn(false);
-
-					if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
-						lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+						lectureByDay.setDisableJoinBtn(true);
+						lectureByDay.setVideoIframeDynamicLink("");
+						lectureByDay.setLiveIframeDynamicLink("");
 
 					} else {
-						lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+
+						lectureByDay.setDisableJoinBtn(false);
+
+						if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
+							lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+
+						} else {
+							lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+
+						}
 
 					}
 
+					lectureByDay.setSNo(lectureEntity2.getSNo());
+					lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
+					lectureByDay.setEndTime(lectureEntity2.getEndTime());
+					lectureByDay.setLectureName(lectureEntity2.getLectureName());
+					lectureByDay.setStartTime(lectureEntity2.getStartTime());
+
+					lectureByDayList.add(lectureByDay);
+				} catch (Exception e) {
+					return errorResponse();
 				}
-
-				lectureByDay.setSNo(lectureEntity2.getSNo());
-				lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
-				lectureByDay.setEndTime(lectureEntity2.getEndTime());
-				lectureByDay.setLectureName(lectureEntity2.getLectureName());
-				lectureByDay.setStartTime(lectureEntity2.getStartTime());
-
-				lectureByDayList.add(lectureByDay);
 
 			}
 
-			dayByCourseId.setDayName(dayEntity.getDayName());
-			dayByCourseId.setDayId(dayEntity.getDayId());
-			dayByCourseId.setLecture(lectureByDayList);
+			return successResponse();
 
-		}
+	}
 
+	private DayByCourseId successResponse() {
+		
+		dayByCourseId.setDayName(dayEntity.getDayName());
+		dayByCourseId.setDayId(dayEntity.getDayId());
+		dayByCourseId.setLecture(lectureByDayList);
+		dayByCourseId.setStatus(ApiConstants.SUCCESS);
+		dayByCourseId.setMessage("Course is not present !");
+
+
+
+return dayByCourseId;
+	}
+
+	private DayByCourseId errorResponse() {
+
+		dayByCourseId.setMessage("Course is not present !");
+		dayByCourseId.setStatus(ApiConstants.FAILURE);
+		
 		return dayByCourseId;
-
 	}
 
 }

@@ -26,36 +26,35 @@ public class LoginService {
 
 	UserDetail userDetail;
 
-	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
+	StatusMessageResponse statusMessageResponse;
 
 	/*
 	 * Login API
 	 */
 
-
 	public LoginResponse validate(LoginRequest loginRequest) {
-		
-		
-		if(Objects.isNull(loginRequest)) {
-			return failureResponse();
+
+		if (Objects.isNull(loginRequest)) {
+			return failureLoginResponse();
 
 		}
 
 		userDetail = new UserDetail();
 		loginResponse = new LoginResponse();
-	
+
 		String emailFromLoginRequest = loginRequest.getUserEmail();
 
-		//userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		// userAccountEntity =
+		// userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
 
 		try {
 			userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
 		} catch (Exception e) {
-			return failureResponse();
+			return failureLoginResponse();
 		}
-		
-		if(Objects.isNull(userAccountEntity) || userAccountEntity.isLogin()) {
-			return failureResponse();
+
+		if (Objects.isNull(userAccountEntity) || userAccountEntity.isLogin()) {
+			return failureLoginResponse();
 		}
 
 		if (!Objects.isNull(userAccountEntity) && !userAccountEntity.isLogin()) {
@@ -65,51 +64,42 @@ public class LoginService {
 			String passwordFromEntity = userAccountEntity.getPassword();
 			boolean userIsLogin = userAccountEntity.isLogin();
 
-			if (emailFromLoginRequest.equals(emailFromEntity) && passwordToLoginFromUser.equals(passwordFromEntity)
-					&& !userIsLogin) {
+			try {
+				if (emailFromLoginRequest.equals(emailFromEntity) && passwordToLoginFromUser.equals(passwordFromEntity)
+						&& !userIsLogin) {
 
-				userAccountEntity.setLogin(true);
-				try {
-					userAccountRepository.save(userAccountEntity);
-				} catch (Exception e) {
-					return failureResponse();
+					userAccountEntity.setLogin(true);
+					try {
+						userAccountRepository.save(userAccountEntity);
+					} catch (Exception e) {
+						return failureLoginResponse();
+					}
+
+					userDetail.setUserEmail(loginRequest.getUserEmail());
+					userDetail.setUserName(userAccountEntity.getUserName());
+
+					return successLoginResponse();
 				}
 
-				userDetail.setUserEmail(loginRequest.getUserEmail());
-				userDetail.setUserName(userAccountEntity.getUserName());
+			} catch (Exception e) {
 
-				return successResponse();
-
-			} else {
-
-				loginResponse.setStatus(ApiConstants.FAILURE);
-				// loginResponse.setUserDetails(userDetail);
-				loginResponse.setMessage("wrong username or password or user is already logged in");
-				return loginResponse;
+				return failureLoginResponse();
 
 			}
 
-		} else {
-
-			userDetail.setUserEmail(loginRequest.getUserEmail());
-			userDetail.setUserName("");
-
-			loginResponse.setStatus("failure");
-			// loginResponse.setUserDetails(userDetail);
-			loginResponse.setMessage("wrong username or password or user is already logged in");
 		}
 		return loginResponse;
 
 	}
 
-	private LoginResponse successResponse() {
+	private LoginResponse successLoginResponse() {
 		loginResponse.setStatus("success");
 		loginResponse.setUserDetails(userDetail);
 		loginResponse.setMessage("you have successfully logged in");
 		return loginResponse;
 	}
-	
-	private LoginResponse failureResponse() {
+
+	private LoginResponse failureLoginResponse() {
 		loginResponse.setStatus(ApiConstants.FAILURE);
 		loginResponse.setMessage("Login failed");
 		return loginResponse;
@@ -117,33 +107,56 @@ public class LoginService {
 
 	public StatusMessageResponse logout(LogoutRequest logoutRequest) {
 
+		statusMessageResponse = new StatusMessageResponse();
+
+		if (Objects.isNull(logoutRequest)) {
+			return failureLogoutResponse();
+
+		}
+
 		String emailFromLoginRequest = logoutRequest.getUserEmail();
 
-		userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		try {
+			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		} catch (Exception e) {
+			return failureLogoutResponse();
+		}
 
-		userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
+		// userAccountEntity =
+		// userAccountRepository.findByEmailId(emailFromLoginRequest);
 
-		if (!Objects.isNull(userAccountEntity)) {
+		if (Objects.isNull(userAccountEntity)) {
+			return failureLogoutResponse();
+
+		}
+
+		try {
 
 			if (userAccountEntity.isLogin()) {
 
 				userAccountEntity.setLogin(false);
 				userAccountRepository.save(userAccountEntity);
-				statusMessageResponse.setStatus("success");
-				statusMessageResponse.setMessage("You have successfully logged out");
-
-				return statusMessageResponse;
-
-			} else {
-
-				statusMessageResponse.setStatus("fail");
-				statusMessageResponse.setMessage("You have already logged out");
-				return statusMessageResponse;
+				return successlogoutResponse();
 			}
 
-		}
-		return statusMessageResponse;
+		} catch (Exception e) {
+			return failureLogoutResponse();
 
+		}
+		return failureLogoutResponse();
+
+	}
+
+	private StatusMessageResponse successlogoutResponse() {
+		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
+		statusMessageResponse.setMessage("you have successfully logout");
+		return statusMessageResponse;
+	}
+
+	private StatusMessageResponse failureLogoutResponse() {
+		statusMessageResponse.setStatus(ApiConstants.FAILURE);
+		statusMessageResponse.setMessage("Logout failed");
+		return statusMessageResponse;
 	}
 
 }

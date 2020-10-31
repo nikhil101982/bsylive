@@ -11,10 +11,11 @@ import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.CreateAccountReq;
 import com.yoga.api.model.CreateAccountRequest;
-import com.yoga.api.model.CreateAccountResponse;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class UserAccountService {
@@ -25,53 +26,62 @@ public class UserAccountService {
 	@Autowired
 	UserAccountRepository userAccountRepository;
 
-	CreateAccountResponse createAccountResponse;
+	StatusMessageResponse statusMessageResponse;
+
+	UserAccountResponse userAccountResponse;
 
 	UserAccountEntity userAccountEntity;
 
+	String successResponseMessage = null;
+	String failureResponseMessage = null;
+
+	UtilMethods utilMethods = new UtilMethods();
+
 	// Create User Account
 
-	public CreateAccountResponse createUserAccount(CreateAccountReq createAccountRequest) {
+	public StatusMessageResponse createUserAccount(CreateAccountReq createAccountRequest) {
 
-		createAccountResponse = new CreateAccountResponse();
+		successResponseMessage = "account created successfully !";
+		failureResponseMessage = "create account failed !";
+
+		if (Objects.isNull(createAccountRequest)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		statusMessageResponse = new StatusMessageResponse();
 
 		try {
 
 			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(createAccountRequest.getUserEmail());
 
 		} catch (NullPointerException e) {
-			System.out.println("Null pointer exception while creating account! UserAccountEntity " + userAccountEntity
-					+ "Stacktrace ");
-			e.printStackTrace();
+			return utilMethods.errorResponse(failureResponseMessage);
+
 		}
-		if (Objects.isNull(userAccountEntity)) {
 
-			userAccountEntity = new UserAccountEntity();
+		if (!Objects.isNull(userAccountEntity)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
 
-			if (createAccountRequest.getUserName().equals("admin")) {
-				userAccountEntity.setRole("admin");
-			} else {
-				userAccountEntity.setRole("student");
-			}
+		userAccountEntity = new UserAccountEntity();
 
-			userAccountEntity.setEmailId(createAccountRequest.getUserEmail());
-			userAccountEntity.setUserName(createAccountRequest.getUserName());
-			userAccountEntity.setPassword(createAccountRequest.getPassword());
-
-			userAccountRepository.save(userAccountEntity);
-
-			createAccountResponse.setStatus(ApiConstants.SUCCESS);
-			createAccountResponse.setMessage("Account created successfully");
-
-			return createAccountResponse;
-
+		if (createAccountRequest.getUserName().equals("admin")) {
+			userAccountEntity.setRole("admin");
 		} else {
-			createAccountResponse.setStatus(ApiConstants.FAILURE);
-			createAccountResponse.setMessage("Not able to create account");
-
-			return createAccountResponse;
-
+			userAccountEntity.setRole("student");
 		}
+
+		userAccountEntity.setEmailId(createAccountRequest.getUserEmail());
+		userAccountEntity.setUserName(createAccountRequest.getUserName());
+		userAccountEntity.setPassword(createAccountRequest.getPassword());
+
+		try {
+			userAccountRepository.save(userAccountEntity);
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		return utilMethods.successResponse(successResponseMessage);
 
 	}
 
@@ -79,39 +89,60 @@ public class UserAccountService {
 
 	public UserAccountResponse userAccounts() {
 
+		successResponseMessage = "user accounts !";
+		failureResponseMessage = "not able to get user accounts !";
+
+		userAccountResponse = new UserAccountResponse();
+
 		List<UserAccountEntity> userAccountEntityList = null;
 
 		try {
 			userAccountEntityList = userAccountRepository.getAllUserAccountEntity();
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+
+			return errorResponse(failureResponseMessage);
 		}
 
-		UserAccountResponse userAccountResponse = new UserAccountResponse();
+		if (Objects.isNull(userAccountEntityList)) {
+			return errorResponse(failureResponseMessage);
+		}
 
-		if (!Objects.isNull(userAccountEntityList)) {
+		CreateAccountRequest createAccRequest = null;
 
-			CreateAccountRequest createAccRequest = null;
+		List<CreateAccountRequest> createAccountRequestList = new ArrayList<CreateAccountRequest>();
 
-			List<CreateAccountRequest> createAccountRequestList = new ArrayList<CreateAccountRequest>();
+		for (UserAccountEntity userAccEntity : userAccountEntityList) {
 
-			for (UserAccountEntity userAccEntity : userAccountEntityList) {
-
-				createAccRequest = new CreateAccountRequest();
-				createAccRequest.setPassword(userAccEntity.getPassword());
-				createAccRequest.setUserEmail(userAccEntity.getEmailId());
-				createAccRequest.setUserName(userAccEntity.getUserName());
-				createAccRequest.setLogin(userAccEntity.isLogin());
-				createAccRequest.setRole(userAccEntity.getRole());
-				createAccountRequestList.add(createAccRequest);
-
-			}
-
-			userAccountResponse.setUserAccounts(createAccountRequestList);
-
-			return userAccountResponse;
+			createAccRequest = new CreateAccountRequest();
+			createAccRequest.setPassword(userAccEntity.getPassword());
+			createAccRequest.setUserEmail(userAccEntity.getEmailId());
+			createAccRequest.setUserName(userAccEntity.getUserName());
+			createAccRequest.setLogin(userAccEntity.isLogin());
+			createAccRequest.setRole(userAccEntity.getRole());
+			createAccountRequestList.add(createAccRequest);
 
 		}
+		
+		if (Objects.isNull(createAccountRequestList)) {
+			return errorResponse(failureResponseMessage);
+		}
+
+		return successResponse(createAccountRequestList ,successResponseMessage);
+
+	}
+
+	public UserAccountResponse errorResponse(String message) {
+
+		userAccountResponse.setMessage(message);
+		userAccountResponse.setStatus(ApiConstants.FAILURE);
+		userAccountResponse.setUserAccounts(null);
+		return userAccountResponse;
+	}
+
+	public UserAccountResponse successResponse(List<CreateAccountRequest> userAccounts, String message) {
+		userAccountResponse.setMessage(message);
+		userAccountResponse.setStatus(ApiConstants.FAILURE);
+		userAccountResponse.setUserAccounts(userAccounts);
 
 		return userAccountResponse;
 	}

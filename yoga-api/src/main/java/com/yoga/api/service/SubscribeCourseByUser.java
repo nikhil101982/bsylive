@@ -7,15 +7,15 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.UserAccountEntity;
-import com.yoga.api.model.StatusResponse;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class SubscribeCourseByUser {
@@ -36,30 +36,35 @@ public class SubscribeCourseByUser {
 
 	UserAccountEntity userAccountEntity;
 
-	StatusResponse statusResponse;
-
 	List<CourseEntity> courseEntityList;
 
 	List<Integer> userAccountCourseIdList;
 
-	public StatusResponse subscribeTheCourse(SubscribeCourses subscribeCourses, String userEmail) {
+	String successResponseMessage = null;
+	String failureResponseMessage = null;
+	
+	UtilMethods utilMethods = new UtilMethods();
 
-		statusResponse = new StatusResponse();
+
+	public StatusMessageResponse subscribeTheCourse(SubscribeCourses subscribeCourses, String userEmail) {
+
+		successResponseMessage = "courses subscribed !";
+		failureResponseMessage = "not able to subscribe the course!";
 
 		if (Objects.isNull(userEmail) || Objects.isNull(subscribeCourses)) {
-			return errorResponse(userEmail);
+			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
 
 		try {
 			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(userEmail);
 		} catch (Exception e) {
-			return errorResponse(userEmail);
+			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
 
 		if (Objects.isNull(userAccountEntity)) {
-			return errorResponse(userEmail);
+			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
 		userAccountCourseIdList = new ArrayList<>();
@@ -69,11 +74,11 @@ public class SubscribeCourseByUser {
 			try {
 				courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 			} catch (Exception e) {
-				return errorResponse(userEmail);
+				return utilMethods.errorResponse(failureResponseMessage);
 			}
 
 			if (Objects.isNull(courseEntity)) {
-				return errorResponse(userEmail);
+				return utilMethods.errorResponse(failureResponseMessage);
 			}
 
 			userAccountCourseIdList.add(courseEntity.getCourseId());
@@ -81,33 +86,20 @@ public class SubscribeCourseByUser {
 		}
 
 		if (Objects.isNull(userAccountCourseIdList)) {
-			return errorResponse(userEmail);
+			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
 		try {
 			userAccountRepository.save(userAccountEntity);
 		} catch (Exception e) {
-			return errorResponse(userEmail);
+			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
 
-		return successResponse(userEmail);
+		return utilMethods.successResponse(successResponseMessage);
 
 	}
 
-	private StatusResponse errorResponse(String userEmail) {
-		statusResponse.setStatus(ApiConstants.FAILURE);
-		statusResponse.setMessage("not able to subscribe the course!");
-		statusResponse.setUserEmail(userEmail);
-		return statusResponse;
-	}
-
-	private StatusResponse successResponse(String userEmail) {
-		statusResponse.setStatus(ApiConstants.SUCCESS);
-		statusResponse.setMessage("courses subscribed!");
-		statusResponse.setUserEmail(userEmail);
-		return statusResponse;
-	}
 
 	public void deleteData() {
 		try {

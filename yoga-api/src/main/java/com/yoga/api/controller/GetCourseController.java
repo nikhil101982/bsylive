@@ -46,6 +46,9 @@ public class GetCourseController {
 	List<DayEntity> dayEntityList;
 
 	
+	/*
+	 * Get Courses by courseId and dayId API
+	 */
 	
 	@GetMapping("/getCourseByAdmin/{courseId}/{dayId}")
 	@CrossOrigin(origins="*" , allowedHeaders="*")
@@ -57,6 +60,10 @@ public class GetCourseController {
 		return dayByCourseIdByDayID;
 		
 	}
+	
+	/*
+	 * Get all days API
+	 */
 	
 	
 	@GetMapping("/getAllDays")
