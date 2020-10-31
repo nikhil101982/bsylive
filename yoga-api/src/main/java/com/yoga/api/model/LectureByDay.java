@@ -32,7 +32,6 @@ public class LectureByDay {
 	public int sNo;
 	String videoIframeDynamicLink;
 	String liveIframeDynamicLink;
-	String test;
 
 
 }

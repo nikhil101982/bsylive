@@ -55,10 +55,8 @@ public class GetCourseController {
 	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
 		
 		
-		DayByCourseId dayByCourseIdByDayID = getCourseByAdminService.getCourseByAdmin(courseId , dayId );
-		
-		return dayByCourseIdByDayID;
-		
+		return getCourseByAdminService.getCourseByAdmin(courseId , dayId );
+				
 	}
 	
 	/*

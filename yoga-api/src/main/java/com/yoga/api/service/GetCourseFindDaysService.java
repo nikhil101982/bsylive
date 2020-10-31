@@ -74,27 +74,32 @@ public class GetCourseFindDaysService {
 		Arrays.sort(numCount);
 
 		for (int i = 0; i < size; i++) {
-
-			daysResponseList = successResponse(numCount, i);
-
+			successResponse(numCount, i);
 		}
 
 		return daysResponseList;
 	}
 
 	private List<DaysResponse> successResponse(int[] numCount, int i) {
+
+		daysResponse = new DaysResponse();
+
 		daysResponse.setDayId(numCount[i]);
-		dayEntity = dayRepository.getDayEntityByDayId(numCount[i]);
+		try {
+			dayEntity = dayRepository.getDayEntityByDayId(numCount[i]);
+		} catch (Exception e) {
+			return errorResponse();
+		}
+
+		if (Objects.isNull(dayEntity)) {
+			return errorResponse();
+		}
 		daysResponse.setDayName(dayEntity.getDayName().toUpperCase());
-		daysResponse.setStatus(ApiConstants.SUCCESS);
-		daysResponse.setMessage("Course Days");
 		daysResponseList.add(daysResponse);
 		return daysResponseList;
 	}
 
 	private List<DaysResponse> errorResponse() {
-		daysResponse.setStatus(ApiConstants.FAILURE);
-		daysResponse.setMessage("Days is not present !");
 		daysResponseList.add(daysResponse);
 		return daysResponseList;
 	}

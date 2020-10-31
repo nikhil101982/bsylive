@@ -148,14 +148,14 @@ public class AddCourseFromAdminService {
 	}
 
 	private void iframe(LectureByDay LectByDay) {
-		if (Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
-				&& Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+		if (Objects.isNull(LectByDay.getVideoIframeDynamicLink())
+				&& Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
 			lectureEntity.setDisableJoinBtn(true);
 			lectureEntity.setLiveIframeDynamicLink(null);
 			lectureEntity.setVideoIframeDynamicLink(null);
 
-		} else if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())
-				&& !Objects.isNull(lectureEntity.getLiveIframeDynamicLink())) {
+		} else if (!Objects.isNull(LectByDay.getVideoIframeDynamicLink())
+				&& !Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
 
 			lectureEntity.setDisableJoinBtn(false);
 			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());

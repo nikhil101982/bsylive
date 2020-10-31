@@ -42,66 +42,52 @@ public class LoginService {
 		userDetail = new UserDetail();
 		loginResponse = new LoginResponse();
 
-		String emailFromLoginRequest = loginRequest.getUserEmail();
-
-		// userAccountEntity =
-		// userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+		String userId_request = loginRequest.getUserEmail();
 
 		try {
-			userAccountEntity = userAccountRepository.findByEmailId(emailFromLoginRequest);
+			userAccountEntity = userAccountRepository.findByEmailId(userId_request);
 		} catch (Exception e) {
 			return failureLoginResponse();
 		}
 
-		if (Objects.isNull(userAccountEntity) || userAccountEntity.isLogin()) {
+		String userID_DB = userAccountEntity.getEmailId();
+		String password_DB = userAccountEntity.getPassword();
+
+		String password_request = loginRequest.getPassword();
+		boolean userIsLogin = userAccountEntity.isLogin();
+
+		boolean password_equal = false;
+
+		password_equal = password_DB.equals(password_request);
+
+		if (Objects.isNull(userAccountEntity) || userIsLogin || !password_equal
+				|| !userId_request.equals(userID_DB)) {
 			return failureLoginResponse();
 		}
 
-		if (!Objects.isNull(userAccountEntity) && !userAccountEntity.isLogin()) {
+		try {
 
-			String emailFromEntity = userAccountEntity.getEmailId(); // password
-			String passwordToLoginFromUser = loginRequest.getPassword();
-			String passwordFromEntity = userAccountEntity.getPassword();
-			boolean userIsLogin = userAccountEntity.isLogin();
-
-			try {
-				if (emailFromLoginRequest.equals(emailFromEntity) && passwordToLoginFromUser.equals(passwordFromEntity)
-						&& !userIsLogin) {
-
-					userAccountEntity.setLogin(true);
-					try {
-						userAccountRepository.save(userAccountEntity);
-					} catch (Exception e) {
-						return failureLoginResponse();
-					}
-
-					userDetail.setUserEmail(loginRequest.getUserEmail());
-					userDetail.setUserName(userAccountEntity.getUserName());
-
-					return successLoginResponse();
-				}
-
-			} catch (Exception e) {
-
-				return failureLoginResponse();
-
-			}
-
+			userAccountEntity.setLogin(true);
+			userAccountRepository.save(userAccountEntity);
+			userDetail.setUserEmail(loginRequest.getUserEmail());
+			userDetail.setUserName(userAccountEntity.getUserName());
+			return successLoginResponse();
+		} catch (Exception e) {
+			return failureLoginResponse();
 		}
-		return loginResponse;
 
 	}
 
 	private LoginResponse successLoginResponse() {
 		loginResponse.setStatus("success");
 		loginResponse.setUserDetails(userDetail);
-		loginResponse.setMessage("you have successfully logged in");
+		loginResponse.setMessage("");
 		return loginResponse;
 	}
 
 	private LoginResponse failureLoginResponse() {
 		loginResponse.setStatus(ApiConstants.FAILURE);
-		loginResponse.setMessage("Login failed");
+		loginResponse.setMessage("Login failed !");
 		return loginResponse;
 	}
 
@@ -121,9 +107,6 @@ public class LoginService {
 		} catch (Exception e) {
 			return failureLogoutResponse();
 		}
-
-		// userAccountEntity =
-		// userAccountRepository.findByEmailId(emailFromLoginRequest);
 
 		if (Objects.isNull(userAccountEntity)) {
 			return failureLogoutResponse();
@@ -149,7 +132,7 @@ public class LoginService {
 
 	private StatusMessageResponse successlogoutResponse() {
 		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
-		statusMessageResponse.setMessage("you have successfully logout");
+		statusMessageResponse.setMessage("");
 		return statusMessageResponse;
 	}
 

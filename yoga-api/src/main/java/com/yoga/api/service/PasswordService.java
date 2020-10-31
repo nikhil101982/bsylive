@@ -69,7 +69,7 @@ public class PasswordService {
 
 	public StatusMessageResponse fotgotPassword(ForgotPasswordRequest forgotPasswordRequest) {
 
-		successResponseMessage = "send password successfully via email !";
+		successResponseMessage = "We have sent password successfully via email, If you do not receive an email, check your spam folder or make sure this email address is registered !";
 		failureResponseMessage = "unable to send password !";
 
 		if (Objects.isNull(forgotPasswordRequest)) {
@@ -109,7 +109,7 @@ public class PasswordService {
 
 		failureResponseMessage = "changed password failed !";
 
-		if (Objects.isNull(changePasswordRequest)) {
+		if (Objects.isNull(changePasswordRequest) || changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPassword())) {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
@@ -129,6 +129,11 @@ public class PasswordService {
 		boolean passwordCheck = false;
 
 		passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
+		
+		if(!passwordCheck) {
+			return utilMethods.errorResponse(failureResponseMessage);
+
+		}
 
 		try {
 			if (passwordCheck && userAccEntity.isLogin()) {
