@@ -2,8 +2,9 @@
 
   <div class="container pb-5 pt-4">
 
+<div *ngIf="enableCourses" class="pt-3 msgStyle"> {{coursesMsg}}</div>
 
-    <div class="col-md-12 pt-2">
+    <div class="col-md-12 pt-2" *ngIf="!enableCourses">
       <div class="p-2" *ngFor="let course of coursesList">
         <div class="courseBox">
           <div class="boxText">

@@ -27,7 +27,7 @@ public class LectureEntity {
 	public String startTime;
 	public String endTime;
 	public String currDate;
-	boolean disableJoinBtn;
+	String disableJoinBtn;
 	String videoIframeDynamicLink;
 	String liveIframeDynamicLink;
 

@@ -65,6 +65,11 @@
     font-size: 12px;
 }
 
+.msgStyle {
+    text-align: center;
+    font-size: 42px;
+}
+
 /* 
 .yogaTextSty {
     position: relative;

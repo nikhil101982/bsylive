@@ -61,12 +61,12 @@ public class GetCourseService {
 		try {
 			courseEntityList = courseRepository.getAllCourses();
 		} catch (Exception e) {
-			return errorResponse();
+			return errorResponse("eoor");
 
 		}
 
 		if (Objects.isNull(courseEntityList)) {
-			return errorResponse();
+			return errorResponse("error");
 		}
 
 		AllUserCourses allUserCourses;
@@ -85,7 +85,11 @@ public class GetCourseService {
 		}
 
 		if ((Objects.isNull(allUserCoursesList))) {
-			return errorResponse();
+			return errorResponse("error");
+		}
+		
+		if (allUserCoursesList.size()==0) {
+			return errorResponse("Cours is not subscribed!");
 		}
 
 		return successResponse(allUserCoursesList);
@@ -97,10 +101,9 @@ public class GetCourseService {
 		return courseEntity;
 	}
 
-	private AllUserCoursesResponse errorResponse() {
-
+	private AllUserCoursesResponse errorResponse(String message) {
 		allUserCoursesResponse.setStatus(ApiConstants.FAILURE);
-		allUserCoursesResponse.setMessage("course is not available");
+		allUserCoursesResponse.setMessage(message);
 		allUserCoursesResponse.setCourses(null);
 		return allUserCoursesResponse;
 	}
@@ -108,7 +111,7 @@ public class GetCourseService {
 	private AllUserCoursesResponse successResponse(List<AllUserCourses> allUserCoursesList) {
 
 		allUserCoursesResponse.setStatus(ApiConstants.SUCCESS);
-		allUserCoursesResponse.setMessage("course is available ");
+		allUserCoursesResponse.setMessage("");
 		allUserCoursesResponse.setCourses(allUserCoursesList);
 		return allUserCoursesResponse;
 	}

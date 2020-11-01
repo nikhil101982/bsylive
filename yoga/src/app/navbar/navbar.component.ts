@@ -101,7 +101,6 @@ export class NavbarComponent implements OnInit {
       .subscribe((res) => {
         console.log("log in res = ", res);
         if (res['status'] === 'success') {
-          this.showAlert('success', res['message']);
           console.log("success", res, res['status'])
           this.userName = res['userDetails'].userName;
           localStorage.setItem('timestamp', JSON.stringify(new Date().getTime() + oneHr))
@@ -172,10 +171,12 @@ export class NavbarComponent implements OnInit {
       userEmail: this.userDetails.userEmail
     }
     this.service.logout(obj).subscribe(res => {
-      if (res) {
-        this.showAlert('success', res['message']);
+      if (res['status'] === 'success') {
         this.router.navigate(['login']);
         localStorage.clear();
+      }
+      if (res['status'] === 'failure') {
+         this.showAlert('error', res['message']);
       }
     })
   }
