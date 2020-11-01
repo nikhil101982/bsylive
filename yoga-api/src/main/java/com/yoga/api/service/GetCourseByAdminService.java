@@ -164,6 +164,7 @@ public class GetCourseByAdminService {
 			return errorResponse("Course is not present !");
 
 		}
+		return dayByCourseId;
 
 	}
 
