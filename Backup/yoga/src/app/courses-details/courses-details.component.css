@@ -1,0 +1,107 @@
+.tableHeader {
+    background-color: #dcdee0;
+}
+
+.breadcrumb {
+    background-color: white;
+}
+
+.accordionStyle2 {
+    position: relative;
+    top: 30px;
+}
+
+.btn span:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0;
+}
+
+.btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0;
+}
+
+.headerSty {
+    border-bottom: 0px solid #dee2e6;
+}
+
+.lecture:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.thPadding {
+    padding: 12px 0px;
+}
+
+.fWeight {
+    font-weight: 500;
+}
+
+.f-15 {
+    font-size: 15px;
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.tableSty {
+    position: relative;
+    left: 30px;
+}
+
+.bookLinkSty {
+    margin-left: 150px;
+}
+
+.inputSty {
+    width: 70%;
+    height: 28px;
+}
+
+.asanaSty {
+    background-color: #e8e8e8;
+    padding: 10px;
+}
+
+.cardShadow {
+    width: 60%;
+    border: 0px;
+}
+
+.card-header {
+    /* background-color: white; */
+    padding: 5px;
+}
+
+.active {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.panel-title {
+    position: relative;
+}
+
+.panel-title::after {
+    content: "\f107";
+    color: #333;
+    font-size: 25px;
+    font-weight: 900;
+    top: 5px;
+    right: 20px;
+    position: absolute;
+    font-family: "FontAwesome";
+}
+
+.panel-title[aria-expanded="true"]::after {
+    content: "\f106";
+}
+
+.list-group-item {
+    border: 0px;
+    cursor: pointer;
+}

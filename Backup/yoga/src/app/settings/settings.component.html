@@ -1,0 +1,22 @@
+<div class="container-fluid settings-page">
+    <div class="d-flex flex-row">
+
+        <div class="col-md-3">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" [ngClass]="{'active-section' : accounts}"><span class="label"
+                        (click)="onClickAccounts()"> <span class="fa fa-user fs-26"></span>
+                        <span class="label-name-sty">Account</span></span>
+                </li>
+
+                <!-- <li class="nav-item" [ngClass]="{'active-section' : payment}"><span class="label"
+                        (click)="onClickPayment()"> <span class="fa fa-user fs-26"></span>
+                        <span class="label-name-sty">Payment</span></span>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="col-md-9 body-section">
+            <app-account-settings></app-account-settings>
+        </div>
+    </div>
+</div>
