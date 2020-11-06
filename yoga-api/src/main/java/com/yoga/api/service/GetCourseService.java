@@ -11,6 +11,8 @@ import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
+import com.yoga.api.model.AllCourses;
+import com.yoga.api.model.AllCoursesResponse;
 import com.yoga.api.model.AllUserCourses;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.model.Lecture;
@@ -47,16 +49,16 @@ public class GetCourseService {
 
 	List<LectureByDay> lectureByDayList = new ArrayList<>();
 
-	AllUserCoursesResponse allUserCoursesResponse;
+	AllCoursesResponse allUserCoursesResponse;
 
 	DayEntity dayEntity;
 
 	// Get course
-	public AllUserCoursesResponse courses() {
+	public AllCoursesResponse courses() {
 
-		allUserCoursesResponse = new AllUserCoursesResponse();
+		allUserCoursesResponse = new AllCoursesResponse();
 
-		List<AllUserCourses> allUserCoursesList = new ArrayList<>();
+		List<AllCourses> allUserCoursesList = new ArrayList<>();
 
 		try {
 			courseEntityList = courseRepository.getAllCourses();
@@ -69,17 +71,13 @@ public class GetCourseService {
 			return errorResponse("error");
 		}
 
-		AllUserCourses allUserCourses;
+		AllCourses allUserCourses;
 
 		for (CourseEntity courseEntity : courseEntityList) {
 
-			allUserCourses = new AllUserCourses();
-
-			allUserCourses = new AllUserCourses();
+			allUserCourses = new AllCourses();
 			allUserCourses.setCourseName(courseEntity.getCourseName());
-			allUserCourses.setStartDate(courseEntity.getStartDate());
 			allUserCourses.setCourseId(courseEntity.getCourseId());
-			allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
 			allUserCoursesList.add(allUserCourses);
 
 		}
@@ -101,14 +99,14 @@ public class GetCourseService {
 		return courseEntity;
 	}
 
-	private AllUserCoursesResponse errorResponse(String message) {
+	private AllCoursesResponse errorResponse(String message) {
 		allUserCoursesResponse.setStatus(ApiConstants.FAILURE);
 		allUserCoursesResponse.setMessage(message);
 		allUserCoursesResponse.setCourses(null);
 		return allUserCoursesResponse;
 	}
 
-	private AllUserCoursesResponse successResponse(List<AllUserCourses> allUserCoursesList) {
+	private AllCoursesResponse successResponse(List<AllCourses> allUserCoursesList) {
 
 		allUserCoursesResponse.setStatus(ApiConstants.SUCCESS);
 		allUserCoursesResponse.setMessage("");

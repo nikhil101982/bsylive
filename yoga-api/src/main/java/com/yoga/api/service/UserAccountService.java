@@ -6,12 +6,14 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.CreateAccountReq;
 import com.yoga.api.model.CreateAccountRequest;
 import com.yoga.api.model.StatusMessageResponse;
+import com.yoga.api.model.UserAccountId;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
@@ -146,5 +148,60 @@ public class UserAccountService {
 
 		return userAccountResponse;
 	}
+	
+	
+
+	public List<UserAccountId> getUserEmailId() {
+
+		UserAccountId userAccountId;
+		List<UserAccountId> userAccountIdList = new ArrayList<>();
+		List<UserAccountEntity> userAccountEntityList = userAccountRepository.findAll();
+
+		for (UserAccountEntity userAccountEntity : userAccountEntityList) {
+			userAccountId = new UserAccountId();
+			userAccountId.setUserEmail(userAccountEntity.getEmailId());
+			userAccountIdList.add(userAccountId);
+		}
+		return userAccountIdList;
+
+	}
+
+	public StatusMessageResponse removeUser(String userEmail) {
+		
+
+		if (Objects.isNull(userEmail)) {
+			return utilMethods.errorResponse("User id is empty! ");
+		}
+
+		statusMessageResponse = new StatusMessageResponse();
+
+		try {
+
+			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(userEmail);
+
+		} catch (NullPointerException e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+
+		}
+
+		if (Objects.isNull(userAccountEntity)) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+		
+		
+		try {
+			userAccountRepository.delete(userAccountEntity);
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
+		return utilMethods.successResponse("Successfully removed user! ");
+
+
+
+	}
 
 }
+
+
+

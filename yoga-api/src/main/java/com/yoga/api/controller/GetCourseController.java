@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
+import com.yoga.api.model.AllCoursesResponse;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.repository.CourseRepository;
@@ -87,7 +88,7 @@ public class GetCourseController {
 	/*
 	 * Get All Courses by UserName without lecture details.
 	 */
-	@GetMapping("/coursesBasedOnUserNameTemp/{nameOfTheCours}")
+	@GetMapping("/coursesBasedOnUserName/{nameOfTheCours}")
 	public AllUserCoursesResponse coursesByUserName(@PathVariable("userName") String userName) throws Exception {
 		return getCourseBasedOnUserNameService.coursesByUserName(userName);
 
@@ -97,11 +98,13 @@ public class GetCourseController {
 	/*
 	 * Get All Courses
 	 */
-	@GetMapping("/coursesBasedOnUserName/{userName}")
-	public AllUserCoursesResponse courses(@PathVariable("userName") String userName ) throws Exception {
+	@GetMapping("/courses")
+	public AllCoursesResponse courses() throws Exception {
 		return getCourseService.courses();
 
 	}
+	
+	
 	
 	
 }
