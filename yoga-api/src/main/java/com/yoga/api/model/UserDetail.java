@@ -15,4 +15,6 @@ public class UserDetail {
 
 	public String userName;
 	public String userEmail;
+	public String userRole;
+
 }

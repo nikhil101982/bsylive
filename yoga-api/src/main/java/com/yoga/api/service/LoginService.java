@@ -71,6 +71,7 @@ public class LoginService {
 			userAccountRepository.save(userAccountEntity);
 			userDetail.setUserEmail(loginRequest.getUserEmail());
 			userDetail.setUserName(userAccountEntity.getUserName());
+			userDetail.setUserRole(userAccountEntity.getRole());
 			return successLoginResponse();
 		} catch (Exception e) {
 			return failureLoginResponse();
