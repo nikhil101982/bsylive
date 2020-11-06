@@ -21,12 +21,10 @@ public class DayByCourseId {
 
 	public Integer dayId;;
 	public String dayName;
-	List<LectureByDay> lecture = new ArrayList<>();
-
 	public String status;;
 	public String message;
+	List<LectureByDay> lecture = new ArrayList<>();
 
-	
 	private final static long serialVersionUID = 2177644673242063512L;
 
 }

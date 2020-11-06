@@ -92,7 +92,7 @@ public class AddCourseService {
 		for (Day day : course.getDay()) {
 
 			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
-			lectureEntity.setDisableJoinBtn(false);
+			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
 			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
 			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
