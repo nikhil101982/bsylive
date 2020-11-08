@@ -1,5 +1,6 @@
 package com.yoga.api.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,8 @@ public class GetCourseController {
 	
 	@GetMapping("/getCourseByAdmin/{courseId}/{dayId}")
 	@CrossOrigin(origins="*" , allowedHeaders="*")
-	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId , @PathVariable("dayId") Integer dayId) {
+	public DayByCourseId getCourseByAdmin(@PathVariable("courseId") Integer courseId,
+			@PathVariable("dayId") Integer dayId) throws ParseException {
 		
 		
 		return getCourseByAdminService.getCourseByAdmin(courseId , dayId );

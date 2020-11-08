@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.yoga.api.model.LectureByDay;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
+import com.yoga.api.util.CompareDates;
 
 @Service
 public class GetCourseByAdminService {
@@ -52,8 +54,10 @@ public class GetCourseByAdminService {
 	DayEntity dayEntity;
 
 	DayByCourseId dayByCourseId = new DayByCourseId();
+	
+	CompareDates compareDates = new CompareDates();
 
-	public DayByCourseId getCourseByAdmin(Integer courseId, Integer dayId) {
+	public DayByCourseId getCourseByAdmin(Integer courseId, Integer dayId) throws ParseException {
 
 		if (Objects.isNull(courseId) || Objects.isNull(dayId)) {
 			return errorResponse("error");
@@ -64,10 +68,17 @@ public class GetCourseByAdminService {
 		} catch (Exception e) {
 			return errorResponse("error");
 		}
-
+		
 		if (Objects.isNull(courseEntity)) {
 			return errorResponse("error");
 		}
+
+		
+		if(!compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+			return errorResponse("error");
+
+		}
+		
 
 		dayEntityList = courseEntity.getDayEntity();
 
@@ -108,10 +119,10 @@ public class GetCourseByAdminService {
 				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
 
 				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
-				
+
 				if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 						&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-					
+
 					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
 					lectureByDay.setVideoIframeDynamicLink("");
 					lectureByDay.setLiveIframeDynamicLink("");
@@ -120,12 +131,10 @@ public class GetCourseByAdminService {
 
 				else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 						&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-					
 
 					lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
 					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
 					lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
-					
 
 				} else {
 
@@ -136,7 +145,6 @@ public class GetCourseByAdminService {
 						lectureByDay.setLiveIframeDynamicLink("");
 
 					} else {
-						
 
 						lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
 						lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
@@ -158,9 +166,9 @@ public class GetCourseByAdminService {
 
 		}
 
-		DayByCourseId dayByCourseId =  successResponse();
-		
-		if(Objects.isNull(dayByCourseId)) {
+		DayByCourseId dayByCourseId = successResponse();
+
+		if (Objects.isNull(dayByCourseId)) {
 			return errorResponse("Course is not present !");
 
 		}

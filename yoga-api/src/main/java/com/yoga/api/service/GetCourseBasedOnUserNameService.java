@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import com.yoga.api.model.AllUserCourses;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.CompareDates;
 
 @Service
 public class GetCourseBasedOnUserNameService {
@@ -35,9 +37,11 @@ public class GetCourseBasedOnUserNameService {
 
 	List<AllUserCourses> allUserCoursesList;
 
+	CompareDates compareDates = new CompareDates();
+
 	// Gell all courses based on user
 
-	public AllUserCoursesResponse coursesByUserName(String userName) {
+	public AllUserCoursesResponse coursesByUserName(String userName) throws ParseException {
 
 		allUserCoursesResponse = new AllUserCoursesResponse();
 
@@ -55,16 +59,19 @@ public class GetCourseBasedOnUserNameService {
 
 		for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {
 
-			if (!Objects.isNull(courseEntity)) {
+			if (compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
 
-				allUserCourses = new AllUserCourses();
+				if (!Objects.isNull(courseEntity)) {
 
-				allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
-				allUserCourses.setCourseName(courseEntity.getCourseName());
-				allUserCourses.setStartDate(courseEntity.getStartDate());
-				allUserCourses.setCourseId(courseEntity.getCourseId());
-				allUserCoursesList.add(allUserCourses);
+					allUserCourses = new AllUserCourses();
 
+					allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
+					allUserCourses.setCourseName(courseEntity.getCourseName());
+					allUserCourses.setStartDate(courseEntity.getStartDate());
+					allUserCourses.setCourseId(courseEntity.getCourseId());
+					allUserCoursesList.add(allUserCourses);
+
+				}
 			}
 
 		}

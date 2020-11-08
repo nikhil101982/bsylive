@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,7 @@ import com.yoga.api.model.LectureByDay;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
+import com.yoga.api.util.CompareDates;
 
 @Service
 public class GetCourseService {
@@ -53,8 +55,10 @@ public class GetCourseService {
 
 	DayEntity dayEntity;
 
+	CompareDates compareDates = new CompareDates();
+
 	// Get course
-	public AllCoursesResponse courses() {
+	public AllCoursesResponse courses() throws ParseException {
 
 		allUserCoursesResponse = new AllCoursesResponse();
 
@@ -75,27 +79,36 @@ public class GetCourseService {
 
 		for (CourseEntity courseEntity : courseEntityList) {
 
-			allUserCourses = new AllCourses();
-			allUserCourses.setCourseName(courseEntity.getCourseName());
-			allUserCourses.setCourseId(courseEntity.getCourseId());
-			allUserCoursesList.add(allUserCourses);
+			if (compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+				
+				allUserCourses = new AllCourses();
+				allUserCourses.setCourseName(courseEntity.getCourseName());
+				allUserCourses.setCourseId(courseEntity.getCourseId());
+				allUserCoursesList.add(allUserCourses);
+
+			}
 
 		}
 
 		if ((Objects.isNull(allUserCoursesList))) {
 			return errorResponse("error");
 		}
-		
-		if (allUserCoursesList.size()==0) {
-			return errorResponse("Cours is not subscribed!");
+
+		if (allUserCoursesList.size() == 0) {
+			return errorResponse("There is not approved cours!");
 		}
 
 		return successResponse(allUserCoursesList);
 	}
 
 	// Get All Course Entity By course ID
-	public CourseEntity coursesByCourseId(Integer courseId) {
+	public CourseEntity coursesByCourseId(Integer courseId) throws ParseException {
+
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+
+		if (!compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+			return null;
+		}
 		return courseEntity;
 	}
 
