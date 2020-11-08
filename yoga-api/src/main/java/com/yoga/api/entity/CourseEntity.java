@@ -32,6 +32,8 @@ public class CourseEntity {
 	public String courseName;
 	public int couseDuration;
 	public String startDate;
+	public String language;
+
 
 	@Embedded
 	@ElementCollection

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddCourseResponse;
+import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.RemoveCourseRequest;
 import com.yoga.api.model.StatusMessageResponse;
@@ -61,6 +63,12 @@ public class AddCourseController {
 	@PostMapping("/removeCourse/{courseId}")
 	public StatusMessageResponse removeCourse(@PathVariable("courseId") Integer courseId) throws Exception {	
 		return addCourseService.removeCourse(courseId);
+	}
+	
+	
+	@PutMapping("/updateUserCourses")
+	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {	
+		return addCourseService.updateUserCourses(course);
 	}
 
 }

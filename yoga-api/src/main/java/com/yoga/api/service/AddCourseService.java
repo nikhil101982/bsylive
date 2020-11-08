@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.LectureEntity;
+import com.yoga.api.entity.UserAccountEntity;
+import com.yoga.api.model.AddCourse;
 import com.yoga.api.model.AddCourseResponse;
+import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.Day;
 import com.yoga.api.model.RemoveCourseRequest;
 import com.yoga.api.model.StatusMessageResponse;
+import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.LectureRepository;
+import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -37,6 +43,13 @@ public class AddCourseService {
 	List<LectureEntity> lecEntityList = new ArrayList<>();
 
 	UtilMethods utilMethods = new UtilMethods();
+
+	@Autowired
+	UserAccountRepository userAccountRepository;
+
+	UserAccountEntity userAccountEntity;
+
+	List<CourseEntity> courseEntityList;
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
@@ -127,6 +140,8 @@ public class AddCourseService {
 			return utilMethods.errorResponse("Course is not present! ");
 		}
 
+		courseEntityList = new ArrayList<>();
+
 		try {
 			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 		} catch (Exception e) {
@@ -145,6 +160,53 @@ public class AddCourseService {
 		} catch (Exception e) {
 			return utilMethods.errorResponse("Course is not present! ");
 
+		}
+
+	}
+
+	public StatusMessageResponse updateUserCourses(AddListOfCourse courses) {
+
+		List<AddCourse> day = new ArrayList<>();
+
+		if (Objects.isNull(courses)) {
+			return utilMethods.errorResponse("Course is not present!");
+		}
+
+		try {
+			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(courses.getUserEmail());
+		} catch (Exception e) {
+			return utilMethods.errorResponse("Course is not present!");
+		}
+
+		if (Objects.isNull(userAccountEntity)) {
+			return utilMethods.errorResponse("Course is not present!");
+		}
+		for (AddCourse course : courses.getCourses()) {
+
+			courseEntity = new CourseEntity();
+			try {
+				courseEntity = courseRepository.getCourseEntityByCourseId(course.getCourseId());
+			} catch (Exception e) {
+				return utilMethods.errorResponse("Course is not present!");
+			}
+
+			if (Objects.isNull(courseEntity)) {
+				return utilMethods.errorResponse("Course is not present!");
+			}
+
+			courseEntityList.add(courseEntity);
+		}
+
+		if (Objects.isNull(courseEntityList)) {
+			return utilMethods.errorResponse("Course is not present!");
+		}
+
+		try {
+			userAccountEntity.setCourseEntity(courseEntityList);
+			return utilMethods.successResponse("Updated user courses! ");
+
+		} catch (Exception e) {
+			return utilMethods.errorResponse("Course is not present!");
 		}
 
 	}
