@@ -4,9 +4,10 @@ public interface ApiConstants {
 
 	String SUCCESS = "success";
 	String FAILURE = "failure";
-	
-	//String FAIL = "fail";
+	String CREATE_ACCOUNT_BY_ADMIN_SUBJECT = "Bihar yoga live website account created";
+	String FORGOT_PASSWORD_SUBJECT = "Bihar yoga login password";
 
+	
 
 	
 }

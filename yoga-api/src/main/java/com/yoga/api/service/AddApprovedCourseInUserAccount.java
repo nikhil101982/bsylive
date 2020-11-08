@@ -18,7 +18,7 @@ import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
-import com.yoga.api.util.SendEmail;
+import com.yoga.api.util.SendEmailUtil;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -58,7 +58,7 @@ public class AddApprovedCourseInUserAccount {
 
 	UtilMethods utilMethods = new UtilMethods();
 
-	SendEmail sendEmail = new SendEmail();
+	SendEmailUtil sendEmail = new SendEmailUtil();
 
 	public StatusMessageResponse addCoursesInUser(CourseRegistrationRequest courseRegistrationRequest) {
 

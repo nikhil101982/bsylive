@@ -1,6 +1,5 @@
 package com.yoga.api.service;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.mail.MessagingException;
@@ -12,10 +11,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.CreateAccountReq;
-import com.yoga.api.model.CreateAccountRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
@@ -110,7 +107,6 @@ public class AdminUserAccountService {
 			message.setTo(emailId);
 			message.setFrom(adminCreateAccountSendEmailFrom);
 			message.setSubject("Bihar yoga live website account created");
-			message.setText("user id: " + emailId);
 			message.setText("User id: "+ emailId + "\nPassword: " + userPassword);
 			javaMailSender.send(message);
 			return utilMethods.successResponse(successResponseMessage);
@@ -121,20 +117,5 @@ public class AdminUserAccountService {
 		}
 	}
 
-	public UserAccountResponse errorResponse(String message) {
-
-		userAccountResponse.setMessage(message);
-		userAccountResponse.setStatus(ApiConstants.FAILURE);
-		userAccountResponse.setUserAccounts(null);
-		return userAccountResponse;
-	}
-
-	public UserAccountResponse successResponse(List<CreateAccountRequest> userAccounts, String message) {
-		userAccountResponse.setMessage(message);
-		userAccountResponse.setStatus(ApiConstants.FAILURE);
-		userAccountResponse.setUserAccounts(userAccounts);
-
-		return userAccountResponse;
-	}
 
 }
