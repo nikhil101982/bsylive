@@ -1,6 +1,5 @@
 package com.yoga.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.UserAccountId;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.service.AdminUserAccountService;
 import com.yoga.api.service.UserAccountService;
 
 @RestController
@@ -28,6 +28,10 @@ public class UserAccountController {
 
 	@Autowired
 	UserAccountService userAccountService;
+	
+	@Autowired
+	AdminUserAccountService adminUserAccountService;
+	
 
 	@PostMapping("/createAccount")
 	public StatusMessageResponse createUserAccount(final @RequestBody CreateAccountReq createAccountRequest)
@@ -56,6 +60,12 @@ public class UserAccountController {
 	List<UserAccountId> getUserEmailId() {
 		return userAccountService.getUserEmailId();
 
+	}
+	
+	@PostMapping("/createAccountByAdmin")
+	public StatusMessageResponse createAccountByAdmin(final @RequestBody CreateAccountReq createAccountRequest)
+			throws Exception {
+		return adminUserAccountService.createAccountByAdmin(createAccountRequest);
 	}
 
 }

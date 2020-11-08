@@ -26,9 +26,8 @@ public class PasswordService {
 	@Autowired
 	public JavaMailSender javaMailSender;
 
-	@Value("${forgot.password.email.send.to}")
-	private String forgotPasswordSendEmailTo;
 
+	
 	@Value("${forgot.password.email.send.from}")
 	private String forgotPasswordSendEmailFrom;
 

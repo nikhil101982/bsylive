@@ -17,8 +17,15 @@ forgot:
   password:
     email:
       send:
-        to: nikhil101982@gmail.com
         from: biharyoga123@gmail.com
+        
+        
+admin:
+  create:
+    account:
+      email:
+        send:
+          from: biharyoga123@gmail.com
         
 
 server:
