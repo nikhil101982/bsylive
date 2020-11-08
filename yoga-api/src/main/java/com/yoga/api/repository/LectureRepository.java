@@ -14,10 +14,10 @@ import com.yoga.api.entity.LectureEntity;
 @Repository
 public interface LectureRepository extends JpaRepository<LectureEntity, Integer> {
 
-	@Query("SELECT l FROM LectureEntity l WHERE l.lecId = ?1")
+	@Query("SELECT l FROM LectureEntity l WHERE l.lectureId = ?1")
 	List<LectureEntity> getLecEntityListByLecId(Integer dayId);
 	
-	@Query("SELECT l FROM LectureEntity l WHERE l.lecId = ?1")
+	@Query("SELECT l FROM LectureEntity l WHERE l.lectureId = ?1")
 	LectureEntity getLecEntityByLecId(Integer dayId);
 	
 

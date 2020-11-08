@@ -105,7 +105,7 @@ public class GetCourseByAdminService {
 
 		for (LectureEntity lectureEntity : lecEntityList) {
 
-			arrayOfLectureId[count] = lectureEntity.getLecId();
+			arrayOfLectureId[count] = lectureEntity.getLectureId();
 			count = count + 1;
 		}
 
@@ -118,6 +118,7 @@ public class GetCourseByAdminService {
 
 				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
 
+				
 				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
 
 				if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())

@@ -23,28 +23,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "yoga_lecture")
-public class LectureEntity {
+@Table(name = "yoga_lecture_type")
+public class LectureTypeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer lectureId;
+	public Integer lectureTypeId;
 
-	public String lectureName;
-	public String startTime;
-	public String endTime;
-	public String currDate;
-	public String videoIframeDynamicLink;
-	public String liveIframeDynamicLink;
-	public String disableJoinBtn;
-	public int sNo;
-
-
+	public String lectureTypeHeaderName;
+	
 	@Embedded
 	@ElementCollection
-	@OneToMany(targetEntity = LectureTypeEntity.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "dl_fk", referencedColumnName = "lectureId")
-	private List<LectureTypeEntity> lectureTypeEntity;
+	@OneToMany(targetEntity = LectureSessionEntity.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "uc_fk", referencedColumnName = "lectureTypeId")
+	private List<LectureSessionEntity> lectureSessionEntity;
+
 
 
 }
