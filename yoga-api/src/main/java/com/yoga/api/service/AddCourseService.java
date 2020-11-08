@@ -13,8 +13,11 @@ import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.Day;
+import com.yoga.api.model.RemoveCourseRequest;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.LectureRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class AddCourseService {
@@ -32,6 +35,8 @@ public class AddCourseService {
 	AddCourseResponse addCourseResponse;
 
 	List<LectureEntity> lecEntityList = new ArrayList<>();
+
+	UtilMethods utilMethods = new UtilMethods();
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
@@ -114,6 +119,34 @@ public class AddCourseService {
 		addCourseResponse.setStartDate(course.getStartDate());
 		addCourseResponse.setStatus(ApiConstants.SUCCESS);
 		return addCourseResponse;
+	}
+
+	public StatusMessageResponse removeCourse(Integer courseId) {
+
+		if (Objects.isNull(courseId)) {
+			return utilMethods.errorResponse("Course is not present! ");
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return utilMethods.errorResponse("Course is not present! ");
+		}
+
+		if (!Objects.isNull(courseEntity)) {
+			return utilMethods.errorResponse("Course is not present! ");
+
+		}
+
+		try {
+			courseRepository.delete(courseEntity);
+			return utilMethods.successResponse("Course removed! ");
+
+		} catch (Exception e) {
+			return utilMethods.errorResponse("Course is not present! ");
+
+		}
+
 	}
 
 }

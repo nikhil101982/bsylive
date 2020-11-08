@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.CourseResources;
+import com.yoga.api.model.RemoveCourseRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.SubscribeCourses;
 import com.yoga.api.service.AddCourseFromAdminService;
@@ -55,6 +56,11 @@ public class AddCourseController {
 	@PostMapping("/addCourse")
 	public AddCourseResponse addCourseNew(@RequestBody CourseResources course) throws Exception {	
 		return addCourseService.addCourse(course);
+	}
+	
+	@PostMapping("/removeCourse/{courseId}")
+	public StatusMessageResponse removeCourse(@PathVariable("courseId") Integer courseId) throws Exception {	
+		return addCourseService.removeCourse(courseId);
 	}
 
 }
