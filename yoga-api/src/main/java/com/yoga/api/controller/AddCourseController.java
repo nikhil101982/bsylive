@@ -14,7 +14,7 @@ import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.RemoveCourseRequest;
 import com.yoga.api.model.StatusMessageResponse;
-import com.yoga.api.model.SubscribeCourses;
+import com.yoga.api.model.RegisterCourses;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
 import com.yoga.api.service.SubscribeCourseByUser;
@@ -33,6 +33,9 @@ public class AddCourseController {
 	@Autowired
 	AddCourseFromAdminService addCourseFromAdminService;
 	
+	/*
+	 * Add course by admin
+	 */
 	
 	@PostMapping("/addCourseFromAdmin")
 	public StatusMessageResponse getCourseByDayIDAndByCourseId(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
@@ -40,31 +43,27 @@ public class AddCourseController {
 	}
 	
 	/*
-	 * Add Courses by user in their account
+	 * Register Courses by user in their account
 	 */
 
-	@PostMapping("/subscribeTheCourse/{userEmail}")
-	public StatusMessageResponse subscribeTheCourse(@RequestBody SubscribeCourses subscribeCourses,
+	@PostMapping("/registerCourses/{userEmail}")
+	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
 			@PathVariable("userEmail") String userEmail) throws Exception {
-		return subscribeCourseByUser.subscribeTheCourse(subscribeCourses, userEmail);
+		return subscribeCourseByUser.registerCourses(subscribeCourses, userEmail);
 	}
 	
 	/*
-	 * Admin Add Courses API: Admin will use to add course in database (Register the
-	 * course)
+	 * Remove Courses by admin
 	 */
-	
-
-	@PostMapping("/addCourse")
-	public AddCourseResponse addCourseNew(@RequestBody CourseResources course) throws Exception {	
-		return addCourseService.addCourse(course);
-	}
 	
 	@PostMapping("/removeCourse/{courseId}")
 	public StatusMessageResponse removeCourse(@PathVariable("courseId") Integer courseId) throws Exception {	
 		return addCourseService.removeCourse(courseId);
 	}
 	
+	/*
+	 * Update Courses by admin in user profile
+	 */
 	
 	@PutMapping("/updateUserCourses")
 	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {	

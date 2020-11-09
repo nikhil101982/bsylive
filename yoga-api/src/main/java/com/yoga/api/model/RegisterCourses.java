@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SubscribeCourses {
+public class RegisterCourses {
 
 	private List<Integer> courseId;
 

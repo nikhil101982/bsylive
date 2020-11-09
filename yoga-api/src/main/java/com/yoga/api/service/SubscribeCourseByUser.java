@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.StatusMessageResponse;
-import com.yoga.api.model.SubscribeCourses;
+import com.yoga.api.model.RegisterCourses;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
@@ -46,7 +46,7 @@ public class SubscribeCourseByUser {
 	UtilMethods utilMethods = new UtilMethods();
 
 
-	public StatusMessageResponse subscribeTheCourse(SubscribeCourses subscribeCourses, String userEmail) {
+	public StatusMessageResponse registerCourses(RegisterCourses subscribeCourses, String userEmail) {
 
 		successResponseMessage = "courses subscribed !";
 		failureResponseMessage = "not able to subscribe the course!";

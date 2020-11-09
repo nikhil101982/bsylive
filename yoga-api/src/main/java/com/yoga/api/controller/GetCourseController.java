@@ -1,6 +1,7 @@
 package com.yoga.api.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.model.AllCoursesResponse;
+import com.yoga.api.model.AllUserCourses;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.repository.CourseRepository;
@@ -19,6 +21,7 @@ import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.service.GetCourseBasedOnUserNameService;
 import com.yoga.api.service.GetCourseByAdminService;
+import com.yoga.api.service.GetCourseFromAdminService;
 import com.yoga.api.service.GetCourseService;
 
 @RestController
@@ -46,6 +49,9 @@ public class GetCourseController {
 	DayEntity dayEntity;
 	
 	List<DayEntity> dayEntityList;
+	
+	@Autowired
+	GetCourseFromAdminService getCourseFromAdminService;
 
 	
 	/*
@@ -90,7 +96,7 @@ public class GetCourseController {
 	/*
 	 * Get All Courses by UserName without lecture details.
 	 */
-	@GetMapping("/coursesBasedOnUserName/{nameOfTheCours}")
+	@GetMapping("/coursesBasedOnUserName/{userName}")
 	public AllUserCoursesResponse coursesByUserName(@PathVariable("userName") String userName) throws Exception {
 		return getCourseBasedOnUserNameService.coursesByUserName(userName);
 
@@ -100,12 +106,22 @@ public class GetCourseController {
 	/*
 	 * Get All Courses
 	 */
-	@GetMapping("/courses")
+	@GetMapping("/coursesForAdmin")
 	public AllCoursesResponse courses() throws Exception {
 		return getCourseService.courses();
 
 	}
 	
+	
+	
+	/*
+	 * Get All Courses for admin section
+	 */
+	@GetMapping("/courses")
+	public AllUserCoursesResponse coursesForAdmin() throws Exception {
+		return getCourseFromAdminService.coursesForAdmin();
+
+	}
 	
 	
 	
