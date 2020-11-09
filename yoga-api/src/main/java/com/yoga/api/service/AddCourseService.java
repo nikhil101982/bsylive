@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.mail.MessagingException;
 
-import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,7 @@ import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.Day;
-import com.yoga.api.model.RemoveCourseRequest;
 import com.yoga.api.model.StatusMessageResponse;
-import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
@@ -32,13 +29,12 @@ import com.yoga.api.util.UtilMethods;
 @Service
 public class AddCourseService {
 
-	
 	@Autowired
 	CourseRepository courseRepository;
 
 	@Autowired
 	LectureRepository lectureRepository;
-	
+
 	@Value("${forgot.password.email.send.from}")
 	private String forgotPasswordSendEmailFrom;
 
@@ -58,16 +54,17 @@ public class AddCourseService {
 	UserAccountEntity userAccountEntity;
 
 	List<CourseEntity> courseEntityList;
-	
+
 	@Autowired
 	SendEmailUtil sendEmailUtil;
 
-	 final String successMessage = "Course removed! ";
-	 final String failureMessage = "Course is not present! ";
+	final String successMessage = "Course removed! ";
+	final String failureMessage = "Course is not present! ";
+
+	StatusMessageResponse statusResp = new StatusMessageResponse();
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
-		
 
 		addCourseResponse = new AddCourseResponse();
 
@@ -150,8 +147,6 @@ public class AddCourseService {
 	}
 
 	public StatusMessageResponse removeCourse(Integer courseId) {
-		
-
 
 		if (Objects.isNull(courseId)) {
 			return utilMethods.errorResponse(failureMessage);
@@ -170,7 +165,6 @@ public class AddCourseService {
 
 		}
 
-		
 		try {
 			courseRepository.delete(courseEntity);
 			return utilMethods.successResponse(successMessage);
@@ -184,7 +178,10 @@ public class AddCourseService {
 
 	public StatusMessageResponse updateUserCourses(AddListOfCourse courses) throws MessagingException {
 
-		List<AddCourse> day = new ArrayList<>();
+		List<AddCourse> addCourseList = new ArrayList<>();
+
+		addCourseList.addAll(courses.getExistingCourses());
+		addCourseList.addAll(courses.getNewCourses());
 
 		if (Objects.isNull(courses)) {
 			return utilMethods.errorResponse(failureMessage);
@@ -199,7 +196,12 @@ public class AddCourseService {
 		if (Objects.isNull(userAccountEntity)) {
 			return utilMethods.errorResponse(failureMessage);
 		}
-		for (AddCourse course : courses.getCourses()) {
+
+		if (Objects.isNull(courses.getExistingCourses())) {
+			return utilMethods.errorResponse(failureMessage);
+		}
+
+		for (AddCourse course : addCourseList) {
 
 			courseEntity = new CourseEntity();
 			try {
@@ -225,17 +227,29 @@ public class AddCourseService {
 		} catch (Exception e) {
 			return utilMethods.errorResponse(failureMessage);
 		}
-		
+
+		if (Objects.isNull(userAccountEntity)) {
+			return utilMethods.errorResponse(failureMessage);
+		}
+
+		try {
+			userAccountRepository.save(userAccountEntity);
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureMessage);
+
+		}
+
 		String subject = "Courses updated";
 		String text = "Courses updated successfully";
 
-		
 		try {
-			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom, subject, text, "User courses updated! ", "User courses not updated! ");
+			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom, subject, text,
+					"User courses updated! ", "User courses not updated! ");
 		} catch (Exception e) {
 			return utilMethods.errorResponse(failureMessage);
 		}
 
 	}
+
 
 }

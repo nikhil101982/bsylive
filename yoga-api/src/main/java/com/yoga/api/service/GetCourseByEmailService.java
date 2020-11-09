@@ -18,10 +18,13 @@ import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.util.CompareDates;
 
 @Service
-public class GetCourseBasedOnUserNameService {
+public class GetCourseByEmailService {
 
 	@Autowired
 	CourseRepository courseRepository;
+
+	@Autowired
+	GetCourseFromAdminService getCourseFromAdminService;
 
 	@Autowired
 	UserAccountRepository userAccountRepository;
@@ -41,12 +44,20 @@ public class GetCourseBasedOnUserNameService {
 
 	// Gell all courses based on user
 
-	public AllUserCoursesResponse coursesByUserName(String userName) throws ParseException {
+	public AllUserCoursesResponse coursesByUserName(String userEmail, String userRole) throws ParseException {
 
 		allUserCoursesResponse = new AllUserCoursesResponse();
 
+		if (Objects.isNull(userRole) && Objects.isNull(userEmail)) {
+			return errorResponse();
+		}
+
+		if (userRole.equals(ApiConstants.ADMIN_ROLE)) {
+			return getCourseFromAdminService.coursesForAdmin();
+		}
+
 		try {
-			userAccountEntity = userAccountRepository.findByUserName(userName);
+			userAccountEntity = userAccountRepository.findByUserName(userEmail);
 		} catch (Exception e) {
 			return errorResponse();
 		}

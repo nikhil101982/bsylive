@@ -19,7 +19,7 @@ import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
-import com.yoga.api.service.GetCourseBasedOnUserNameService;
+import com.yoga.api.service.GetCourseByEmailService;
 import com.yoga.api.service.GetCourseByAdminService;
 import com.yoga.api.service.GetCourseFromAdminService;
 import com.yoga.api.service.GetCourseService;
@@ -35,7 +35,7 @@ public class GetCourseController {
 	CourseRepository courseRepository;
 	
 	@Autowired
-	GetCourseBasedOnUserNameService getCourseBasedOnUserNameService;
+	GetCourseByEmailService getCourseBasedOnUserNameService;
 	
 	@Autowired
 	UserAccountRepository userAccountRepository;
@@ -94,17 +94,17 @@ public class GetCourseController {
 	
 	
 	/*
-	 * Get All Courses by UserName without lecture details.
+	 * Get All Courses by userEmail and userRole without lecture details.
 	 */
-	@GetMapping("/coursesBasedOnUserName/{userName}")
-	public AllUserCoursesResponse coursesByUserName(@PathVariable("userName") String userName) throws Exception {
-		return getCourseBasedOnUserNameService.coursesByUserName(userName);
+	@GetMapping("/courses/{userEmail}/{userRole}")
+	public AllUserCoursesResponse coursesByUserName(@PathVariable("userEmail") String userEmail , @PathVariable("userRole") String userRole ) throws Exception {
+		return getCourseBasedOnUserNameService.coursesByUserName(userEmail , userRole);
 
 	}
 
 	
 	/*
-	 * Get All Courses
+	 * Get All Courses with course id and course name as a response
 	 */
 	@GetMapping("/coursesForAdmin")
 	public AllCoursesResponse courses() throws Exception {
@@ -112,16 +112,7 @@ public class GetCourseController {
 
 	}
 	
-	
-	
-	/*
-	 * Get All Courses for admin section
-	 */
-	@GetMapping("/courses")
-	public AllUserCoursesResponse coursesForAdmin() throws Exception {
-		return getCourseFromAdminService.coursesForAdmin();
 
-	}
 	
 	
 	
