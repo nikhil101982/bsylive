@@ -24,7 +24,7 @@ import com.yoga.api.service.SubscribeCourseByUser;
 public class AddCourseController {
 
 	@Autowired
-	SubscribeCourseByUser subscribeCourseByUser;
+	SubscribeCourseByUser registerCourses;
 
 	@Autowired
 	AddCourseService addCourseService;
@@ -37,19 +37,19 @@ public class AddCourseController {
 	 * Add course by admin
 	 */
 	
-	@PostMapping("/addCourseFromAdmin")
-	public StatusMessageResponse getCourseByDayIDAndByCourseId(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
-		return addCourseFromAdminService.addCourseFromAdmin(addCourseByDayId);
+	@PostMapping("/addCourse")
+	public StatusMessageResponse addCourse(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
+		return addCourseFromAdminService.addCourse(addCourseByDayId);
 	}
 	
 	/*
-	 * Register Courses by user in their account
+	 * Courses registration by user in their account
 	 */
 
 	@PostMapping("/registerCourses/{userEmail}")
 	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
 			@PathVariable("userEmail") String userEmail) throws Exception {
-		return subscribeCourseByUser.registerCourses(subscribeCourses, userEmail);
+		return registerCourses.registerCourses(subscribeCourses, userEmail);
 	}
 	
 	/*

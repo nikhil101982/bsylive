@@ -3,6 +3,9 @@ package com.yoga.api.util;
 import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.model.StatusMessageResponse;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class UtilMethods {
 	
 	private StatusMessageResponse statusResponse = new StatusMessageResponse();

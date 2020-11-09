@@ -48,7 +48,7 @@ public class AddCourseFromAdminService {
 	UtilMethods utilMethods = new UtilMethods();
 
 	// Add Course api
-	public StatusMessageResponse addCourseFromAdmin(AddCourseByDayId course) throws InterruptedException {
+	public StatusMessageResponse addCourse(AddCourseByDayId course) throws InterruptedException {
 
 		final String failureMessage = "course is not created !";
 		final String successMessage = " course have created successfully !";

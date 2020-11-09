@@ -17,6 +17,7 @@ import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.SendEmailUtil;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -24,6 +25,12 @@ public class AdminUserAccountService {
 
 	@Autowired
 	CourseRepository courseRepository;
+
+	@Autowired
+	SendEmailUtil sendEmailUtil;
+
+	@Value("${forgot.password.email.send.from}")
+	private String forgotPasswordSendEmailFrom;
 
 	@Autowired
 	UserAccountRepository userAccountRepository;
@@ -91,7 +98,11 @@ public class AdminUserAccountService {
 
 		try {
 
-			return sendEmail(userAccountEntity.getPassword(), userAccountEntity.getEmailId());
+			String text = "Your account has been created \n" + "Username: " + userAccountEntity.getEmailId()
+					+ "\n Password " + userAccountEntity.getPassword();
+
+			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom,
+					"Bihar yoga account", text, successResponseMessage, failureResponseMessage);
 
 		} catch (MessagingException e) {
 			return utilMethods.errorResponse("Not able to inform user by email! ");
@@ -99,23 +110,5 @@ public class AdminUserAccountService {
 		}
 
 	}
-
-	private StatusMessageResponse sendEmail(String userPassword, String emailId) throws MessagingException {
-
-		SimpleMailMessage message = new SimpleMailMessage();
-		try {
-			message.setTo(emailId);
-			message.setFrom(adminCreateAccountSendEmailFrom);
-			message.setSubject("Bihar yoga live website account created");
-			message.setText("User id: "+ emailId + "\nPassword: " + userPassword);
-			javaMailSender.send(message);
-			return utilMethods.successResponse(successResponseMessage);
-		} catch (MailException e) {
-
-			return utilMethods.errorResponse(failureResponseMessage);
-
-		}
-	}
-
 
 }

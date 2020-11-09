@@ -6,9 +6,6 @@ import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.constant.ApiConstants;
@@ -18,16 +15,15 @@ import com.yoga.api.model.ForgotPasswordRequest;
 import com.yoga.api.model.LoginResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.SendEmailUtil;
 import com.yoga.api.util.UtilMethods;
 
 @Service
 public class PasswordService {
 
 	@Autowired
-	public JavaMailSender javaMailSender;
+	SendEmailUtil sendEmailUtil;
 
-
-	
 	@Value("${forgot.password.email.send.from}")
 	private String forgotPasswordSendEmailFrom;
 
@@ -44,23 +40,6 @@ public class PasswordService {
 	String failureResponseMessage = null;
 
 	UtilMethods utilMethods = new UtilMethods();
-
-	private StatusMessageResponse sendEmail(String userPassword, String emailId) throws MessagingException {
-
-		SimpleMailMessage message = new SimpleMailMessage();
-		try {
-			message.setTo(emailId);
-			message.setFrom(forgotPasswordSendEmailFrom);
-			message.setText("password: " + userPassword);
-			message.setSubject("Bihar yoga login password");
-			javaMailSender.send(message);
-			return utilMethods.successResponse(successResponseMessage);
-		} catch (MailException e) {
-
-			return utilMethods.errorResponse(failureResponseMessage);
-
-		}
-	}
 
 	/*
 	 * Forgot Password API
@@ -89,7 +68,10 @@ public class PasswordService {
 
 		try {
 
-			return sendEmail(userAccountEntity.getPassword(), emailId);
+			String text = "password: " + userAccountEntity.getPassword();
+
+			return sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, ApiConstants.FORGOT_PASSWORD_SUBJECT,
+					text, successResponseMessage, failureResponseMessage);
 
 		} catch (MessagingException e) {
 			return utilMethods.errorResponse(failureResponseMessage);
@@ -108,7 +90,8 @@ public class PasswordService {
 
 		failureResponseMessage = "changed password failed !";
 
-		if (Objects.isNull(changePasswordRequest) || changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPassword())) {
+		if (Objects.isNull(changePasswordRequest)
+				|| changePasswordRequest.getNewPassword().equals(changePasswordRequest.getPassword())) {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
@@ -128,8 +111,8 @@ public class PasswordService {
 		boolean passwordCheck = false;
 
 		passwordCheck = userAccEntity.getPassword().equals(changePasswordRequest.getPassword());
-		
-		if(!passwordCheck) {
+
+		if (!passwordCheck) {
 			return utilMethods.errorResponse(failureResponseMessage);
 
 		}

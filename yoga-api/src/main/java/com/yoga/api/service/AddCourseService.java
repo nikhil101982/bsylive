@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.mail.MessagingException;
+
 import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.constant.ApiConstants;
@@ -23,16 +26,21 @@ import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.SendEmailUtil;
 import com.yoga.api.util.UtilMethods;
 
 @Service
 public class AddCourseService {
 
+	
 	@Autowired
 	CourseRepository courseRepository;
 
 	@Autowired
 	LectureRepository lectureRepository;
+	
+	@Value("${forgot.password.email.send.from}")
+	private String forgotPasswordSendEmailFrom;
 
 	CourseEntity courseEntity;
 
@@ -50,9 +58,16 @@ public class AddCourseService {
 	UserAccountEntity userAccountEntity;
 
 	List<CourseEntity> courseEntityList;
+	
+	@Autowired
+	SendEmailUtil sendEmailUtil;
+
+	 final String successMessage = "Course removed! ";
+	 final String failureMessage = "Course is not present! ";
 
 	// Add Course api
 	public AddCourseResponse addCourse(CourseResources course) {
+		
 
 		addCourseResponse = new AddCourseResponse();
 
@@ -135,9 +150,11 @@ public class AddCourseService {
 	}
 
 	public StatusMessageResponse removeCourse(Integer courseId) {
+		
+
 
 		if (Objects.isNull(courseId)) {
-			return utilMethods.errorResponse("Course is not present! ");
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		courseEntityList = new ArrayList<>();
@@ -145,41 +162,42 @@ public class AddCourseService {
 		try {
 			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 		} catch (Exception e) {
-			return utilMethods.errorResponse("Course is not present! ");
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		if (!Objects.isNull(courseEntity)) {
-			return utilMethods.errorResponse("Course is not present! ");
+			return utilMethods.errorResponse(failureMessage);
 
 		}
 
+		
 		try {
 			courseRepository.delete(courseEntity);
-			return utilMethods.successResponse("Course removed! ");
+			return utilMethods.successResponse(successMessage);
 
 		} catch (Exception e) {
-			return utilMethods.errorResponse("Course is not present! ");
+			return utilMethods.errorResponse(failureMessage);
 
 		}
 
 	}
 
-	public StatusMessageResponse updateUserCourses(AddListOfCourse courses) {
+	public StatusMessageResponse updateUserCourses(AddListOfCourse courses) throws MessagingException {
 
 		List<AddCourse> day = new ArrayList<>();
 
 		if (Objects.isNull(courses)) {
-			return utilMethods.errorResponse("Course is not present!");
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		try {
 			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(courses.getUserEmail());
 		} catch (Exception e) {
-			return utilMethods.errorResponse("Course is not present!");
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		if (Objects.isNull(userAccountEntity)) {
-			return utilMethods.errorResponse("Course is not present!");
+			return utilMethods.errorResponse(failureMessage);
 		}
 		for (AddCourse course : courses.getCourses()) {
 
@@ -187,26 +205,35 @@ public class AddCourseService {
 			try {
 				courseEntity = courseRepository.getCourseEntityByCourseId(course.getCourseId());
 			} catch (Exception e) {
-				return utilMethods.errorResponse("Course is not present!");
+				return utilMethods.errorResponse(failureMessage);
 			}
 
 			if (Objects.isNull(courseEntity)) {
-				return utilMethods.errorResponse("Course is not present!");
+				return utilMethods.errorResponse(failureMessage);
 			}
 
 			courseEntityList.add(courseEntity);
 		}
 
 		if (Objects.isNull(courseEntityList)) {
-			return utilMethods.errorResponse("Course is not present!");
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 		try {
 			userAccountEntity.setCourseEntity(courseEntityList);
-			return utilMethods.successResponse("Updated user courses! ");
 
 		} catch (Exception e) {
-			return utilMethods.errorResponse("Course is not present!");
+			return utilMethods.errorResponse(failureMessage);
+		}
+		
+		String subject = "Courses updated";
+		String text = "Courses updated successfully";
+
+		
+		try {
+			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom, subject, text, "User courses updated! ", "User courses not updated! ");
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureMessage);
 		}
 
 	}

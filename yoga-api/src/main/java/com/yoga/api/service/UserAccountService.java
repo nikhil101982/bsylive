@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -17,6 +20,7 @@ import com.yoga.api.model.UserAccountId;
 import com.yoga.api.model.UserAccountResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
+import com.yoga.api.util.SendEmailUtil;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -38,6 +42,12 @@ public class UserAccountService {
 	String failureResponseMessage = null;
 
 	UtilMethods utilMethods = new UtilMethods();
+	
+	@Autowired
+	SendEmailUtil sendEmailUtil;
+
+	@Value("${forgot.password.email.send.from}")
+	private String forgotPasswordSendEmailFrom;
 
 	// Create User Account
 
@@ -166,8 +176,11 @@ public class UserAccountService {
 
 	}
 
-	public StatusMessageResponse removeUser(String userEmail) {
+	public StatusMessageResponse removeUser(String userEmail) throws MessagingException {
 		
+		successResponseMessage = "Successfully bihae yoga user account removed!";
+		failureResponseMessage = "Bihae yoga user account not deleted";
+
 
 		if (Objects.isNull(userEmail)) {
 			return utilMethods.errorResponse("User id is empty! ");
@@ -183,11 +196,14 @@ public class UserAccountService {
 			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
+		
+		
 
 		if (Objects.isNull(userAccountEntity)) {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
 		
+		String emailId = userAccountEntity.getEmailId();
 		
 		try {
 			userAccountRepository.delete(userAccountEntity);
@@ -195,8 +211,12 @@ public class UserAccountService {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
-		return utilMethods.successResponse("Successfully removed user! ");
+		String text = "Your account has been deleted! ";
 
+		return  sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, "Bihar yoga account",
+				text, successResponseMessage, failureResponseMessage);
+
+		
 
 
 	}
