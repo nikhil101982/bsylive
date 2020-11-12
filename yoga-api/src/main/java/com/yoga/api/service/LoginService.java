@@ -38,36 +38,44 @@ public class LoginService {
 			return failureLoginResponse();
 
 		}
+		
+		String userID_DB = null;
+		boolean userIsLogin = false;
+		boolean password_equal = false;
+		String password_DB;
+		String password_request;
+		password_equal = false;
+
 
 		userDetail = new UserDetail();
 		loginResponse = new LoginResponse();
 
-		String userId_request = loginRequest.getUserEmail();
+		String userEmail = loginRequest.getUserEmail();
 
 		try {
-			userAccountEntity = userAccountRepository.findByEmailId(userId_request);
+			userAccountEntity = userAccountRepository.findByUserEmail(userEmail);
 		} catch (Exception e) {
 			return failureLoginResponse();
 		}
 
-		String userID_DB = userAccountEntity.getEmailId();
-		String password_DB = userAccountEntity.getPassword();
-
-		String password_request = loginRequest.getPassword();
-		boolean userIsLogin = userAccountEntity.isLogin();
-
-		boolean password_equal = false;
-
+		if (Objects.isNull(userAccountEntity)) {
+			return failureLoginResponse();
+		}
+		
+		password_DB = userAccountEntity.getPassword();
+		password_request = loginRequest.getPassword();
+		userIsLogin = userAccountEntity.getIsLogin() == ApiConstants.TRUE;
 		password_equal = password_DB.equals(password_request);
-
-		if (Objects.isNull(userAccountEntity) || userIsLogin || !password_equal
-				|| !userId_request.equals(userID_DB)) {
+		userID_DB = userAccountEntity.getUserEmail();
+		
+		if (userIsLogin || !password_equal || !userEmail.equals(userID_DB)) {
 			return failureLoginResponse();
 		}
 
 		try {
 
-			userAccountEntity.setLogin(true);
+			userAccountEntity.setIsLogin(ApiConstants.TRUE);
+
 			userAccountRepository.save(userAccountEntity);
 			userDetail.setUserEmail(loginRequest.getUserEmail());
 			userDetail.setUserName(userAccountEntity.getUserName());
@@ -80,9 +88,9 @@ public class LoginService {
 	}
 
 	private LoginResponse successLoginResponse() {
-		loginResponse.setStatus("success");
+		loginResponse.setStatus(ApiConstants.SUCCESS);
 		loginResponse.setUserDetails(userDetail);
-		loginResponse.setMessage("");
+		loginResponse.setMessage("Login successful");
 		return loginResponse;
 	}
 
@@ -101,10 +109,8 @@ public class LoginService {
 
 		}
 
-		String emailFromLoginRequest = logoutRequest.getUserEmail();
-
 		try {
-			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(emailFromLoginRequest);
+			userAccountEntity = userAccountRepository.findByUserEmail(logoutRequest.getUserEmail());
 		} catch (Exception e) {
 			return failureLogoutResponse();
 		}
@@ -113,20 +119,20 @@ public class LoginService {
 			return failureLogoutResponse();
 
 		}
+		System.out.println("user login status *********************  " + userAccountEntity.getIsLogin());
 
-		try {
-
-			if (userAccountEntity.isLogin()) {
-
-				userAccountEntity.setLogin(false);
+		if (userAccountEntity.getIsLogin().equals(ApiConstants.TRUE)) {			
+			userAccountEntity.setIsLogin(ApiConstants.FALSE);
+			try {
 				userAccountRepository.save(userAccountEntity);
-				return successlogoutResponse();
+			} catch (Exception e) {
+				return failureLogoutResponse();
+
 			}
 
-		} catch (Exception e) {
-			return failureLogoutResponse();
-
+			return successlogoutResponse();
 		}
+
 		return failureLogoutResponse();
 
 	}

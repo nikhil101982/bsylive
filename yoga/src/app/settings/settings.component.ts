@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Roles } from '../constants/roles';
+import { ServiceService } from '../service.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,21 +10,36 @@ import { Component, OnInit } from '@angular/core';
 export class SettingsComponent implements OnInit {
 
   accounts: boolean = false;
-  payment: boolean = false;
+  user: boolean = false;
 
-  constructor() { }
+  userDetails: any;
+  userRole: string;
+  enableUserSection: boolean = false;
+
+  constructor(private service: ServiceService) { }
 
   ngOnInit(): void {
     this.onClickAccounts();
+
+    this.userDetails = this.service.getUserData();
+
+    // if (this.userDetails.userRole) this.userRole = this.userDetails.userRole;
+
+    this.userRole = this.userDetails.userRole;
+
+    if (this.userRole === Roles.admin) {
+      this.enableUserSection = true;
+    }
+
   }
 
   onClickAccounts() {
     this.accounts = true;
-    this.payment = false;
+    this.user = false;
   }
 
-  onClickPayment() {
-    this.payment = true;
+  onClickUser() {
+    this.user = true;
     this.accounts = false;
   }
 

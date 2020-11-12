@@ -19,6 +19,8 @@ forgot:
       send:
         from: biharyoga123@gmail.com
         
+
+        
         
 admin:
   create:
@@ -26,6 +28,9 @@ admin:
       email:
         send:
           from: biharyoga123@gmail.com
+
+  user:
+      email: nikagrl19@gmail.com
         
 
 server:

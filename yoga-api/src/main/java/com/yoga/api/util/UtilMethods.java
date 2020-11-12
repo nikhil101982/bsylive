@@ -20,6 +20,7 @@ public class UtilMethods {
 	public StatusMessageResponse successResponse(String message) {
 		statusResponse.setMessage(message);
 		statusResponse.setStatus(ApiConstants.SUCCESS);
+		
 		return statusResponse;
 	}
 

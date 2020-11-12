@@ -9,7 +9,6 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.UserAccountEntity;
@@ -18,6 +17,7 @@ import com.yoga.api.model.CreateAccountRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.UserAccountId;
 import com.yoga.api.model.UserAccountResponse;
+import com.yoga.api.model.UserEmail;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.UserAccountRepository;
 import com.yoga.api.util.SendEmailUtil;
@@ -42,12 +42,21 @@ public class UserAccountService {
 	String failureResponseMessage = null;
 
 	UtilMethods utilMethods = new UtilMethods();
-	
+
 	@Autowired
 	SendEmailUtil sendEmailUtil;
 
 	@Value("${forgot.password.email.send.from}")
 	private String forgotPasswordSendEmailFrom;
+
+	@Value("${admin.user.email}")
+	private String adminUserEmail;
+
+	UserAccountId userAccountId;
+
+	List<UserEmail> userEmailList;
+
+	UserEmail userEmail;
 
 	// Create User Account
 
@@ -77,13 +86,15 @@ public class UserAccountService {
 
 		userAccountEntity = new UserAccountEntity();
 
-		if (createAccountRequest.getUserName().equals("admin")) {
-			userAccountEntity.setRole("admin");
+		System.out.println("email:  " + createAccountRequest.getUserEmail());
+
+		if (createAccountRequest.getUserEmail().equals(adminUserEmail)) {
+			userAccountEntity.setRole(ApiConstants.ADMIN_ROLE);
 		} else {
-			userAccountEntity.setRole("student");
+			userAccountEntity.setRole(ApiConstants.STUDENT_ROLE);
 		}
 
-		userAccountEntity.setEmailId(createAccountRequest.getUserEmail());
+		userAccountEntity.setUserEmail(createAccountRequest.getUserEmail());
 		userAccountEntity.setUserName(createAccountRequest.getUserName());
 		userAccountEntity.setPassword(createAccountRequest.getPassword());
 
@@ -127,19 +138,20 @@ public class UserAccountService {
 
 			createAccRequest = new CreateAccountRequest();
 			createAccRequest.setPassword(userAccEntity.getPassword());
-			createAccRequest.setUserEmail(userAccEntity.getEmailId());
+			createAccRequest.setUserEmail(userAccEntity.getUserEmail());
 			createAccRequest.setUserName(userAccEntity.getUserName());
-			createAccRequest.setLogin(userAccEntity.isLogin());
+			createAccRequest.setIsLogin(userAccEntity.getIsLogin());
 			createAccRequest.setRole(userAccEntity.getRole());
+			
 			createAccountRequestList.add(createAccRequest);
 
 		}
-		
+
 		if (Objects.isNull(createAccountRequestList)) {
 			return errorResponse(failureResponseMessage);
 		}
 
-		return successResponse(createAccountRequestList ,successResponseMessage);
+		return successResponse(createAccountRequestList, successResponseMessage);
 
 	}
 
@@ -158,29 +170,64 @@ public class UserAccountService {
 
 		return userAccountResponse;
 	}
-	
-	
 
-	public List<UserAccountId> getUserEmailId() {
+	public UserAccountId getUserEmailId() {
 
-		UserAccountId userAccountId;
-		List<UserAccountId> userAccountIdList = new ArrayList<>();
-		List<UserAccountEntity> userAccountEntityList = userAccountRepository.findAll();
+		List<UserAccountEntity> userAccountEntityList = null;
 
-		for (UserAccountEntity userAccountEntity : userAccountEntityList) {
-			userAccountId = new UserAccountId();
-			userAccountId.setUserEmail(userAccountEntity.getEmailId());
-			userAccountIdList.add(userAccountId);
+		userEmailList = new ArrayList<>();
+
+		try {
+			userAccountEntityList = userAccountRepository.findAll();
+		} catch (Exception e) {
+			userAccountEntityList = new ArrayList<>();
+			return userAccountIdErrorResponse(userAccountEntityList);
 		}
-		return userAccountIdList;
+
+		if (Objects.isNull(userAccountEntityList)) {
+			userAccountEntityList = new ArrayList<>();
+			return userAccountIdErrorResponse(userAccountEntityList);
+		}
+		if (!Objects.isNull(userAccountEntityList)) {
+			return userAccountIdSuccessResponse(userAccountEntityList);
+		}
+		return userAccountId;
 
 	}
 
+	private UserAccountId userAccountIdSuccessResponse(List<UserAccountEntity> userAccountEntityList) {
+
+		userAccountId = new UserAccountId();
+
+		userAccountId.setMessage("User emails !");
+		userAccountId.setStatus(ApiConstants.SUCCESS);
+
+		for (UserAccountEntity userAccEntity : userAccountEntityList) {
+			
+			userEmail = new UserEmail();
+			userEmail.setUserEmail(userAccEntity.getUserEmail());
+			
+			userEmailList.add(userEmail);
+		}
+		userAccountId.setUserEmails(userEmailList);
+		return userAccountId;
+	}
+
+	private UserAccountId userAccountIdErrorResponse(List<UserAccountEntity> userAccountEntityList) {
+
+		userAccountId = new UserAccountId();
+		userEmailList = new ArrayList<>();
+
+		userAccountId.setMessage("User is not present! ");
+		userAccountId.setStatus(ApiConstants.FAILURE);
+
+		return userAccountId;
+	}
+
 	public StatusMessageResponse removeUser(String userEmail) throws MessagingException {
-		
+
 		successResponseMessage = "Successfully bihae yoga user account removed!";
 		failureResponseMessage = "Bihae yoga user account not deleted";
-
 
 		if (Objects.isNull(userEmail)) {
 			return utilMethods.errorResponse("User id is empty! ");
@@ -196,15 +243,13 @@ public class UserAccountService {
 			return utilMethods.errorResponse(failureResponseMessage);
 
 		}
-		
-		
 
 		if (Objects.isNull(userAccountEntity)) {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
-		
-		String emailId = userAccountEntity.getEmailId();
-		
+
+		String emailId = userAccountEntity.getUserEmail();
+
 		try {
 			userAccountRepository.delete(userAccountEntity);
 		} catch (Exception e) {
@@ -213,15 +258,9 @@ public class UserAccountService {
 
 		String text = "Your account has been deleted! ";
 
-		return  sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, "Bihar yoga account",
-				text, successResponseMessage, failureResponseMessage);
-
-		
-
+		return sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, "Bihar yoga account", text,
+				successResponseMessage, failureResponseMessage);
 
 	}
 
 }
-
-
-

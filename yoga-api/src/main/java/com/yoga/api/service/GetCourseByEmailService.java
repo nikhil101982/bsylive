@@ -51,16 +51,22 @@ public class GetCourseByEmailService {
 		if (Objects.isNull(userRole) && Objects.isNull(userEmail)) {
 			return errorResponse();
 		}
-
-		if (userRole.equals(ApiConstants.ADMIN_ROLE)) {
-			return getCourseFromAdminService.coursesForAdmin();
-		}
-
+		
 		try {
-			userAccountEntity = userAccountRepository.findByUserName(userEmail);
+			userAccountEntity = userAccountRepository.findByUserEmail(userEmail);
 		} catch (Exception e) {
 			return errorResponse();
 		}
+
+		if (userAccountEntity.getRole().equals(ApiConstants.ADMIN_ROLE)) {
+			return getCourseFromAdminService.coursesForAdmin();
+		}
+
+//		try {
+//			userAccountEntity = userAccountRepository.findByUserName(userEmail);
+//		} catch (Exception e) {
+//			return errorResponse();
+//		}
 
 		if (Objects.isNull(userAccountEntity)) {
 			return errorResponse();

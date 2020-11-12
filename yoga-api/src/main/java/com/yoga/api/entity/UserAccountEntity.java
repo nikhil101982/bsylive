@@ -32,8 +32,8 @@ public class UserAccountEntity {
 
 	String userName;
 	String password;
-	String emailId;
-	boolean isLogin;
+	String userEmail;
+	String isLogin;
 	String role;
 	String loginStartDate;
 

@@ -49,7 +49,7 @@ public class UserAccountController {
 		return userAccountRepository.findAll();
 
 	}
-
+	
 	@PostMapping(value = "/removeUser/{userEmail}")
 	public StatusMessageResponse removeUser(@PathVariable("userEmail") String userEmail) throws Exception {
 		return userAccountService.removeUser(userEmail);
@@ -57,7 +57,7 @@ public class UserAccountController {
 	}
 
 	@GetMapping(value = "/userEmails")
-	List<UserAccountId> getUserEmailId() {
+	UserAccountId getUserEmailId() {
 		return userAccountService.getUserEmailId();
 
 	}

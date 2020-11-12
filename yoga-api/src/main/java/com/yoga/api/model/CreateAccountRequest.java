@@ -12,8 +12,9 @@ public class CreateAccountRequest {
 	String userName;
 	String password;
 	String userEmail;
-	boolean isLogin;
+	String isLogin;
 	String role;
+
 
 
 

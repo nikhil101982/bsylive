@@ -9,15 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.model.AddCourseByDayId;
-import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.AddListOfCourse;
-import com.yoga.api.model.CourseResources;
-import com.yoga.api.model.RemoveCourseRequest;
-import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.model.RegisterCourses;
+import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
 import com.yoga.api.service.SubscribeCourseByUser;
+import com.yoga.api.service.UpdateCourseService;
 
 @RestController
 @CrossOrigin
@@ -32,6 +30,9 @@ public class AddCourseController {
 	
 	@Autowired
 	AddCourseFromAdminService addCourseFromAdminService;
+	
+	@Autowired
+	UpdateCourseService updateCourseService;
 	
 	/*
 	 * Add course by admin
@@ -57,6 +58,7 @@ public class AddCourseController {
 	 */
 	
 	@PostMapping("/removeCourse/{courseId}")
+	@CrossOrigin(origins="*" , allowedHeaders="*")
 	public StatusMessageResponse removeCourse(@PathVariable("courseId") Integer courseId) throws Exception {	
 		return addCourseService.removeCourse(courseId);
 	}
@@ -66,8 +68,9 @@ public class AddCourseController {
 	 */
 	
 	@PutMapping("/updateUserCourses")
+	@CrossOrigin(origins="*" , allowedHeaders="*")
 	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {	
-		return addCourseService.updateUserCourses(course);
+		return updateCourseService.updateUserCourses(course);
 	}
 
 }

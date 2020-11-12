@@ -8,15 +8,20 @@
                         <span class="label-name-sty">Account</span></span>
                 </li>
 
-                <!-- <li class="nav-item" [ngClass]="{'active-section' : payment}"><span class="label"
-                        (click)="onClickPayment()"> <span class="fa fa-user fs-26"></span>
-                        <span class="label-name-sty">Payment</span></span>
-                </li> -->
+                <li *ngIf="enableUserSection" class="nav-item" [ngClass]="{'active-section' : user}"><span class="label"
+                        (click)="onClickUser()">
+                        <span class="fa fa-user fs-26"></span>
+                        <span class="label-name-sty">User</span></span>
+                </li>
             </ul>
         </div>
 
-        <div class="col-md-9 body-section">
+        <div class="col-md-9 body-section" *ngIf="accounts">
             <app-account-settings></app-account-settings>
+        </div>
+
+        <div class="col-md-9 body-section" *ngIf="user">
+            <app-user></app-user>
         </div>
     </div>
 </div>

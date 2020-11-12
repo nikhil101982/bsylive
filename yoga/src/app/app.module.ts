@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { SettingsComponent } from './settings/settings.component';
+import { UserComponent } from './settings/user/user.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { SettingsComponent } from './settings/settings.component';
     HomeComponent,
     AccountSettingsComponent,
     SettingsComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

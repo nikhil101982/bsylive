@@ -25,8 +25,8 @@ import lombok.ToString;
 public class AddListOfCourse {
 
 	private String userEmail;
-	private List<AddCourse> existingCourses = new ArrayList<>();
-	private List<AddCourse> newCourses = new ArrayList<>();
+	private List<AddCourse> existingCourses;
+	private List<AddCourse> newCourses;
 
 
 }

@@ -9,10 +9,7 @@ public interface ApiConstants {
 	String ADMIN_ROLE = "admin";
 	String STUDENT_ROLE = "student";
 
+	String TRUE = "true";
+	String FALSE = "false";
 
-	
-
-	
-
-	
 }

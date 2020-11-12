@@ -54,9 +54,8 @@ public class LoginController {
 	public StatusMessageResponse logout(final @RequestBody LogoutRequest logoutRequest)
 			throws Exception {
 		
-		StatusMessageResponse logoutResponse =  loginService.logout(logoutRequest);
+		return loginService.logout(logoutRequest);
 		
-		return logoutResponse;
 	}
 	
 	

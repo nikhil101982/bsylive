@@ -118,12 +118,11 @@ public class PasswordService {
 		}
 
 		try {
-			if (passwordCheck && userAccEntity.isLogin()) {
+			if (passwordCheck && userAccEntity.getIsLogin().equals(ApiConstants.TRUE)) {
 
 				userAccEntity.setPassword(changePasswordRequest.getNewPassword());
-				userAccEntity.setLogin(false);
+				userAccEntity.setIsLogin(ApiConstants.FALSE);
 				userAccountRepository.save(userAccEntity);
-
 				return utilMethods.successResponse(successResponseMessage);
 
 			}

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,7 @@ import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.entity.UserAccountEntity;
-import com.yoga.api.model.AddCourse;
 import com.yoga.api.model.AddCourseResponse;
-import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CourseResources;
 import com.yoga.api.model.Day;
 import com.yoga.api.model.StatusMessageResponse;
@@ -175,81 +171,5 @@ public class AddCourseService {
 		}
 
 	}
-
-	public StatusMessageResponse updateUserCourses(AddListOfCourse courses) throws MessagingException {
-
-		List<AddCourse> addCourseList = new ArrayList<>();
-
-		addCourseList.addAll(courses.getExistingCourses());
-		addCourseList.addAll(courses.getNewCourses());
-
-		if (Objects.isNull(courses)) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		try {
-			userAccountEntity = userAccountRepository.getUserAccountEntityByEmail(courses.getUserEmail());
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		if (Objects.isNull(userAccountEntity)) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		if (Objects.isNull(courses.getExistingCourses())) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		for (AddCourse course : addCourseList) {
-
-			courseEntity = new CourseEntity();
-			try {
-				courseEntity = courseRepository.getCourseEntityByCourseId(course.getCourseId());
-			} catch (Exception e) {
-				return utilMethods.errorResponse(failureMessage);
-			}
-
-			if (Objects.isNull(courseEntity)) {
-				return utilMethods.errorResponse(failureMessage);
-			}
-
-			courseEntityList.add(courseEntity);
-		}
-
-		if (Objects.isNull(courseEntityList)) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		try {
-			userAccountEntity.setCourseEntity(courseEntityList);
-
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		if (Objects.isNull(userAccountEntity)) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-		try {
-			userAccountRepository.save(userAccountEntity);
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
-
-		}
-
-		String subject = "Courses updated";
-		String text = "Courses updated successfully";
-
-		try {
-			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom, subject, text,
-					"User courses updated! ", "User courses not updated! ");
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
-		}
-
-	}
-
 
 }

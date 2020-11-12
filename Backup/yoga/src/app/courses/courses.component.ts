@@ -11,8 +11,6 @@ export class CoursesComponent implements OnInit {
   constructor(private service: ServiceService) { }
 
   coursesList: any;
-  enableCourses: boolean = false;
-  coursesMsg: string;
 
   ngOnInit() {
     this.getCoursesList();
@@ -20,13 +18,8 @@ export class CoursesComponent implements OnInit {
 
   getCoursesList() {
     this.service.getCoursesData().subscribe(res => {
-      this.enableCourses = false;
       this.coursesList = res['courses'];
       console.log("courses list", res);
-      if(res['courses'].length === 0) {
-      this.enableCourses = true;
-      this.coursesMsg = res['message'];
-      }
     })
   }
 

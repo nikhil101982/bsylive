@@ -86,7 +86,7 @@ public class AdminUserAccountService {
 			userAccountEntity.setRole("student");
 		}
 
-		userAccountEntity.setEmailId(createAccountRequest.getUserEmail());
+		userAccountEntity.setUserEmail(createAccountRequest.getUserEmail());
 		userAccountEntity.setUserName(createAccountRequest.getUserName());
 		userAccountEntity.setPassword(createAccountRequest.getPassword());
 
@@ -98,10 +98,10 @@ public class AdminUserAccountService {
 
 		try {
 
-			String text = "Your account has been created \n" + "Username: " + userAccountEntity.getEmailId()
+			String text = "Your account has been created \n" + "Username: " + userAccountEntity.getUserEmail()
 					+ "\n Password " + userAccountEntity.getPassword();
 
-			return sendEmailUtil.sendEmail(userAccountEntity.getEmailId(), forgotPasswordSendEmailFrom,
+			return sendEmailUtil.sendEmail(userAccountEntity.getUserEmail(), forgotPasswordSendEmailFrom,
 					"Bihar yoga account", text, successResponseMessage, failureResponseMessage);
 
 		} catch (MessagingException e) {

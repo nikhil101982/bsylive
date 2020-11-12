@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,10 +46,44 @@ export class ServiceService {
   }
 
   getCoursesData() {
-    let link = `${this.url}coursesBasedOnUserName/${this.getUserData().userName}`
+    let link = `${this.url}courses/${this.getUserData().userEmail}/${this.getUserData().userRole}`
     return this.http.get(link, this.requestHeaders);
     // return this.http.get('./assets/jsons/courses.json')
   }
+
+
+  // for admin
+
+  getAllCourses() {
+    let link = `${this.url}coursesForAdmin`
+    return this.http.get(link, this.requestHeaders);
+  }
+
+  getAllEmails() {
+    let link = `${this.url}userEmails`
+    return this.http.get(link, this.requestHeaders);
+  }
+
+  getSelectedEmailCourses(useremail) {
+    let link = `${this.url}courses/${useremail}/${this.getUserData().userRole}`
+    return this.http.get(link, this.requestHeaders);
+  }
+
+  deleteUser(useremail) {
+    let link = `${this.url}removeUser/${useremail}`
+    return this.http.post(link, this.requestHeaders);
+  }
+
+  updateUserCoursesByAdmin(params) {
+    return this.http.put(this.url + 'updateUserCourses', params, this.requestHeaders)
+  }
+
+  createAccountByAdmin(params) {
+    return this.http.post(this.url + 'createAccountByAdmin', params, this.requestHeaders);
+  }
+
+  //
+
 
   uploadFile(file: File) {
     const endpoint = 'url';
@@ -56,6 +91,8 @@ export class ServiceService {
     formData.append('fileKey', file, file.name);
     return this.http.post(endpoint, formData);
   }
+
+  // login component
 
   getLogInData(params) {
     return this.http.post(this.url + 'login', params, this.requestHeaders);
@@ -77,4 +114,5 @@ export class ServiceService {
     return this.http.post(this.url + 'changePassword', params, this.requestHeaders)
   }
 
+  //
 }
