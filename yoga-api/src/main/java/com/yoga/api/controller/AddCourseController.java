@@ -14,6 +14,7 @@ import com.yoga.api.model.RegisterCourses;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
+import com.yoga.api.service.AddCourseWithLectureDetailsService;
 import com.yoga.api.service.SubscribeCourseByUser;
 import com.yoga.api.service.UpdateCourseService;
 
@@ -34,6 +35,8 @@ public class AddCourseController {
 	@Autowired
 	UpdateCourseService updateCourseService;
 	
+	@Autowired
+	AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
 	/*
 	 * Add course by admin
 	 */
@@ -71,6 +74,15 @@ public class AddCourseController {
 	@CrossOrigin(origins="*" , allowedHeaders="*")
 	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {	
 		return updateCourseService.updateUserCourses(course);
+	}
+	
+	/*
+	 * Add course by admin
+	 */
+	
+	@PostMapping("/addCourseWithLectureDetails")
+	public StatusMessageResponse addCourseWithLectureDetails(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
+		return addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
 	}
 
 }
