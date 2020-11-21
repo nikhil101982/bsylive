@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.yoga.api.model.Day;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,9 +24,15 @@ import lombok.ToString;
 public class AddCourseByDayId {
 
 	private String courseName;
-	private String couseDuration;
+	private int couseDuration;
 	private String startDate;
+	private String endDate;
+	private String language;
+	private Integer courseId;
 
 	private List<DayByCourseId> day = new ArrayList<>();
+	public String status;;
+	public String message;
+
 
 }

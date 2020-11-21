@@ -1,16 +1,9 @@
 package com.yoga.api.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -40,11 +33,6 @@ public class LectureEntity {
 	public int sNo;
 
 
-	@Embedded
-	@ElementCollection
-	@OneToMany(targetEntity = LectureTypeEntity.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "dl_fk", referencedColumnName = "lectureId")
-	private List<LectureTypeEntity> lectureTypeEntity;
 
 
 }

@@ -14,6 +14,10 @@ public interface DayRepository extends JpaRepository<DayEntity, Integer> {
 	
 	@Query("SELECT c FROM DayEntity c WHERE c.dayId = ?1")
 	DayEntity getDayEntityByDayId(Integer dayId);
+	
+	@Query("SELECT c FROM DayEntity c WHERE c.dayName = ?1")
+	DayEntity getDayEntityByDayName(String dayName);
+
 
 	
 }

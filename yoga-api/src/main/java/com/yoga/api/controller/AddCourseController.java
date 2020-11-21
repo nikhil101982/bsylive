@@ -1,5 +1,7 @@
 package com.yoga.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,14 +10,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yoga.api.model.AddCourseAdminRequest;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddListOfCourse;
+import com.yoga.api.model.CoursesId;
 import com.yoga.api.model.RegisterCourses;
 import com.yoga.api.model.StatusMessageResponse;
+import com.yoga.api.service.AddCourseAdminService;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
-import com.yoga.api.service.AddCourseWithLectureDetailsService;
 import com.yoga.api.service.SubscribeCourseByUser;
+import com.yoga.api.service.UpdateCourService;
 import com.yoga.api.service.UpdateCourseService;
 
 @RestController
@@ -27,25 +32,35 @@ public class AddCourseController {
 
 	@Autowired
 	AddCourseService addCourseService;
-	
-	
+
 	@Autowired
 	AddCourseFromAdminService addCourseFromAdminService;
-	
+
 	@Autowired
 	UpdateCourseService updateCourseService;
+
+	@Autowired
+	AddCourseAdminService addCourseAdminService;
 	
 	@Autowired
-	AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
+	UpdateCourService updateCourService;
+
+	// @Autowired
+	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
 	/*
 	 * Add course by admin
 	 */
-	
-	@PostMapping("/addCourse")
-	public StatusMessageResponse addCourse(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
+
+	@PostMapping("/addCourseTemp")
+	public StatusMessageResponse addCourseTemp(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {
 		return addCourseFromAdminService.addCourse(addCourseByDayId);
 	}
-	
+
+	@PostMapping("/addCourse")
+	public StatusMessageResponse addCourse(@RequestBody AddCourseAdminRequest addCourseAdminRequest) throws Exception {
+		return addCourseAdminService.addCourse(addCourseAdminRequest);
+	}
+
 	/*
 	 * Courses registration by user in their account
 	 */
@@ -55,34 +70,44 @@ public class AddCourseController {
 			@PathVariable("userEmail") String userEmail) throws Exception {
 		return registerCourses.registerCourses(subscribeCourses, userEmail);
 	}
-	
+
 	/*
 	 * Remove Courses by admin
 	 */
-	
-	@PostMapping("/removeCourse/{courseId}")
-	@CrossOrigin(origins="*" , allowedHeaders="*")
-	public StatusMessageResponse removeCourse(@PathVariable("courseId") Integer courseId) throws Exception {	
-		return addCourseService.removeCourse(courseId);
+
+	@PostMapping("/removeCourse")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public StatusMessageResponse removeCourse(@RequestBody List<CoursesId> removeCoursesReq) throws Exception {
+		return addCourseService.removeCourse(removeCoursesReq);
 	}
-	
+
 	/*
 	 * Update Courses by admin in user profile
 	 */
-	
+
 	@PutMapping("/updateUserCourses")
-	@CrossOrigin(origins="*" , allowedHeaders="*")
-	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public StatusMessageResponse updateUserCourses(@RequestBody AddListOfCourse course) throws Exception {
 		return updateCourseService.updateUserCourses(course);
 	}
-	
+
 	/*
 	 * Add course by admin
 	 */
+
+	// @PostMapping("/addCourseWithLectureDetails")
+	// public StatusMessageResponse addCourseWithLectureDetails(@RequestBody
+	// AddCourseByDayId addCourseByDayId) throws Exception {
+	// return
+	// addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
+	// }
 	
-	@PostMapping("/addCourseWithLectureDetails")
-	public StatusMessageResponse addCourseWithLectureDetails(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {	
-		return addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
+	@PutMapping("/updateCourse/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
+		return updateCourService.updateCourse(courseId);
+		
+		
 	}
 
 }

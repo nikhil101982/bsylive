@@ -184,13 +184,31 @@ export class UserComponent implements OnInit {
     }
 
     if (section === 'existingCourse') {
-      console.log("existingCourse", section);
-      // this.existingCouresSelectedList.push(item);
-    }
+    var index;
+   this.existingCouresSelectedList = this.userCourses;
+       console.log("existingCourse", section, this.userCourses);
+       this.userCourses.map((data, i) =>{
+      if(data.courseId == item.courseId){
+      console.log("index ==== ", data, i)
+index = i
+      }
+      })
+      this.existingCouresSelectedList.splice(index, 1);
+      console.log("final list = ", this.existingCouresSelectedList)
+     }
 
     if (section === 'allCourses') {
-      console.log("allCourses", section);
-      // this.allCoursesSelectedList.push(item);
+    var index; 
+    this.allCoursesSelectedList= this.allCourses;
+      console.log("allCourses", section, this.allCourses);
+      this.allCourses.map((course, i) => {
+      if(course.courseId == item.courseid){
+index = i
+      }
+      })
+     //  const index = this.allCoursesSelectedList.findIndex(element => element.courseId === item.courseId);
+      this.allCoursesSelectedList.splice(index, 1);
+      console.log("all courses final list = ", this.allCoursesSelectedList)
     }
   }
 

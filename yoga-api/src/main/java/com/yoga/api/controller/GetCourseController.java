@@ -1,7 +1,6 @@
 package com.yoga.api.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.model.AllCoursesResponse;
-import com.yoga.api.model.AllUserCourses;
 import com.yoga.api.model.AllUserCoursesResponse;
 import com.yoga.api.model.DayByCourseId;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.UserAccountRepository;
-import com.yoga.api.service.GetCourseByEmailService;
 import com.yoga.api.service.GetCourseByAdminService;
+import com.yoga.api.service.GetCourseByEmailService;
 import com.yoga.api.service.GetCourseFromAdminService;
 import com.yoga.api.service.GetCourseService;
 
@@ -52,6 +50,10 @@ public class GetCourseController {
 	
 	@Autowired
 	GetCourseFromAdminService getCourseFromAdminService;
+	
+	//@Autowired
+	//AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
+	/*
 
 	
 	/*
@@ -113,6 +115,12 @@ public class GetCourseController {
 	}
 	
 
+
+//	@GetMapping("/lectureSessionList")
+//	public List<LectureSessionEntity> lectureSessionList() throws Exception {
+//		return addCourseWithLectureDetailsService.lectureSessionList();
+//
+//	}
 	
 	
 	

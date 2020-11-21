@@ -14,6 +14,7 @@ import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.entity.UserAccountEntity;
 import com.yoga.api.model.AddCourseResponse;
 import com.yoga.api.model.CourseResources;
+import com.yoga.api.model.CoursesId;
 import com.yoga.api.model.Day;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
@@ -142,33 +143,23 @@ public class AddCourseService {
 		return addCourseResponse;
 	}
 
-	public StatusMessageResponse removeCourse(Integer courseId) {
+	public StatusMessageResponse removeCourse(List<CoursesId> coursesIdList) {
 
-		if (Objects.isNull(courseId)) {
+		if (Objects.isNull(coursesIdList)) {
 			return utilMethods.errorResponse(failureMessage);
 		}
 
-		courseEntityList = new ArrayList<>();
-
-		try {
-			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
+		for (CoursesId coursesId : coursesIdList) {
+			try {
+				courseEntity = courseRepository.getCourseEntityByCourseId(coursesId.getCourseId());
+				courseRepository.delete(courseEntity);
+				return utilMethods.successResponse(successMessage);
+			} catch (Exception e) {
+				return utilMethods.errorResponse(failureMessage);
+			}
 		}
+		return utilMethods.successResponse(successMessage);
 
-		if (!Objects.isNull(courseEntity)) {
-			return utilMethods.errorResponse(failureMessage);
-
-		}
-
-		try {
-			courseRepository.delete(courseEntity);
-			return utilMethods.successResponse(successMessage);
-
-		} catch (Exception e) {
-			return utilMethods.errorResponse(failureMessage);
-
-		}
 
 	}
 

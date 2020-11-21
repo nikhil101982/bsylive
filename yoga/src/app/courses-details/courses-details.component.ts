@@ -98,6 +98,10 @@ export class CoursesDetailsComponent implements OnInit {
     }
   }
 
+  clearIframeLink() {
+    this.iFrameDynamicLink = "";
+  }
+
   onClickCancelLecture() {
     this.showIframe = false;
   }

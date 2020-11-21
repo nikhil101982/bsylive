@@ -33,6 +33,7 @@ public class CourseEntity {
 	public int couseDuration;
 	public String startDate;
 	public String language;
+	public String endDate;
 
 
 	@Embedded
@@ -40,5 +41,9 @@ public class CourseEntity {
 	@OneToMany(targetEntity = DayEntity.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "cd_fk", referencedColumnName = "courseId")
 	private List<DayEntity> dayEntity;
+	
+	
+	
+	
 
 }
