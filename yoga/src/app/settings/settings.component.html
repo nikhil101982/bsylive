@@ -8,10 +8,15 @@
                         <span class="label-name-sty">Account</span></span>
                 </li>
 
-                <li *ngIf="enableUserSection" class="nav-item" [ngClass]="{'active-section' : user}"><span class="label"
+                <li  class="nav-item" [ngClass]="{'active-section' : user}"><span class="label"
                         (click)="onClickUser()">
                         <span class="fa fa-user fs-26"></span>
                         <span class="label-name-sty">User</span></span>
+                </li>
+
+                <li class="nav-item" [ngClass]="{'active-section' : adminCourses}"><span class="label"
+                        (click)="onClickAdminCourse()"> <span class="fa fa-book fs-26"></span>
+                        <span class="label-name-sty">Courses</span></span>
                 </li>
             </ul>
         </div>
@@ -22,6 +27,10 @@
 
         <div class="col-md-9 body-section" *ngIf="user">
             <app-user></app-user>
+        </div>
+
+        <div class="col-md-9 body-section" *ngIf="adminCourses">
+            <app-admin-course-section></app-admin-course-section>
         </div>
     </div>
 </div>

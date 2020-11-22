@@ -34,35 +34,41 @@ public class UserAccountController {
 	
 
 	@PostMapping("/createAccount")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse createUserAccount(final @RequestBody CreateAccountReq createAccountRequest)
 			throws Exception {
 		return userAccountService.createUserAccount(createAccountRequest);
 	}
 
 	@GetMapping("/userAccounts")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public UserAccountResponse userAccounts() throws Exception {
 		return userAccountService.userAccounts();
 	}
 
 	@GetMapping(value = "/allUserAccountEntityDetails")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public List<UserAccountEntity> getUserAccountEntityDetails() throws Exception {
 		return userAccountRepository.findAll();
 
 	}
 	
 	@PostMapping(value = "/removeUser/{userEmail}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse removeUser(@PathVariable("userEmail") String userEmail) throws Exception {
 		return userAccountService.removeUser(userEmail);
 
 	}
 
 	@GetMapping(value = "/userEmails")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	UserAccountId getUserEmailId() {
 		return userAccountService.getUserEmailId();
 
 	}
 	
 	@PostMapping("/createAccountByAdmin")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse createAccountByAdmin(final @RequestBody CreateAccountReq createAccountRequest)
 			throws Exception {
 		return adminUserAccountService.createAccountByAdmin(createAccountRequest);

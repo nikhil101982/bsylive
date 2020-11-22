@@ -11,6 +11,7 @@ export class SettingsComponent implements OnInit {
 
   accounts: boolean = false;
   user: boolean = false;
+  adminCourses: boolean = false;
 
   userDetails: any;
   userRole: string;
@@ -23,23 +24,28 @@ export class SettingsComponent implements OnInit {
 
     this.userDetails = this.service.getUserData();
 
-    // if (this.userDetails.userRole) this.userRole = this.userDetails.userRole;
-
     this.userRole = this.userDetails.userRole;
 
     if (this.userRole === Roles.admin) {
       this.enableUserSection = true;
     }
-
   }
 
   onClickAccounts() {
     this.accounts = true;
     this.user = false;
+    this.adminCourses = false;
   }
 
   onClickUser() {
     this.user = true;
+    this.accounts = false;
+    this.adminCourses = false;
+  }
+
+  onClickAdminCourse() {
+    this.adminCourses = true;
+    this.user = false;
     this.accounts = false;
   }
 

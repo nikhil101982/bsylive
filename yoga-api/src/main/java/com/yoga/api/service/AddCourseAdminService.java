@@ -1,12 +1,16 @@
 package com.yoga.api.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yoga.api.entity.CourseEntity;
+import com.yoga.api.entity.DayEntity;
 import com.yoga.api.model.AddCourseAdminRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
+import com.yoga.api.repository.DayRepository;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -14,8 +18,17 @@ public class AddCourseAdminService {
 
 	@Autowired
 	CourseRepository courseRepository;
+	
+	@Autowired
+	DayRepository dayRepository;
 
 	CourseEntity courseEntity;
+	
+	List<DayEntity> dayEntityList;
+
+	DayEntity dayEntity;
+	
+	
 
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
@@ -37,7 +50,7 @@ public class AddCourseAdminService {
 		try {
 
 			courseEntity = courseRepository.getCourseByCourseNameAndStartDateAndCouseDurationAndLanguage(
-					course.getCourseName(), course.getStartDate(), course.getCouseDuration(), course.getLanguage());
+					course.getCourseName(), course.getStartDate(), course.getDuration(), course.getLanguage());
 		} catch (Exception e) {
 			return utilMethods.errorResponse(failureMessage);
 		}
@@ -55,11 +68,12 @@ public class AddCourseAdminService {
 		try {
 			courseEntity = new CourseEntity();
 			courseEntity.setCourseName(course.getCourseName());
-			courseEntity.setCouseDuration(course.getCouseDuration());
+			courseEntity.setCouseDuration(course.getDuration());
 			courseEntity.setLanguage(course.getLanguage());
 			courseEntity.setStartDate(course.getStartDate());
 			courseEntity.setEndDate(course.getEndDate());
-
+			courseEntity.setDayEntity(createDayEntityList(course));
+			
 			if (!Objects.isNull(courseEntity)) {
 				courseRepository.save(courseEntity);
 			}
@@ -69,6 +83,27 @@ public class AddCourseAdminService {
 			return utilMethods.errorResponse(failureMessage);
 
 		}
+	}
+
+	private List<DayEntity> createDayEntityList(AddCourseAdminRequest course) {
+
+		dayEntityList = new ArrayList<>();
+		
+		for (int i = 1; i <= course.getDuration(); i++) {
+			
+			dayEntity = new DayEntity();
+			
+			String dayName = "Day".concat(Integer.toString(i));
+			
+			dayEntity.setDayName(dayName);
+			dayEntityList.add(dayEntity);
+		}
+		
+		if (!Objects.isNull(dayEntityList)) {
+			dayRepository.saveAll(dayEntityList);
+		}
+		
+		return dayEntityList;
 	}
 
 }

@@ -1,12 +1,8 @@
 package com.yoga.api.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.yoga.api.model.Day;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -24,7 +20,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class CreateLectureRequest {
 
-	private List<Integer> dayIds = new ArrayList<>();
+	private List<DayId> dayIds;
 	public Integer fromDayId;;
 	public Integer toDayId;
 	private String lectureName;
@@ -34,6 +30,9 @@ public class CreateLectureRequest {
 	private String videoIframeDynamicLink;
 	private String liveIframeDynamicLink;
 	private Integer courseId;
+	
+	private final static long serialVersionUID = 2177644673242063512L;
+
 	
 
 

@@ -35,11 +35,13 @@ public class LectureController {
 	 */
 
 	@GetMapping(value = "/getLectures")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public List<LectureEntity> getLectures() throws Exception {
 		return lecRepository.findAll();
 	}
 	
 	@PostMapping("/createLecture")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse createLecture(@RequestBody CreateLectureRequest createLectureRequest) throws Exception {
 		return lectureAdminService.createLecture(createLectureRequest);
 	}

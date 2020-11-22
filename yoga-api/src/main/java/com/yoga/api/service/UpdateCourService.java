@@ -37,7 +37,7 @@ public class UpdateCourService {
 
 	@Autowired
 	DayRepository dayRepository;
-	
+
 	@Autowired
 	UserAccountRepository userAccountRepository;
 
@@ -129,7 +129,7 @@ public class UpdateCourService {
 		dayEntityList = new ArrayList<>();
 		lecEntityList = new ArrayList<>();
 
-		if (courseEntity.getDayEntity().size()==0) {
+		if (courseEntity.getDayEntity().size() == 0) {
 
 			for (int i = 1; i < courseEntity.getCouseDuration(); i++) {
 
@@ -138,15 +138,17 @@ public class UpdateCourService {
 				dayEntity = new DayEntity();
 				dayEntity.setDayName(dayName);
 				dayEntityList.add(dayEntity);
+				dayRepository.save(dayEntity);
 
 				dayByCourseId = new DayByCourseId();
 				dayByCourseId.setDayName(dayName);
+				dayByCourseId.setDayId(dayEntity.getDayId());
 				dayByCourseIdList.add(dayByCourseId);
 
 			}
 
 			try {
-				dayRepository.saveAll(dayEntityList);
+				// dayRepository.saveAll(dayEntityList);
 			} catch (Exception e) {
 				System.out.println("Not able to save day entity list ! ");
 			}
@@ -158,14 +160,13 @@ public class UpdateCourService {
 				lectureByDayList = new ArrayList<>();
 
 				for (LectureEntity lectureEntity : dayEntity1.getLecEntity()) {
-					
+
 					lectureEntity = createLectureEntityList(lectureEntity);
 					lecEntityList.add(lectureEntity);
-					
-					
+
 					lectureByDay = createLectureByDay(lectureEntity);
 					lectureByDayList.add(lectureByDay);
-					
+
 				}
 
 				dayByCourseId = new DayByCourseId();
@@ -212,7 +213,7 @@ public class UpdateCourService {
 	private LectureByDay createLectureByDay(LectureEntity lectureEntity2) {
 
 		lectureByDay = new LectureByDay();
-		
+
 		if (!Objects.isNull(lectureEntity2)) {
 
 			iframeLectureByDay(lectureByDay, lectureEntity2);
@@ -227,7 +228,6 @@ public class UpdateCourService {
 
 	private void iframeLectureByDay(LectureByDay lectureByDay2, LectureEntity lectureEntity2) {
 
-		
 		if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 				&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 			lectureByDay2.setDisableJoinBtn("true");
@@ -256,7 +256,7 @@ public class UpdateCourService {
 			}
 
 		}
-		
+
 	}
 
 	private LectureEntity createLectureEntityList(LectureEntity lectureEntity) {
@@ -280,7 +280,8 @@ public class UpdateCourService {
 
 		addCourseByDayId.setCourseName(courseEntity.getCourseName());
 		addCourseByDayId.setCourseId(courseEntity.getCourseId());
-		addCourseByDayId.setCouseDuration(courseEntity.getCouseDuration());
+
+		addCourseByDayId.setDuration(courseEntity.getCouseDuration());
 		addCourseByDayId.setLanguage(courseEntity.getLanguage());
 		addCourseByDayId.setEndDate(courseEntity.getEndDate());
 		addCourseByDayId.setStartDate(courseEntity.getStartDate());

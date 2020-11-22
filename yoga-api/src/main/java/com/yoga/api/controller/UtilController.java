@@ -31,6 +31,7 @@ public class UtilController {
 	 * Delete all the data from User Account , Course , Lecture [All entity]
 	 */
 	@PostMapping("/delete")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public void addCourseByUsername() throws Exception {		
 		 courseService.deleteData();
 	}
@@ -40,6 +41,7 @@ public class UtilController {
 	 */
 	
 	@GetMapping("/getDays/{CourseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public List<DaysResponse> getDays(@PathVariable("CourseId") Integer CourseId) throws Exception {
 		return getCourseFindDaysService.findDays(CourseId);
 		

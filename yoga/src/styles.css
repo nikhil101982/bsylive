@@ -16,6 +16,33 @@
     line-height: 30px;
 }
 
+
+.navLinkSty {
+    border: 1px solid;
+    margin: 0px 10px;
+    padding: 3px 15px !important;
+    color: black;
+    cursor: pointer;
+}
+
+.selected-section {
+    color: #004eb6;
+    font-weight: 500;
+}
+
+
+.form-control {
+  border: 1px solid #767676 !important;
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #767676 !important;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0) !important;
+}
+
 /* .swal2-popup {
     padding: 0px !important;
 }

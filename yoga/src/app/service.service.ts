@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject } from 'rxjs';
-
+import { API_ENDPOINTS } from '../app/endpoints';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +33,8 @@ export class ServiceService {
     this.updateLogInOption.next(val);
   }
 
-  getDays(id) {
-    let link = `${this.url}getDays/${id}`
+  getDays(courseId) {
+    let link = `${this.url}getDays/${courseId}`
     return this.http.get(link, this.requestHeaders);
     // return this.http.get('./assets/jsons/days.json')
   }
@@ -57,6 +57,7 @@ export class ServiceService {
   getAllCourses() {
     let link = `${this.url}coursesForAdmin`
     return this.http.get(link, this.requestHeaders);
+    // return this.http.get('./assets/jsons/jsons.json')
   }
 
   getAllEmails() {
@@ -115,4 +116,35 @@ export class ServiceService {
   }
 
   //
+
+
+  // create course {
+
+  createCourse(params) {
+    return this.http.post(this.url + 'addCourses', params, this.requestHeaders);
+  }
+
+
+  // remove course 
+
+  removeCourse(obj) {
+    console.log("remove course obj = ", obj);
+    return this.http.post(this.url + 'removeCourse', obj, this.requestHeaders);
+    // return this.http.get('./assets/jsons/jsons.json')
+  }
+
+  //
+
+  // update course sectio in courses
+
+  getSelectedCourseData(courseId) {
+    let url = `${this.url}updateCourse/${courseId}`
+    return this.http.put(url, this.requestHeaders);
+    // return this.http.get('./assets/jsons/jsons.json');
+  }
+
+  saveLecture(params) {
+    return this.http.post(this.url + 'createLecture', params, this.requestHeaders)
+  }
+
 }

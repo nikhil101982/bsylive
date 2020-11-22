@@ -76,6 +76,7 @@ public class GetCourseController {
 	
 	
 	@GetMapping("/getAllDays")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public List<DayEntity> geAllDay() {
 		
 		dayEntityList = dayRepository.findAll();
@@ -89,6 +90,7 @@ public class GetCourseController {
 	 */
 	
 	@GetMapping("/courseDetailsBasedOnCourseId/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public CourseEntity courseDetails(@PathVariable("courseId") Integer courseId) throws Exception {		
 		return getCourseService.coursesByCourseId(courseId);
 
@@ -99,6 +101,7 @@ public class GetCourseController {
 	 * Get All Courses by userEmail and userRole without lecture details.
 	 */
 	@GetMapping("/courses/{userEmail}/{userRole}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AllUserCoursesResponse coursesByUserName(@PathVariable("userEmail") String userEmail , @PathVariable("userRole") String userRole ) throws Exception {
 		return getCourseBasedOnUserNameService.coursesByUserName(userEmail , userRole);
 
@@ -109,6 +112,7 @@ public class GetCourseController {
 	 * Get All Courses with course id and course name as a response
 	 */
 	@GetMapping("/coursesForAdmin")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AllCoursesResponse courses() throws Exception {
 		return getCourseService.courses();
 

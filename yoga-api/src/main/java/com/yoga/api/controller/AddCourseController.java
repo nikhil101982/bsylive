@@ -24,7 +24,6 @@ import com.yoga.api.service.UpdateCourService;
 import com.yoga.api.service.UpdateCourseService;
 
 @RestController
-@CrossOrigin
 public class AddCourseController {
 
 	@Autowired
@@ -52,11 +51,13 @@ public class AddCourseController {
 	 */
 
 	@PostMapping("/addCourseTemp")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse addCourseTemp(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {
 		return addCourseFromAdminService.addCourse(addCourseByDayId);
 	}
 
-	@PostMapping("/addCourse")
+	@PostMapping("/addCourses")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse addCourse(@RequestBody AddCourseAdminRequest addCourseAdminRequest) throws Exception {
 		return addCourseAdminService.addCourse(addCourseAdminRequest);
 	}
@@ -66,6 +67,7 @@ public class AddCourseController {
 	 */
 
 	@PostMapping("/registerCourses/{userEmail}")
+	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
 			@PathVariable("userEmail") String userEmail) throws Exception {
 		return registerCourses.registerCourses(subscribeCourses, userEmail);

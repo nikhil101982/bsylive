@@ -57,12 +57,14 @@ public class GetCourseService {
 
 	CompareDates compareDates = new CompareDates();
 
+	List<AllCourses> allUserCoursesList;
+
 	// Get course
 	public AllCoursesResponse courses() throws ParseException {
 
 		allUserCoursesResponse = new AllCoursesResponse();
 
-		List<AllCourses> allUserCoursesList = new ArrayList<>();
+		allUserCoursesList = new ArrayList<>();
 
 		try {
 			courseEntityList = courseRepository.getAllCourses();
@@ -80,7 +82,7 @@ public class GetCourseService {
 		for (CourseEntity courseEntity : courseEntityList) {
 
 			if (compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
-				
+
 				allUserCourses = new AllCourses();
 				allUserCourses.setCourseName(courseEntity.getCourseName());
 				allUserCourses.setCourseId(courseEntity.getCourseId());

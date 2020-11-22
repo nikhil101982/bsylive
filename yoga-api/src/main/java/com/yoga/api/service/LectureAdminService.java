@@ -12,6 +12,7 @@ import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureRequest;
 import com.yoga.api.model.DayByCourseId;
+import com.yoga.api.model.DayId;
 import com.yoga.api.model.LectureByDay;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
@@ -62,23 +63,23 @@ public class LectureAdminService {
 			return utilMethods.errorResponse(failureMessage);
 		}
 
-		if (!Objects.isNull(courseEntity)) {
+		if (Objects.isNull(courseEntity)) {
 			return utilMethods.errorResponse(failureMessage);
 
 		}
 
-		if (Objects.isNull(createLectureRequest.getDayIds())) {
-			return utilMethods.errorResponse(failureMessage);
-		}
+//		if (Objects.isNull(createLectureRequest) {
+//			return utilMethods.errorResponse(failureMessage);
+//		}
 
 		dayEntityList = new ArrayList<>();
 		lecEntityList = new ArrayList<>();
 
 		// array of days
 
-		for (Integer dayId : createLectureRequest.getDayIds()) {
+		for (DayId dayId : createLectureRequest.getDayIds()) {
 
-			dayEntity = findDayEntity(dayId);
+			dayEntity = findDayEntity(dayId.getDayId());
 
 			saveLectureEntity(createLectureRequest, dayEntity);
 
@@ -114,12 +115,17 @@ public class LectureAdminService {
 	}
 
 	private void saveLectureEntity(CreateLectureRequest createLectureRequest, DayEntity dayEntity) {
-		for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
 
-			lectureEntity = lectureRepository.getLecEntityByLecId(lectureEntity.getLectureId());
+		if (dayEntity.getLecEntity().size() == 0) {
+			lecEntityList.add(createLectureList(createLectureRequest));
+		} else {
+			for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
 
-			if (!(lectureEntity.getLectureName().equals(createLectureRequest.getLectureName()))) {
-				lecEntityList.add(createLectureList(createLectureRequest));
+				lectureEntity = lectureRepository.getLecEntityByLecId(lectureEntity.getLectureId());
+
+				if (!(lectureEntity.getLectureName().equals(createLectureRequest.getLectureName()))) {
+					lecEntityList.add(createLectureList(createLectureRequest));
+				}
 			}
 		}
 	}

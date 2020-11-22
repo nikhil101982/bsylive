@@ -24,7 +24,7 @@ import lombok.ToString;
 public class AddCourseByDayId {
 
 	private String courseName;
-	private int couseDuration;
+	private int duration;
 	private String startDate;
 	private String endDate;
 	private String language;
