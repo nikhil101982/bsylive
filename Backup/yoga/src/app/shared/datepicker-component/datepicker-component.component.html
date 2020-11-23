@@ -1,0 +1,12 @@
+<div class="form-group">
+    <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="selectedDate" ngbDatepicker
+            #d="ngbDatepicker" (dateSelect)="onSelectDatePicker($event, d)" (click)="d.toggle()"
+            (keyup)="onSelectDatePicker($event,d)" autocomplete="off">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                <span class="fa fa-calendar"></span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -251,7 +251,7 @@ export class AdminCourseSectionComponent implements OnInit {
       if (res['status'] === 'success') {
         this.enableCourseDetailsSection = true;
         this.showSections = false;
-        this.courseObj = res;
+        this.courseObj = res['course'];
         this.getCourseAllDays(courseid)
       }
       if (res['status'] === 'failure') {

@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.yoga.api.constant.ApiConstants;
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
+import com.yoga.api.model.DaysResp;
 import com.yoga.api.model.DaysResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
+import com.yoga.api.util.UtilMethods;
 
 @Service
 public class GetCourseFindDaysService {
@@ -31,9 +33,13 @@ public class GetCourseFindDaysService {
 	DaysResponse daysResponse;
 
 	List<DaysResponse> daysResponseList;
+	
+	UtilMethods utilMethods = new UtilMethods();
 
+	
+	DaysResp days;
 	// Get Find Days
-	public List<DaysResponse> findDays(Integer courseId) {
+	public DaysResp findDays(Integer courseId) {
 
 		// condition for error response
 		if (Objects.isNull(courseId)) {
@@ -47,7 +53,7 @@ public class GetCourseFindDaysService {
 		}
 
 		daysResponseList = new ArrayList<>();
-		daysResponse = new DaysResponse();
+		
 
 		// condition for error response
 		if (Objects.isNull(courseEntity)) {
@@ -72,15 +78,24 @@ public class GetCourseFindDaysService {
 		}
 
 		Arrays.sort(numCount);
+		
+		//daysResponseList = new ArrayList<>();
 
 		for (int i = 0; i < size; i++) {
-			successResponse(numCount, i);
+			daysResponse = successResponse(numCount, i);
+			daysResponseList.add(daysResponse);
 		}
+		
+		days = new DaysResp();
+		days.setStatus(ApiConstants.SUCCESS);
+		days.setMessage("Days");
+		days.setDays(daysResponseList);
 
-		return daysResponseList;
+
+		return days;
 	}
 
-	private List<DaysResponse> successResponse(int[] numCount, int i) {
+	private DaysResponse successResponse(int[] numCount, int i) {
 
 		daysResponse = new DaysResponse();
 
@@ -88,20 +103,24 @@ public class GetCourseFindDaysService {
 		try {
 			dayEntity = dayRepository.getDayEntityByDayId(numCount[i]);
 		} catch (Exception e) {
-			return errorResponse();
+			//return errorResponse();
 		}
 
 		if (Objects.isNull(dayEntity)) {
-			return errorResponse();
+			//return errorResponse();
 		}
 		daysResponse.setDayName(dayEntity.getDayName().toUpperCase());
-		daysResponseList.add(daysResponse);
-		return daysResponseList;
+
+		return daysResponse;
 	}
 
-	private List<DaysResponse> errorResponse() {
-		daysResponseList.add(daysResponse);
-		return daysResponseList;
+	private DaysResp errorResponse() {
+		
+		
+		days = new DaysResp();	
+		days.setStatus(ApiConstants.FAILURE);
+		days.setMessage("Days");
+		return days;
 	}
 
 }

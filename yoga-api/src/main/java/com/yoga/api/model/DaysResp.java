@@ -10,5 +10,7 @@ import lombok.Setter;
 public class DaysResp {
 
 	List<DaysResponse> days;
+	String status;
+	String message;
 
 }
