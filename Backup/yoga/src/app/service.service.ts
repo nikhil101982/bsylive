@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { API_ENDPOINTS } from '../app/endpoints';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class ServiceService {
 
 
   constructor(private http: HttpClient) { }
+
+
+  convertDateFormat(date) {
+    let pipe = new DatePipe('en-US');
+    return pipe.transform(date, 'yyyy-MM-dd');
+  }
 
   getUserData() {
     return JSON.parse(localStorage.getItem('userDetails'));
@@ -57,7 +64,7 @@ export class ServiceService {
   getAllCourses() {
     let link = `${this.url}coursesForAdmin`
     return this.http.get(link, this.requestHeaders);
-    // return this.http.get('./assets/jsons/jsons.json')
+    // return this.http.get('./assets/jsons/all-courses.json')
   }
 
   getAllEmails() {
@@ -140,11 +147,11 @@ export class ServiceService {
   getSelectedCourseData(courseId) {
     let url = `${this.url}updateCourse/${courseId}`
     return this.http.put(url, this.requestHeaders);
-    // return this.http.get('./assets/jsons/jsons.json');
+    // return this.http.get('./assets/jsons/course-obj.json');
   }
 
   saveLecture(params) {
-    return this.http.post(this.url + 'createLecture', params, this.requestHeaders)
+    return this.http.put(this.url + 'createLecture', params, this.requestHeaders)
   }
 
 }

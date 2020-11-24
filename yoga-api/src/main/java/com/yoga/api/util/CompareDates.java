@@ -2,26 +2,33 @@ package com.yoga.api.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class CompareDates {
 
-	public static boolean compareCourseStartDate(String courseStartDateString) throws ParseException {
+	public static String compareCourseStartDate(String courseStartDateString) throws ParseException {
 
-		boolean result = false;
-		
-		final String DATE_FORMAT = "yyyy-mm-dd";
+		String result = "false";
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
-		
-		Date courseStartDate = simpleDateFormat.parse(courseStartDateString);		
-		Date currentDate = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-		
-		System.out.println(courseStartDate.compareTo(currentDate) );
+		String[] startDateStringArray = courseStartDateString.split("-");
 
-		if (courseStartDate.compareTo(currentDate) > 0 || courseStartDate.compareTo(currentDate) == 0) {
-			result = true;
-			System.out.println(result);
+		int courseStartDateStringSize = startDateStringArray.length;
+
+		int[] startDateIntArray = new int[courseStartDateStringSize];
+
+		for (int i = 0; i < courseStartDateStringSize; i++) {
+
+			startDateIntArray[i] = Integer.parseInt(startDateStringArray[i]);
+		}
+
+		LocalDate startDate = LocalDate.of(startDateIntArray[0], startDateIntArray[1], startDateIntArray[2]);
+
+		LocalDate currentDate = LocalDate.now();
+
+		if (startDate.compareTo(currentDate) > 0 || startDate.compareTo(currentDate) == 0) {
+			result = "true";
 		}
 
 		return result;

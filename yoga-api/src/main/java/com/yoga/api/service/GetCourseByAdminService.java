@@ -72,13 +72,15 @@ public class GetCourseByAdminService {
 		if (Objects.isNull(courseEntity)) {
 			return errorResponse("error");
 		}
-
 		
-		if(!compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+		String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
+		
+		
+		if (	!compareDate.equals(ApiConstants.TRUE)) {
 			return errorResponse("error");
 
+			
 		}
-		
 
 		dayEntityList = courseEntity.getDayEntity();
 

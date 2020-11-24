@@ -75,8 +75,10 @@ public class GetCourseByEmailService {
 		allUserCoursesList = new ArrayList<>();
 
 		for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {
-
-			if (compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
+			
+			
+			if (	compareDate.equals(ApiConstants.TRUE)) {
 
 				if (!Objects.isNull(courseEntity)) {
 

@@ -280,7 +280,6 @@ public class UpdateCourService {
 
 		addCourseByDayId.setCourseName(courseEntity.getCourseName());
 		addCourseByDayId.setCourseId(courseEntity.getCourseId());
-
 		addCourseByDayId.setDuration(courseEntity.getCouseDuration());
 		addCourseByDayId.setLanguage(courseEntity.getLanguage());
 		addCourseByDayId.setEndDate(courseEntity.getEndDate());
@@ -288,7 +287,8 @@ public class UpdateCourService {
 		addCourseByDayId.setMessage("Course updated! ");
 		addCourseByDayId.setStatus(ApiConstants.SUCCESS);
 
-		addCourseByDayId.setDay(dayList(courseEntity));
+		List<DayByCourseId> daysList = dayList(courseEntity);
+		addCourseByDayId.setDay(daysList);
 
 		return addCourseByDayId;
 	}

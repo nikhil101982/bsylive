@@ -18,7 +18,7 @@ public class Lecture {
 	String startTime;
 	String endTime;
 	String currentDate;
-	boolean disableJoinBtn;
+	String disableJoinBtn;
 	Integer lecId;
 
 

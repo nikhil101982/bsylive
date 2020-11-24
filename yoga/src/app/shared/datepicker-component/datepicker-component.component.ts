@@ -17,7 +17,7 @@ export class DatepickerComponentComponent implements OnInit {
   }
 
   onSelectDatePicker(event, date) {
-    console.log("eeeeeeeeee", event, date._inputValue);
+    console.log("date", event, date._inputValue);
     this.onSelectDate.emit(date._inputValue)
   }
 

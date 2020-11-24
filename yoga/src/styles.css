@@ -43,6 +43,12 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0) !important;
 }
 
+.settings-body-section {
+  padding: 45px;
+  background: white;
+  border: 1px solid rgba(0,0,0,.1);
+}
+
 /* .swal2-popup {
     padding: 0px !important;
 }

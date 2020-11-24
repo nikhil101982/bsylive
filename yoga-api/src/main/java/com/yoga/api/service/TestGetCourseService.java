@@ -24,20 +24,20 @@ import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.util.CompareDates;
 
 @Service
-public class GetCourseService {
+public class TestGetCourseService {
 
 	@Autowired
 	CourseRepository courseRepository;
-
-	List<CourseEntity> courseEntityList = new ArrayList<>();
-
-	CourseEntity courseEntity;
 
 	@Autowired
 	DayRepository dayRepository;
 
 	@Autowired
 	LectureRepository lecRepository;
+
+	List<CourseEntity> courseEntityList;
+
+	CourseEntity courseEntity;
 
 	List<LectureEntity> lecEntityList;
 
@@ -62,16 +62,16 @@ public class GetCourseService {
 	// Get course
 	public AllCoursesResponse courses() throws ParseException {
 
+		allUserCoursesResponse = new AllCoursesResponse();
+
+		allUserCoursesList = new ArrayList<>();
+
 		try {
 			courseEntityList = courseRepository.findAll();
 		} catch (Exception e) {
 			return errorResponse("eoor");
 
 		}
-
-		allUserCoursesResponse = new AllCoursesResponse();
-
-		allUserCoursesList = new ArrayList<>();
 
 		if (Objects.isNull(courseEntityList)) {
 			return errorResponse("error");
@@ -82,8 +82,10 @@ public class GetCourseService {
 		for (CourseEntity courseEntity : courseEntityList) {
 
 			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
+			
+			
+			if (	compareDate.equals(ApiConstants.TRUE)) {
 
-			if (compareDate.equals(ApiConstants.TRUE)) {
 
 				allUserCourses = new AllCourses();
 				allUserCourses.setCourseName(courseEntity.getCourseName());
@@ -110,14 +112,15 @@ public class GetCourseService {
 
 		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
 
+		
 		String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
-
-		if (compareDate.equals(ApiConstants.TRUE)) {
-			return courseEntity;
+		
+		
+		if (	compareDate.equals(ApiConstants.TRUE)) {
+			return null;
 		}
 
-		
-		return null;
+		return courseEntity;
 	}
 
 	private AllCoursesResponse errorResponse(String message) {

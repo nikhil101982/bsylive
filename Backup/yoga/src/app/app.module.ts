@@ -17,6 +17,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AdminCourseSectionComponent } from './settings/admin-course-section/admin-course-section.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerComponentComponent } from './shared/datepicker-component/datepicker-component.component';
+import { TimepickerComponent } from './shared/timepicker/timepicker.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DatepickerComponentComponent } from './shared/datepicker-component/date
     UserComponent,
     AdminCourseSectionComponent,
     DatepickerComponentComponent,
+    TimepickerComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,21 @@
+{
+    "status" : "success",
+    "courses": [
+        {
+            "courseId": 1,
+            "courseName": "course name 1"
+        },
+        {
+            "courseId": 2,
+            "courseName": "course name 2"
+        },
+        {
+            "courseId": 3,
+            "courseName": "course name 3"
+        },
+        {
+            "courseId": 4,
+            "courseName": "course name 4"
+        }
+    ]
+}

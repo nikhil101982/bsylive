@@ -1,4 +1,4 @@
-<div class="">
+<div class="" [ngClass]="showSections ? 'settings-body-section' : 'showLectures'">
 
 
     <ul class="nav justify-content-center pb-4" *ngIf="showSections">
@@ -88,7 +88,7 @@
     <!-- remove course section start -->
 
     
-    <div class="deleteUserSection" *ngIf="showRemoveCourse">
+    <div class="deleteUserSection col-md-12" *ngIf="showRemoveCourse">
 
         <div class="pt-4">
             <div class="fontWeight500">Courses</div>
@@ -122,60 +122,59 @@
     <div *ngIf="updateCourse" class="col-md-12 pl-0 pr-0">
 
         <div *ngIf="!enableCourseDetailsSection">
-            <div class="p-2" *ngFor="let course of allCourses">
-                <!-- <div class="courseBgSty" (click)="showCourseDetails(course)"> {{course.courseName}}</div> -->
+            <div class="pt-2 pb-2" *ngFor="let course of allCourses">
+                <div class="courseBgSty" (click)="showCourseDetails(course)"> {{course.courseName}}</div>
             
-                <div class="d-flex pt-3 pb-3 courseBgSty">
+                <!-- <div class="d-flex pt-3 pb-3 courseBgSty">
                    
                     <div class="courseNameSty pt-1">
                         {{course.courseName}}
                     </div>
         
                     <div class="ml-auto pr-4">
-                      <button class="btn btn-primary" (click)="showCourseDetails(course)">Go to Course</button>
+                      <button class="btn btn-primary" (click)="showCourseDetails(course)">update</button>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
 
         <div *ngIf="enableCourseDetailsSection">
-            <div class="d-flex flex-row">
-                <div class="col-md-3 pl-0"> 
+            <div class="d-flex flex-row pt-4">
+                <div class="col-md-3 pl-3 courseNameBgSty"> 
                     <a class="coursesLink" (click)="onClickBack()">courses</a>                  
                 </div>
                 <div class="col-md-9 text-center courseNameBgSty">
                     <h3>{{courseObj.courseName}}</h3>
                 </div>
             </div>
-            <div class="row pl-0 pr-0">
-                <div class="col-md-3 pt-2">
+            <div class="d-flex flex-row pl-0 pr-3 pt-3">
+                <div class="col-md-3 pl-0 pr-0 pt-2 pb-4 daysSty">
                     <div class="d-flex flex-column">
                         <div class=" panel-group pt-1" id="accordion" *ngFor="let day of courseObj.day; let i = index">
                             <div class="panel panel-default">
                                 <div href="#" class="list-group-item panel-title f-20" data-toggle="collapse"
-                                    [attr.data-target]="'#test' + i" data-parent="#accordion"
-                                    style="background-color: #E8E8E8;">
+                                    [attr.data-target]="'#test' + i" data-parent="#accordion">
                                     <span class="fWeight">{{day.dayName}} </span><span
                                         class="glyphicon glyphicon-menu-down pull-right"></span>
                                 </div>
-                                <div id="test{{i}}" class="sublinks collapse" style="background: lightgrey;
-                    border: 1px solid; cursor: pointer;">
+                                <div id="test{{i}}" class="collapse lectureGroupSty">
                                     <div *ngFor="let lecture of day.lecture">
-                                        <div class="p-2" (click)="lectureData(lecture)">
+                                        <div class="p-2 pl-3 lectureSty" (click)="lectureData(lecture)">
                                             {{lecture.lectureName}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-3">
-                           <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button>
+                        <div class="createLectureSty text-center p-2 mt-3" (click)="onClickCreateLectureBtn()">
+                            Create Lecture
+                           <!-- <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-9" *ngIf="enableLectureForm">
+                <div class="col-md-9 pl-4 pb-3" *ngIf="enableLectureForm">
 
                     <div class="d-flex flex-column pt-3">
                         <div class="fieldName">
@@ -237,7 +236,9 @@
                         <div class="fieldName">
                             Start Time
                         </div>
-                            <ngb-timepicker [(ngModel)]="startTime"></ngb-timepicker>
+                            <!-- <ngb-timepicker [(ngModel)]="startTime"></ngb-timepicker> -->
+                            <app-timepicker [selectedTime]="startTime" (onSelectTime)="returnSelectedTime($event, 'startTime')"></app-timepicker>
+
                         </div>
                         </div>
                         <div class="col-md-6">
@@ -245,7 +246,8 @@
                                 <div class="fieldName">
                                    End Time
                                 </div>
-                                    <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker>
+                                    <!-- <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker> -->
+                                    <app-timepicker [selectedTime]="endTime" (onSelectTime)="returnSelectedTime($event, 'endTime')"></app-timepicker>
                                 </div>                       
                         </div>
 
@@ -256,7 +258,8 @@
                             Live Iframe Link
                         </div>
                         <div class="pt-1">
-                            <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.liveIFrameLink">
+                            <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.liveIFrameLink"
+                             (keyup)="onKeyupIFrame($event, 'live')" [disabled]="disableLiveIframe">
                         </div>
                     </div>
 
@@ -265,7 +268,8 @@
                             Video Iframe Link
                         </div>
                         <div class="pt-1">
-                            <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.videoIFrameLink">
+                            <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.videoIFrameLink"
+                             (keyup)="onKeyupIFrame($event, 'video')" [disabled]="disableVideoIframe">
                         </div>
                     </div>
 

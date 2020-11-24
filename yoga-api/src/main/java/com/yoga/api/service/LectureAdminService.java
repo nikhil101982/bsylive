@@ -51,6 +51,7 @@ public class LectureAdminService {
 	final String failureMessage = "Lecture is not added !";
 	final String successMessage = " Lecture is added successfully !";
 
+	// create lecture
 	public StatusMessageResponse createLecture(CreateLectureRequest createLectureRequest) throws InterruptedException {
 
 		if (Objects.isNull(createLectureRequest)) {
@@ -181,14 +182,14 @@ public class LectureAdminService {
 
 	private void iframe(CreateLectureRequest LectByDay) {
 
-		if (Objects.isNull(LectByDay.getVideoIframeDynamicLink())
+		if ((Objects.isNull(LectByDay.getVideoIframeDynamicLink()) || LectByDay.getVideoIframeDynamicLink().length()==0)
 				&& Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
 			lectureEntity.setDisableJoinBtn("true");
 			lectureEntity.setLiveIframeDynamicLink(null);
 			lectureEntity.setVideoIframeDynamicLink(null);
 
-		} else if (!Objects.isNull(LectByDay.getVideoIframeDynamicLink())
-				&& !Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
+		} else if ((!Objects.isNull(LectByDay.getVideoIframeDynamicLink() ) &&  LectByDay.getVideoIframeDynamicLink().length()==0 )
+				&& !Objects.isNull(LectByDay.getLiveIframeDynamicLink()) && LectByDay.getLiveIframeDynamicLink().length()==0) {
 
 			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());

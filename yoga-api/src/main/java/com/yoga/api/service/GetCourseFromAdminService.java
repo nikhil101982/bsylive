@@ -64,8 +64,11 @@ public class GetCourseFromAdminService {
 		allUserCoursesList = new ArrayList<>();
 
 		for (CourseEntity courseEntity : courseEntityList) {
-
-			if (compareDates.compareCourseStartDate(courseEntity.getStartDate())) {
+			
+			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
+			
+			
+			if (	compareDate.equals(ApiConstants.TRUE)) {
 
 				if (!Objects.isNull(courseEntity)) {
 

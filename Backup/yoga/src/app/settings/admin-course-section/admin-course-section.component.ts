@@ -12,7 +12,9 @@ class LectureForm {
   endTime: string = "";
   fromDayId: any = "";
   toDayId: any = "";
-  dayIds: any = []
+  dayIds: any = [];
+  courseId: any = "";
+  currentDate: string = "";
 }
 
 
@@ -34,6 +36,8 @@ export class AdminCourseSectionComponent implements OnInit {
   showSections: boolean = true;
 
   courseObj: any;
+
+  courseId: any;
 
   enableCourseDetailsSection: boolean = false;
   enableLectureForm: boolean = false;
@@ -76,6 +80,9 @@ export class AdminCourseSectionComponent implements OnInit {
   startTime = null;
   endTime = null;
 
+
+  disableLiveIframe: boolean = false;
+  disableVideoIframe: boolean = false;
 
   //
 
@@ -244,15 +251,15 @@ export class AdminCourseSectionComponent implements OnInit {
     console.log("selected course", course);
     this.enableCourseDetailsSection = false;
     this.enableLectureForm = false;
-    let courseid = course.courseId;
+    this.courseId = course.courseId
 
-    this.service.getSelectedCourseData(courseid).subscribe(res => {
+    this.service.getSelectedCourseData(this.courseId).subscribe(res => {
       console.log("course obj = ", res);
       if (res['status'] === 'success') {
         this.enableCourseDetailsSection = true;
         this.showSections = false;
-        this.courseObj = res['course'];
-        this.getCourseAllDays(courseid)
+        this.courseObj = res;
+        this.getCourseAllDays(this.courseId)
       }
       if (res['status'] === 'failure') {
         this.showAlertMessage('error', res['message']);
@@ -269,8 +276,8 @@ export class AdminCourseSectionComponent implements OnInit {
       this.lectureForm.lectureName = data.lectureName;
       this.lectureForm.liveIFrameLink = data.liveIframeDynamicLink;
       this.lectureForm.videoIFrameLink = data.videoIframeDynamicLink;
-      this.startTime = this.convertTimeForDataBind(data.startTime);
-      this.endTime = this.convertTimeForDataBind(data.endTime);
+      this.startTime = data.startTime;
+      this.endTime = data.endTime;
       this.fromDaysList = this.allDays.filter(day => day.dayId == data.fromDayId);
       this.toDaysList = this.allDays.filter(day => day.dayId == data.toDayId);
     }
@@ -303,23 +310,35 @@ export class AdminCourseSectionComponent implements OnInit {
       endTime: "",
       fromDayId: "",
       toDayId: "",
-      dayIds: []
+      dayIds: [],
+      currentDate: "",
+      courseId: ""
     }
 
-    this.startTime = this.convertTimeForDataBind(null);
-    this.endTime = this.convertTimeForDataBind(null);
+    this.startTime = "";
+    this.endTime = "";
 
     this.enableLectureForm = true;
 
     console.log("lecture form = ", this.lectureForm);
+  }
 
+
+  returnSelectedTime(time, section) {
+    if (section === 'startTime') {
+      this.lectureForm.startTime = time;
+    }
+    if (section === 'endTime') {
+      this.lectureForm.endTime = time;
+    }
   }
 
 
   saveLecture() {
 
-    this.lectureForm.startTime = this.convertTimeForReqBody(this.startTime);
-    this.lectureForm.endTime = this.convertTimeForReqBody(this.endTime);
+    this.lectureForm.courseId = this.courseId;
+    this.lectureForm.currentDate = this.service.convertDateFormat(new Date());
+    console.log("save lecture req. body = ", this.lectureForm);
 
     this.service.saveLecture(this.lectureForm).subscribe(res => {
       console.log("save lecture res = ", res);
@@ -334,6 +353,7 @@ export class AdminCourseSectionComponent implements OnInit {
     console.log("save lecture = ", this.lectureForm, this.startTime, this.endTime);
   }
 
+  // delet this function
 
   convertTimeForReqBody(time) {
     console.log("time = ", time);
@@ -344,6 +364,10 @@ export class AdminCourseSectionComponent implements OnInit {
       return "";
     }
   }
+
+  //
+
+  // delet this function
 
   convertTimeForDataBind(time1) {
     console.log("time convert for data bind = ", time1);
@@ -366,10 +390,30 @@ export class AdminCourseSectionComponent implements OnInit {
     }
   }
 
+  //
+
 
   onClickBack() {
     this.enableCourseDetailsSection = false;
     this.showSections = true;
+  }
+
+
+  onKeyupIFrame(event, section) {
+
+    let str = event.target.value.trim();
+    this.disableLiveIframe = false;
+    this.disableVideoIframe = false;
+
+    if (str.length > 0) {
+      if (section === 'live') {
+        this.disableVideoIframe = true;
+      }
+
+      if (section === 'video') {
+        this.disableLiveIframe = true;
+      }
+    }
   }
 
 
