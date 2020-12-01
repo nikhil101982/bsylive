@@ -1,6 +1,9 @@
 package com.yoga.api.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import com.yoga.api.model.AddCourseAdminRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
+import com.yoga.api.util.CompareDates;
 import com.yoga.api.util.UtilMethods;
 
 @Service
@@ -33,12 +37,26 @@ public class AddCourseAdminService {
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
 	UtilMethods utilMethods = new UtilMethods();
+	
+	CompareDates compareDates = new CompareDates();
 
 	String failureMessage;
 	String successMessage;
+	
+	private static long findDifference1(String start_date, String end_date) throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+
+		Date d1 = sdf.parse(start_date);
+		Date d2 = sdf.parse(end_date);
+
+		long difference_In_Date = d2.getDay() - d1.getDay() +1;
+
+		return difference_In_Date;
+	}
 
 	// Add Course api
-	public StatusMessageResponse addCourse(AddCourseAdminRequest course) throws InterruptedException {
+	public StatusMessageResponse addCourse(AddCourseAdminRequest course) throws InterruptedException, ParseException {
 
 		failureMessage = "course is not created !";
 		successMessage = " course have created successfully !";
@@ -46,6 +64,12 @@ public class AddCourseAdminService {
 		if (Objects.isNull(course)) {
 			return utilMethods.errorResponse(failureMessage);
 		}
+		
+		
+		int duration = compareDates.findDuration(course.getStartDate(), course.getEndDate());
+		
+		course.setDuration(duration);
+		
 
 		try {
 

@@ -35,4 +35,16 @@ public class CompareDates {
 
 	}
 
+	public static int findDuration(String start_date, String end_date) throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+
+		Date d1 = sdf.parse(start_date);
+		Date d2 = sdf.parse(end_date);
+
+		int duration = d2.getDay() - d1.getDay() + 1;
+
+		return duration;
+	}
+
 }

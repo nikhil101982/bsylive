@@ -127,31 +127,31 @@ public class GetCourseByAdminService {
 						&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 
 					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-					lectureByDay.setVideoIframeDynamicLink("");
-					lectureByDay.setLiveIframeDynamicLink("");
+					lectureByDay.setVideoIframeLink("");
+					lectureByDay.setLiveIframeLink("");
 
 				}
 
 				else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 						&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 
-					lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+					lectureByDay.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
 					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-					lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+					lectureByDay.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
 
 				} else {
 
 					if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
 
-						lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+						lectureByDay.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
 						lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-						lectureByDay.setLiveIframeDynamicLink("");
+						lectureByDay.setLiveIframeLink("");
 
 					} else {
 
-						lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+						lectureByDay.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
 						lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-						lectureByDay.setVideoIframeDynamicLink("");
+						lectureByDay.setVideoIframeLink("");
 
 					}
 

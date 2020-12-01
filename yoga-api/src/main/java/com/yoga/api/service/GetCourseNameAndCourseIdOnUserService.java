@@ -59,7 +59,7 @@ public class GetCourseNameAndCourseIdOnUserService {
 
 				allUserCourses = new AllUserCourses();
 
-				allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
+				allUserCourses.setDays(courseEntity.getDayEntity().size());
 				allUserCourses.setCourseId(courseEntity.getCourseId());
 				allUserCoursesList.add(allUserCourses);
 

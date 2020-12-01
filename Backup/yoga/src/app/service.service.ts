@@ -146,7 +146,7 @@ export class ServiceService {
 
   getSelectedCourseData(courseId) {
     let url = `${this.url}updateCourse/${courseId}`
-    return this.http.put(url, this.requestHeaders);
+    return this.http.get(url, this.requestHeaders);
     // return this.http.get('./assets/jsons/course-obj.json');
   }
 

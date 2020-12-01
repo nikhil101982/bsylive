@@ -1,0 +1,24 @@
+{
+    "days": [
+        {
+            "dayName": "Day1",
+            "dayId": "1"
+        },
+        {
+            "dayName": "Day2",
+            "dayId": "2"
+        },
+        {
+            "dayName": "Day3",
+            "dayId": "3"
+        },
+        {
+            "dayName": "Day4",
+            "dayId": "4"
+        },
+        {
+            "dayName": "Day5",
+            "dayId": "5"
+        }
+    ]
+}

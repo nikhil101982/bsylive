@@ -91,7 +91,7 @@
     <div class="deleteUserSection col-md-12" *ngIf="showRemoveCourse">
 
         <div class="pt-4">
-            <div class="fontWeight500">Courses</div>
+            <div class="fontWeight500 pb-2">Courses</div>
             <ng-multiselect-dropdown 
                 [placeholder]="''" 
                 [settings]="allCourseSettings" 
@@ -123,34 +123,45 @@
 
         <div *ngIf="!enableCourseDetailsSection">
             <div class="pt-2 pb-2" *ngFor="let course of allCourses">
-                <div class="courseBgSty" (click)="showCourseDetails(course)"> {{course.courseName}}</div>
+                <!-- <div class="courseBgSty" (click)="showCourseDetails(course)"> {{course.courseName}}</div> -->
             
-                <!-- <div class="d-flex pt-3 pb-3 courseBgSty">
-                   
+                <div class="d-flex flex-column pt-3 pb-3 courseBgSty">
+                   <div class="d-flex flex-row">
                     <div class="courseNameSty pt-1">
                         {{course.courseName}}
                     </div>
         
                     <div class="ml-auto pr-4">
-                      <button class="btn btn-primary" (click)="showCourseDetails(course)">update</button>
+                      <button class="btn btn-primary btnPrimary" (click)="showCourseDetails(course)">Update</button>
                     </div>
-                </div> -->
+                    </div>
+                   <div class="hrLine"></div>
+                    <div class="d-flex flex-row pt-3">
+                        <div class="section2-sty">
+                            FROM : {{course.startDate}}
+                        </div>
+                        <div class="ml-auto pr-5 section2-sty">
+                          TO : {{course.endDate}}
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
 
         <div *ngIf="enableCourseDetailsSection">
             <div class="d-flex flex-row pt-4">
-                <div class="col-md-3 pl-3 courseNameBgSty"> 
-                    <a class="coursesLink" (click)="onClickBack()">courses</a>                  
+                <div class="col-md-3 pl-3 createLectureSty text-center" (click)="onClickBack()"> 
+                    <a class="backLink">Back</a>
+                    <!-- <button class="btn btn-primary createLectureSty text-center p-2 mt-3" (click)="onClickBack()">Back</button>                 -->
                 </div>
-                <div class="col-md-9 text-center courseNameBgSty">
+                <div class="col-md-9 text-center">
                     <h3>{{courseObj.courseName}}</h3>
                 </div>
             </div>
             <div class="d-flex flex-row pl-0 pr-3 pt-3">
-                <div class="col-md-3 pl-0 pr-0 pt-2 pb-4 daysSty">
-                    <div class="d-flex flex-column">
+                <div class="col-md-3 pl-0 pr-0 pb-3 daysSty">
+                    <div class="d-flex flex-column scroller">
                         <div class=" panel-group pt-1" id="accordion" *ngFor="let day of courseObj.day; let i = index">
                             <div class="panel panel-default">
                                 <div href="#" class="list-group-item panel-title f-20" data-toggle="collapse"
@@ -167,10 +178,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="createLectureSty text-center p-2 mt-3" (click)="onClickCreateLectureBtn()">
-                            Create Lecture
-                           <!-- <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button> -->
-                        </div>
+                    </div>
+                    <div class="createLectureSty text-center p-2 mt-3" (click)="onClickCreateLectureBtn()">
+                        Create Lecture
+                       <!-- <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button> -->
                     </div>
                 </div>
 
@@ -186,7 +197,7 @@
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500">From Day</div>
+                        <div class="fontWeight500 pb-2">From Day</div>
                         <ng-multiselect-dropdown 
                             [placeholder]="''" 
                             [(ngModel)]="fromDaysList"
@@ -201,7 +212,7 @@
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500">To Day</div>
+                        <div class="fontWeight500 pb-2">To Day</div>
                         <ng-multiselect-dropdown 
                             [placeholder]="''" 
                             [(ngModel)]="toDaysList"
@@ -216,7 +227,7 @@
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500">Selected Day</div>
+                        <div class="fontWeight500 pb-2">Selected Day</div>
                         <ng-multiselect-dropdown 
                             [placeholder]="''" 
                             [(ngModel)]="selectedDaysList"

@@ -15,5 +15,10 @@ public class AllCourses {
 	
 	private String courseName;
 	private Integer courseId;
+	private String language;
+	private String startDate;
+	private String endDate;
+	private String days;
+
 	
 }

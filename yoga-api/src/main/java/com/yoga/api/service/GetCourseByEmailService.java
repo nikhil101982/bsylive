@@ -51,7 +51,7 @@ public class GetCourseByEmailService {
 		if (Objects.isNull(userRole) && Objects.isNull(userEmail)) {
 			return errorResponse();
 		}
-		
+
 		try {
 			userAccountEntity = userAccountRepository.findByUserEmail(userEmail);
 		} catch (Exception e) {
@@ -62,11 +62,11 @@ public class GetCourseByEmailService {
 			return getCourseFromAdminService.coursesForAdmin();
 		}
 
-//		try {
-//			userAccountEntity = userAccountRepository.findByUserName(userEmail);
-//		} catch (Exception e) {
-//			return errorResponse();
-//		}
+		// try {
+		// userAccountEntity = userAccountRepository.findByUserName(userEmail);
+		// } catch (Exception e) {
+		// return errorResponse();
+		// }
 
 		if (Objects.isNull(userAccountEntity)) {
 			return errorResponse();
@@ -75,19 +75,23 @@ public class GetCourseByEmailService {
 		allUserCoursesList = new ArrayList<>();
 
 		for (CourseEntity courseEntity : userAccountEntity.getCourseEntity()) {
+
 			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
-			
-			
-			if (	compareDate.equals(ApiConstants.TRUE)) {
+
+			if (compareDate.equals(ApiConstants.TRUE)) {
 
 				if (!Objects.isNull(courseEntity)) {
 
 					allUserCourses = new AllUserCourses();
+					allUserCourses.setEndDate(courseEntity.getEndDate());
+					
+					String courseName = courseEntity.getCourseName().toUpperCase().concat(" : ").concat(courseEntity.getLanguage().toUpperCase());
+					allUserCourses.setCourseName(courseName );
 
-					allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
-					allUserCourses.setCourseName(courseEntity.getCourseName());
+					allUserCourses.setDays(courseEntity.getDayEntity().size());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());
+					allUserCourses.setLanguage(courseEntity.getLanguage());
 					allUserCoursesList.add(allUserCourses);
 
 				}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
 import com.yoga.api.service.SubscribeCourseByUser;
 import com.yoga.api.service.UpdateCourService;
+import com.yoga.api.service.UpdateCourTempService;
 import com.yoga.api.service.UpdateCourseService;
 
 @RestController
@@ -43,6 +45,9 @@ public class AddCourseController {
 	
 	@Autowired
 	UpdateCourService updateCourService;
+	
+	@Autowired
+	UpdateCourTempService updateCourTempService;
 
 	// @Autowired
 	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
@@ -104,10 +109,10 @@ public class AddCourseController {
 	// addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
 	// }
 	
-	@PutMapping("/updateCourse/{courseId}")
+	@GetMapping("/updateCourse/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
-		return updateCourService.updateCourse(courseId);
+		return updateCourTempService.updateCourse(courseId);
 		
 		
 	}

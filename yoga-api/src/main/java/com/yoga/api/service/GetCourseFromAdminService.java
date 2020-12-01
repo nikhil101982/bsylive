@@ -65,8 +65,7 @@ public class GetCourseFromAdminService {
 
 		for (CourseEntity courseEntity : courseEntityList) {
 			
-			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
-			
+			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());	
 			
 			if (	compareDate.equals(ApiConstants.TRUE)) {
 
@@ -74,10 +73,16 @@ public class GetCourseFromAdminService {
 
 					allUserCourses = new AllUserCourses();
 
-					allUserCourses.setCouseDurations(courseEntity.getDayEntity().size());
-					allUserCourses.setCourseName(courseEntity.getCourseName());
+					
+					String courseName = courseEntity.getCourseName().toUpperCase().concat(" : ").concat(courseEntity.getLanguage().toUpperCase());
+					allUserCourses.setCourseName(courseName );
+					
+					allUserCourses.setCourseDuration(courseEntity.getCouseDuration());
+					allUserCourses.setEndDate(courseEntity.getEndDate());
+					allUserCourses.setDays(courseEntity.getDayEntity().size());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());
+					allUserCourses.setLanguage(courseEntity.getLanguage());
 					allUserCoursesList.add(allUserCourses);
 
 				}
