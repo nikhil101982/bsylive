@@ -24,7 +24,7 @@ import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.util.CompareDates;
 
 @Service
-public class GetCourseService {
+public class GetCourseService2 {
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -90,9 +90,10 @@ public class GetCourseService {
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setEndDate(courseEntity.getEndDate());
 
-				String courseName = courseEntity.getCourseName().toUpperCase().concat("  :  ")
-						.concat(courseEntity.getLanguage().toUpperCase());
-
+				String courseName = (courseEntity.getCourseName().toUpperCase().concat(" - ")
+						.concat(courseEntity.getLanguage().toUpperCase()).concat(" - ")
+						.concat(courseEntity.getStartDate()).concat(" - ").concat(courseEntity.getEndDate()));
+				
 				allUserCourses.setCourseName(courseName);
 				allUserCourses.setCourseId(courseEntity.getCourseId());
 				allUserCoursesList.add(allUserCourses);
@@ -112,19 +113,6 @@ public class GetCourseService {
 		return successResponse(allUserCoursesList);
 	}
 
-	// Get All Course Entity By course ID
-	public CourseEntity coursesByCourseId(Integer courseId) throws ParseException {
-
-		courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
-
-		String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
-
-		if (compareDate.equals(ApiConstants.TRUE)) {
-			return courseEntity;
-		}
-
-		return null;
-	}
 
 	private AllCoursesResponse errorResponse(String message) {
 		allUserCoursesResponse.setStatus(ApiConstants.FAILURE);

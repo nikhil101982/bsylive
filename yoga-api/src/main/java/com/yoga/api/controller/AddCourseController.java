@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.model.AddCourseAdminRequest;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddListOfCourse;
 import com.yoga.api.model.CoursesId;
 import com.yoga.api.model.RegisterCourses;
 import com.yoga.api.model.StatusMessageResponse;
+import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.service.AddCourseAdminService;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
@@ -48,6 +50,10 @@ public class AddCourseController {
 	
 	@Autowired
 	UpdateCourTempService updateCourTempService;
+	
+
+	@Autowired
+	CourseRepository courseRepository;
 
 	// @Autowired
 	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
@@ -84,8 +90,8 @@ public class AddCourseController {
 
 	@PostMapping("/removeCourse")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public StatusMessageResponse removeCourse(@RequestBody List<CoursesId> removeCoursesReq) throws Exception {
-		return addCourseService.removeCourse(removeCoursesReq);
+	public StatusMessageResponse removeCourse(@RequestBody List<CoursesId> coursesIdList) throws Exception {
+		return addCourseService.removeCourse(coursesIdList);
 	}
 
 	/*
@@ -112,7 +118,21 @@ public class AddCourseController {
 	@GetMapping("/updateCourse/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
-		return updateCourTempService.updateCourse(courseId);
+		
+		//return courseRepository.findAll();
+		
+	return updateCourTempService.updateCourse(courseId);
+		
+		
+	}
+	
+	
+	@GetMapping("/updateCoursesTest/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public List<CourseEntity> updateCoursesTest(@PathVariable("courseId") Integer courseId) throws Exception {
+		
+		return courseRepository.findAll();
+		
 		
 		
 	}

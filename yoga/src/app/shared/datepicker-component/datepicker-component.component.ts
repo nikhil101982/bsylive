@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-datepicker-component',
@@ -11,10 +11,12 @@ export class DatepickerComponentComponent implements OnInit {
 
   @Output() onSelectDate = new EventEmitter<any>();
 
+  minDate: any = new Date();
+  maxDate: any = new Date();
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSelectDatePicker(event, date) {
     console.log("date", event, date._inputValue);

@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,10 +19,8 @@ import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.util.UtilMethods;
 
-// create lecture api
-
 @Service
-public class LectureService {
+public class LectureService21 {
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -38,12 +37,13 @@ public class LectureService {
 
 	DayEntity newDayEntity;
 
+	List<DayEntity> dayEntityList;
+
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
 	LectureEntity lectureEntity;
 
 	List<LectureEntity> lectureEntityList;
-	List<DayEntity> dayEntityList;
 
 	UtilMethods utilMethods = new UtilMethods();
 
@@ -67,67 +67,36 @@ public class LectureService {
 
 		}
 
-		dayEntityList = courseEntity.getDayEntity();
-
-		for (DayId dayId : createLectureRequest.getDayIds()) {
-
-			dayEntity = findDayEntity(dayId.getDayId());
-			
-			lectureEntityList = dayEntity.getLecEntity();
-
-			try {
-
-				lectureEntity = lectureRepository.getLectureByLectureNameAndStartTimeAndEndTime(
-						createLectureRequest.getLectureName(), createLectureRequest.getStartTime(),
-						createLectureRequest.getEndTime());
-			} catch (Exception e) {
-			}
-
-
-			LectureEntity lectureEntityNew = new LectureEntity();
-
-			lectureEntityNew = addLecture(createLectureRequest, lectureEntityNew);
-
-			int index = lectureEntityList.indexOf(lectureEntity);
-
-			if (index == -1) {
-				lectureEntityList.add(0, lectureEntityNew);
-			} else {
-				lectureEntityList.add(index, lectureEntityNew);
-
-			}
-
-			saveLectureEntity(lectureEntityNew);
-
-			dayEntity.setLecEntity(lectureEntityList);
-
-			int dayEntityIndex = dayEntityList.indexOf(dayEntity);
-			dayEntityList.add(dayEntityIndex, dayEntity);
+		if (courseEntity.getDayEntity().size() == 0) {
+			dayEntityList = new ArrayList<>();
+		} else {
+			dayEntityList = courseEntity.getDayEntity();
 		}
+
+		for (DayId dayId : createLectureRequest.getDayIds()) { }
 
 		if (!Objects.isNull(dayEntityList)) {
 			saveAllDayRepository(dayEntityList);
 		}
 
 		if (!Objects.isNull(courseEntity)) {
-
-			courseEntity.setDayEntity(dayEntityList);
-			courseRepository.save(courseEntity);
-
-			return utilMethods.successResponse(successMessage);
-
-		} else {
-			return utilMethods.errorResponse(failureMessage);
+			saveCourseEntity(courseEntity, dayEntityList);
 
 		}
 
+		return statusMessageResponse;
+
 	}
 
-	private LectureEntity addLecture(CreateLectureTempRequest createLectureRequest, LectureEntity lectureEntity) {
-
-		lectureEntity = createLectureList(createLectureRequest, lectureEntity);
-		return lectureEntity;
-
+	private void addLecture(CreateLectureTempRequest createLectureRequest) {
+		if (Objects.isNull(lectureEntity)) {
+			LectureEntity lecEntity = new LectureEntity();
+			lecEntity = createLectureList(createLectureRequest, lecEntity);
+			lectureEntityList.add(lecEntity);
+			saveAllLectureEntity(lectureEntityList);
+		} else {
+			lectureEntityList.add(lectureEntity);
+		}
 	}
 
 	private void saveCourseEntity(CourseEntity courseEntity, List<DayEntity> dayEntityList) {
@@ -139,14 +108,6 @@ public class LectureService {
 
 		}
 
-	}
-
-	private void saveDayRepository(DayEntity dayEntityList) {
-		try {
-			dayRepository.save(dayEntityList);
-		} catch (Exception e) {
-			utilMethods.errorResponse(failureMessage);
-		}
 	}
 
 	private void saveAllDayRepository(List<DayEntity> dayEntityList) {
@@ -165,24 +126,16 @@ public class LectureService {
 		}
 	}
 
-	private void saveLectureEntity(LectureEntity lectureEntity) {
-		try {
-			lectureRepository.save(lectureEntity);
-		} catch (Exception e) {
-			utilMethods.errorResponse(failureMessage);
-		}
-	}
-
 	private void iframe(CreateLectureTempRequest LectByDay, LectureEntity lectureEntity) {
-
+		
 		boolean checkVideoIframeDynamicLink = false;
 		boolean checkLiveIframeDynamicLink = false;
 
-		if (Objects.isNull(LectByDay.getLiveIFrameLink())) {
-			checkVideoIframeDynamicLink = LectByDay.getVideoIFrameLink().isEmpty();
+		if(Objects.isNull(LectByDay.getLiveIFrameLink())) {
+			 checkVideoIframeDynamicLink = LectByDay.getVideoIFrameLink().isEmpty();
 
-		} else {
-			checkLiveIframeDynamicLink = LectByDay.getLiveIFrameLink().isEmpty();
+		}else {
+			 checkLiveIframeDynamicLink = LectByDay.getLiveIFrameLink().isEmpty();
 
 		}
 
@@ -228,7 +181,7 @@ public class LectureService {
 
 	private DayEntity findDayEntity(Integer dayId) {
 		try {
-			// dayEntity = new DayEntity();
+			dayEntity = new DayEntity();
 			dayEntity = dayRepository.getDayEntityByDayId(dayId);
 		} catch (Exception e) {
 			utilMethods.errorResponse(failureMessage);

@@ -1,13 +1,13 @@
 package com.yoga.api.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.model.AddCourseAdminRequest;
@@ -22,38 +22,24 @@ public class AddCourseAdminService {
 
 	@Autowired
 	CourseRepository courseRepository;
-	
+
 	@Autowired
 	DayRepository dayRepository;
 
 	CourseEntity courseEntity;
-	
+
 	List<DayEntity> dayEntityList;
 
 	DayEntity dayEntity;
-	
-	
 
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
 	UtilMethods utilMethods = new UtilMethods();
-	
+
 	CompareDates compareDates = new CompareDates();
 
 	String failureMessage;
 	String successMessage;
-	
-	private static long findDifference1(String start_date, String end_date) throws ParseException {
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-
-		Date d1 = sdf.parse(start_date);
-		Date d2 = sdf.parse(end_date);
-
-		long difference_In_Date = d2.getDay() - d1.getDay() +1;
-
-		return difference_In_Date;
-	}
 
 	// Add Course api
 	public StatusMessageResponse addCourse(AddCourseAdminRequest course) throws InterruptedException, ParseException {
@@ -64,12 +50,10 @@ public class AddCourseAdminService {
 		if (Objects.isNull(course)) {
 			return utilMethods.errorResponse(failureMessage);
 		}
-		
-		
-		int duration = compareDates.findDuration(course.getStartDate(), course.getEndDate());
-		
+
+		int duration = CompareDates.findDifference(course.getStartDate(), course.getEndDate());
+
 		course.setDuration(duration);
-		
 
 		try {
 
@@ -97,7 +81,7 @@ public class AddCourseAdminService {
 			courseEntity.setStartDate(course.getStartDate());
 			courseEntity.setEndDate(course.getEndDate());
 			courseEntity.setDayEntity(createDayEntityList(course));
-			
+
 			if (!Objects.isNull(courseEntity)) {
 				courseRepository.save(courseEntity);
 			}
@@ -112,21 +96,21 @@ public class AddCourseAdminService {
 	private List<DayEntity> createDayEntityList(AddCourseAdminRequest course) {
 
 		dayEntityList = new ArrayList<>();
-		
+
 		for (int i = 1; i <= course.getDuration(); i++) {
-			
+
 			dayEntity = new DayEntity();
-			
+
 			String dayName = "Day".concat(Integer.toString(i));
-			
+
 			dayEntity.setDayName(dayName);
 			dayEntityList.add(dayEntity);
 		}
-		
+
 		if (!Objects.isNull(dayEntityList)) {
 			dayRepository.saveAll(dayEntityList);
 		}
-		
+
 		return dayEntityList;
 	}
 

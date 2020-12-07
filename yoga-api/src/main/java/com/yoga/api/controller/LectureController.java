@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +23,9 @@ public class LectureController {
 
 	@Autowired
 	LectureRepository lecRepository;
-	
+
 	@Autowired
 	LectureService lectureService;
-
-
 
 	/*
 	 * Get all lecture
@@ -36,16 +36,12 @@ public class LectureController {
 	public List<LectureEntity> getLectures() throws Exception {
 		return lecRepository.findAll();
 	}
-	
+
 	@PutMapping("/createLecture")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public StatusMessageResponse createLecture(@RequestBody CreateLectureTempRequest createLectureRequest) throws Exception {
+	public StatusMessageResponse createLecture(@RequestBody CreateLectureTempRequest createLectureRequest)
+			throws Exception {
 		return lectureService.createLecture(createLectureRequest);
 	}
-	
-	
-
-
-	
 
 }

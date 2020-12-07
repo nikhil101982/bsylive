@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceService } from 'src/app/service.service';
+import { DateServiceService } from 'src/app/shared/date-service/date-service.service';
 import Swal from 'sweetalert2';
 
 
@@ -23,7 +24,7 @@ class CreateCourseParams {
   startDate: any = "";
   endDate: any = "";
   language: string = "hindi"
-  duration: number = null
+  // duration: number = null
 }
 
 @Component({
@@ -53,6 +54,8 @@ export class AdminCourseSectionComponent implements OnInit {
 
   createCourse: CreateCourseParams = new CreateCourseParams();
   createCourseError: string;
+
+  enableDateError: boolean = false;
 
   //
 
@@ -86,7 +89,7 @@ export class AdminCourseSectionComponent implements OnInit {
 
   //
 
-  constructor(private service: ServiceService, private router: Router) { }
+  constructor(private service: ServiceService, private router: Router, private dateService: DateServiceService) { }
 
   ngOnInit(): void {
 
@@ -127,11 +130,13 @@ export class AdminCourseSectionComponent implements OnInit {
       startDate: "",
       endDate: "",
       language: "hindi",
-      duration: null
+      // duration: null
     }
   }
 
   returnDate(date, section) {
+    this.enableDateError = false;
+    this.createCourseError = "";
     console.log("date in course compoenet = ", date, section)
     if (section === 'startDate') {
       this.createCourse.startDate = date;
@@ -139,6 +144,14 @@ export class AdminCourseSectionComponent implements OnInit {
 
     if (section === 'endDate') {
       this.createCourse.endDate = date;
+    }
+
+    if (this.createCourse.startDate && this.createCourse.endDate) {
+      let compare = this.dateService.dateCompare(this.createCourse.startDate, this.createCourse.endDate);
+      console.log("compare date = ", compare)
+      if (compare) {
+        this.enableDateError = true;
+      }
     }
   }
 
@@ -160,13 +173,17 @@ export class AdminCourseSectionComponent implements OnInit {
       this.createCourseError = "Please provide end date";
     }
 
-    else if (this.createCourse.duration === null) {
-      this.createCourseError = "Please provide duration";
+    else if (this.enableDateError === true) {
+      this.createCourseError = "End date should be more than start date"
     }
 
-    else if (this.createCourse.duration === 0) {
-      this.createCourseError = "duration should be more than zero(0)";
-    }
+    // else if (this.createCourse.duration === null) {
+    //   this.createCourseError = "Please provide duration";
+    // }
+
+    // else if (this.createCourse.duration === 0) {
+    //   this.createCourseError = "duration should be more than zero(0)";
+    // }
     else {
       console.log("hit api");
       this.service.createCourse(this.createCourse).subscribe(res => {

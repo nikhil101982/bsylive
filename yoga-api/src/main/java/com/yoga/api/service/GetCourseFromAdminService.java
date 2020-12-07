@@ -74,8 +74,7 @@ public class GetCourseFromAdminService {
 					allUserCourses = new AllUserCourses();
 
 					
-					String courseName = courseEntity.getCourseName().toUpperCase().concat(" : ").concat(courseEntity.getLanguage().toUpperCase());
-					allUserCourses.setCourseName(courseName );
+					allUserCourses.setCourseName(courseEntity.getCourseName().toUpperCase() );
 					
 					allUserCourses.setCourseDuration(courseEntity.getCouseDuration());
 					allUserCourses.setEndDate(courseEntity.getEndDate());

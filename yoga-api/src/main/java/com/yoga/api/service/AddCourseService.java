@@ -149,17 +149,22 @@ public class AddCourseService {
 			return utilMethods.errorResponse(failureMessage);
 		}
 
+		courseEntityList = new ArrayList<>();
+
 		for (CoursesId coursesId : coursesIdList) {
 			try {
 				courseEntity = courseRepository.getCourseEntityByCourseId(coursesId.getCourseId());
-				courseRepository.delete(courseEntity);
-				return utilMethods.successResponse(successMessage);
+				courseEntityList.add(courseEntity);
 			} catch (Exception e) {
 				return utilMethods.errorResponse(failureMessage);
 			}
 		}
-		return utilMethods.successResponse(successMessage);
 
+		if (!Objects.isNull(courseEntityList)) {
+			courseRepository.deleteAll(courseEntityList);
+		}
+
+		return utilMethods.successResponse(successMessage);
 
 	}
 

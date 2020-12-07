@@ -24,5 +24,16 @@ public class UtilMethods {
 		return statusResponse;
 	}
 
+	public void errorResponse1(String message) {
+		statusResponse.setMessage(message);
+		statusResponse.setStatus(ApiConstants.FAILURE);
+	}
+	
+	
+	public void successResponse1(String message) {
+		statusResponse.setMessage(message);
+		statusResponse.setStatus(ApiConstants.SUCCESS);
+		
+	}
 
 }

@@ -231,27 +231,27 @@ public class UpdateCourService {
 		if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 				&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 			lectureByDay2.setDisableJoinBtn("true");
-			lectureByDay2.setLiveIframeLink(null);
-			lectureByDay2.setVideoIframeLink(null);
+			lectureByDay2.setLiveIframeDynamicLink(null);
+			lectureByDay2.setVideoIframeDynamicLink(null);
 
 		} else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
 				&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
 
 			lectureByDay2.setDisableJoinBtn("false");
-			lectureByDay2.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
-			lectureByDay2.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
+			lectureByDay2.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+			lectureByDay2.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
 
 		} else {
 
 			if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-				lectureByDay2.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
+				lectureByDay2.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
 				lectureByDay2.setDisableJoinBtn("false");
-				lectureByDay2.setLiveIframeLink(null);
+				lectureByDay2.setLiveIframeDynamicLink(null);
 
 			} else {
-				lectureByDay2.setVideoIframeLink(null);
+				lectureByDay2.setVideoIframeDynamicLink(null);
 				lectureByDay2.setDisableJoinBtn("false");
-				lectureByDay2.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
+				lectureByDay2.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
 
 			}
 

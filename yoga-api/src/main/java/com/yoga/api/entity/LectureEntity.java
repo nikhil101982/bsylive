@@ -31,6 +31,8 @@ public class LectureEntity {
 	public String liveIframeDynamicLink;
 	public String disableJoinBtn;
 	public int sNo;
+	public String lectureStatus;;
+
 
 
 

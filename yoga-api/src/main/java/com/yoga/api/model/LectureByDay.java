@@ -26,8 +26,8 @@ public class LectureByDay {
 	String currentDate;
 	String disableJoinBtn;
 	public int sNo;
-	String videoIframeLink;
-	String liveIframeLink;
+	String videoIframeDynamicLink;
+	String liveIframeDynamicLink;
 
 
 }

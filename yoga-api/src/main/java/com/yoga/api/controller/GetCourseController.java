@@ -21,6 +21,7 @@ import com.yoga.api.service.GetCourseByAdminService;
 import com.yoga.api.service.GetCourseByEmailService;
 import com.yoga.api.service.GetCourseFromAdminService;
 import com.yoga.api.service.GetCourseService;
+import com.yoga.api.service.GetCourseService2;
 
 @RestController
 @CrossOrigin
@@ -28,6 +29,9 @@ public class GetCourseController {
 
 	@Autowired
 	GetCourseService getCourseService;
+	
+	@Autowired
+	GetCourseService2 getCourseService2;
 	
 	@Autowired
 	CourseRepository courseRepository;
@@ -115,6 +119,17 @@ public class GetCourseController {
 	@GetMapping("/coursesForAdmin")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AllCoursesResponse courses() throws Exception {
+		return getCourseService2.courses();
+
+	}
+	
+	
+	/*
+	 * Get All Courses with course id and course name as a response
+	 */
+	@GetMapping("/coursesToDelete")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public AllCoursesResponse coursesToDelete() throws Exception {
 		return getCourseService.courses();
 
 	}

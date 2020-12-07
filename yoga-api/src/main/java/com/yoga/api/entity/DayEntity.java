@@ -43,5 +43,6 @@ public class DayEntity {
 	@OneToMany(targetEntity = LectureEntity.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dl_fk", referencedColumnName = "dayId")
 	private List<LectureEntity> lecEntity;
+	
 
 }

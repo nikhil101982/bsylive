@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class CompareDates {
@@ -35,16 +36,15 @@ public class CompareDates {
 
 	}
 
-	public static int findDuration(String start_date, String end_date) throws ParseException {
+	public static int findDifference(String start_date, String end_date) throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		LocalDate dateBefore = LocalDate.parse(start_date);
+		LocalDate dateAfter = LocalDate.parse(end_date);
 
-		Date d1 = sdf.parse(start_date);
-		Date d2 = sdf.parse(end_date);
+		// calculating number of days in between
+		int noOfDaysBetween =  (int) ChronoUnit.DAYS.between(dateBefore, dateAfter);
 
-		int duration = d2.getDay() - d1.getDay() + 1;
-
-		return duration;
+		return noOfDaysBetween;
 	}
 
 }
