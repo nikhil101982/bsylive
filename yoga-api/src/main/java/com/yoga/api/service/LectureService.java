@@ -1,5 +1,6 @@
 package com.yoga.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,10 +19,20 @@ import com.yoga.api.repository.DayRepository;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.util.UtilMethods;
 
+import lombok.extern.slf4j.Slf4j;
+
 // create lecture api
 
 @Service
+@Slf4j
 public class LectureService {
+	
+	
+	 
+	
+// If Lecture is null is not present then 
+	
+	
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -33,10 +44,11 @@ public class LectureService {
 	LectureRepository lectureRepository;
 
 	CourseEntity courseEntity;
+	
+	List<CourseEntity> courseEntityList;
+
 
 	DayEntity dayEntity;
-
-	DayEntity newDayEntity;
 
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
@@ -66,53 +78,102 @@ public class LectureService {
 			errorResponse(failureMessage);
 
 		}
+		
+		courseEntityList = courseRepository.findAll();
+
 
 		dayEntityList = courseEntity.getDayEntity();
 
+		lecture(createLectureRequest);
+
 		for (DayId dayId : createLectureRequest.getDayIds()) {
+
+			lecture(createLectureRequest);
 
 			dayEntity = findDayEntity(dayId.getDayId());
 			
-			lectureEntityList = dayEntity.getLecEntity();
-
-			try {
-
-				lectureEntity = lectureRepository.getLectureByLectureNameAndStartTimeAndEndTime(
-						createLectureRequest.getLectureName(), createLectureRequest.getStartTime(),
-						createLectureRequest.getEndTime());
-			} catch (Exception e) {
+			if(!Objects.isNull(dayEntity.getLecEntity())) {
+				lectureEntityList = dayEntity.getLecEntity();
+				
+				int index1 = lectureEntityList.indexOf(lectureEntity);
+				
+				if(index1==-1) {
+					lectureEntityList.add(0,lectureEntity);
+				}else {
+					lectureEntityList.set(index1, lectureEntity);
+				}
+				
+			}else {
+				lectureEntityList = new ArrayList<LectureEntity>();
+				lectureEntityList.add(lectureEntity);
 			}
+			
+			
 
 
-			LectureEntity lectureEntityNew = new LectureEntity();
 
-			lectureEntityNew = addLecture(createLectureRequest, lectureEntityNew);
-
-			int index = lectureEntityList.indexOf(lectureEntity);
-
-			if (index == -1) {
-				lectureEntityList.add(0, lectureEntityNew);
-			} else {
-				lectureEntityList.add(index, lectureEntityNew);
-
-			}
-
-			saveLectureEntity(lectureEntityNew);
-
+			
 			dayEntity.setLecEntity(lectureEntityList);
 
-			int dayEntityIndex = dayEntityList.indexOf(dayEntity);
-			dayEntityList.add(dayEntityIndex, dayEntity);
+			int index = dayEntityList.indexOf(dayEntity);
+			
+			dayEntityList.set(index, dayEntity);
 		}
 
 		if (!Objects.isNull(dayEntityList)) {
-			saveAllDayRepository(dayEntityList);
+
+			for (int i = 0; i < dayEntityList.size(); i++) {
+				DayEntity dEntity = dayEntityList.get(i);
+				if (!(dEntity.getLecEntity().size() == 0)) {
+					System.out.println("Day entity Lecture ********* Days name  " + dEntity.dayName + "Lecture entity"
+							+ dEntity.getLecEntity());
+				}
+			}
+
+			//updateAllDayRepository(dayEntityList);
 		}
 
 		if (!Objects.isNull(courseEntity)) {
+			
+			if(!Objects.isNull(dayEntity.getLecEntity())) {
+				
+				int index1 = courseEntityList.indexOf(courseEntity);
+				
+				courseEntity.setDayEntity(dayEntityList);
+				
+				courseEntityList.set(index1, courseEntity);
+				
+				
+				courseRepository.saveAll(courseEntityList);
 
-			courseEntity.setDayEntity(dayEntityList);
-			courseRepository.save(courseEntity);
+				
+	
+				
+			}
+			
+
+//			for (int i = 0; i < dayEntityList.size(); i++) {
+//
+//				DayEntity d = dayEntityList.get(i);
+//
+//				if (!(d.getLecEntity().size() == 0)) {
+//					System.out.println("Day entity Lecture ********* Days name  " + d.dayName + "Lecture entity"
+//							+ d.getLecEntity());
+//				}
+//
+//			}
+
+			// for(DayEntity dayEntity: dayEntityList){
+			//
+			// System.out.println(dayEntity);
+			// dayRepository.save(dayEntity);
+			// }
+
+			// courseRepository.save(courseEntity);
+			
+			//courseRepository.delete(courseEntity);
+			
+			//courseRepository.updateCourseEntity(dayEntityList, courseEntity.getCourseId());
 
 			return utilMethods.successResponse(successMessage);
 
@@ -123,6 +184,29 @@ public class LectureService {
 
 	}
 
+	private void lecture(CreateLectureTempRequest createLectureRequest) {
+		try {
+			lectureEntity = lectureRepository.getLectureByLectureNameAndStartTimeAndEndTime(
+					createLectureRequest.getLectureName(), createLectureRequest.getStartTime(),
+					createLectureRequest.getEndTime());
+
+			System.out.println("******************* LectureEntity ************" + lectureEntity);
+
+		} catch (Exception e) {
+			log.info("Not able to create Lecture Entity! ");
+
+		}
+
+		if (Objects.isNull(lectureEntity)) {
+			lectureEntity = new LectureEntity();
+			lectureEntity = addLecture(createLectureRequest, lectureEntity);
+			//saveLectureEntity(lectureEntity);
+		} else {
+			lectureEntity = addLecture(createLectureRequest, lectureEntity);
+			//updateLectureEntity(lectureEntity);
+		}
+	}
+
 	private LectureEntity addLecture(CreateLectureTempRequest createLectureRequest, LectureEntity lectureEntity) {
 
 		lectureEntity = createLectureList(createLectureRequest, lectureEntity);
@@ -130,36 +214,30 @@ public class LectureService {
 
 	}
 
-	private void saveCourseEntity(CourseEntity courseEntity, List<DayEntity> dayEntityList) {
-
+	private void updateAllDayRepository(List<DayEntity> dayEntityList) {
 		try {
-			courseEntity.setDayEntity(dayEntityList);
-			courseRepository.save(courseEntity);
-		} catch (Exception e) {
 
-		}
+			for (int i = 0; i < dayEntityList.size(); i++) {
 
-	}
+				DayEntity dEnt = dayEntityList.get(i);
 
-	private void saveDayRepository(DayEntity dayEntityList) {
-		try {
-			dayRepository.save(dayEntityList);
-		} catch (Exception e) {
-			utilMethods.errorResponse(failureMessage);
-		}
-	}
+				dayRepository.updateDayEntity(dEnt.getLecEntity(), dEnt.getDayId());
 
-	private void saveAllDayRepository(List<DayEntity> dayEntityList) {
-		try {
-			dayRepository.saveAll(dayEntityList);
-		} catch (Exception e) {
-			utilMethods.errorResponse(failureMessage);
-		}
-	}
+				System.out.println("Day entity Lecture ********* " + dEnt.getLecEntity());
 
-	private void saveAllLectureEntity(List<LectureEntity> lectureEntityList) {
-		try {
-			lectureRepository.saveAll(lectureEntityList);
+			}
+
+			for (DayEntity DayEntity : dayEntityList) {
+				if (!(DayEntity.getLecEntity().size() == 0)) {
+
+					dayRepository.save(DayEntity);
+
+					// dayRepository.updateDayEntity(DayEntity.getLecEntity(),
+					// DayEntity.getDayId());
+
+				}
+			}
+
 		} catch (Exception e) {
 			utilMethods.errorResponse(failureMessage);
 		}
@@ -168,6 +246,18 @@ public class LectureService {
 	private void saveLectureEntity(LectureEntity lectureEntity) {
 		try {
 			lectureRepository.save(lectureEntity);
+		} catch (Exception e) {
+			utilMethods.errorResponse(failureMessage);
+		}
+	}
+
+	private void updateLectureEntity(LectureEntity lectureEntity) {
+		try {
+			lectureRepository.updateLectureEntity(lectureEntity.getLectureName(), lectureEntity.getStartTime(),
+					lectureEntity.getEndTime(), lectureEntity.getVideoIframeDynamicLink(),
+					lectureEntity.getLiveIframeDynamicLink(), lectureEntity.getCurrDate(),
+					lectureEntity.getLectureId());
+
 		} catch (Exception e) {
 			utilMethods.errorResponse(failureMessage);
 		}
@@ -228,7 +318,6 @@ public class LectureService {
 
 	private DayEntity findDayEntity(Integer dayId) {
 		try {
-			// dayEntity = new DayEntity();
 			dayEntity = dayRepository.getDayEntityByDayId(dayId);
 		} catch (Exception e) {
 			utilMethods.errorResponse(failureMessage);

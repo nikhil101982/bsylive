@@ -40,10 +40,18 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
 	@Query("SELECT c FROM CourseEntity c WHERE c.courseName = ?1 and c.startDate = ?2  and c.couseDuration = ?3  and c.language = ?4")
 	CourseEntity getCourseByCourseNameAndStartDateAndCouseDurationAndLanguage(String courseName, String startDate, int couseDuration, String language);
 
-    @Transactional
-	@Modifying
+//	@Transactional
+    @Modifying(clearAutomatically = true)
 	@Query("UPDATE CourseEntity c set c.dayEntity= :dayEntity WHERE c.courseId=:courseId ")
-	int updateCourseEntity(@Param("dayEntity") List<DayEntity> dayEntity, @Param("courseId") Integer courseId);
+	void updateCourseEntity(@Param("dayEntity") List<DayEntity> dayEntity, @Param("courseId") Integer courseId);
+	
+	
+	
+//	@Transactional
+//    @Modifying(clearAutomatically = true)
+//	@Query("UPDATE CourseEntity c set c.dayEntity= ?1 WHERE c.courseId=?2")
+//	void updateECourseEntity(@Param("dayEntity") List<DayEntity> dayEntity, @Param("courseId") Integer courseId);
+
     
 
     

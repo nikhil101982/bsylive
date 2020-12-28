@@ -250,6 +250,7 @@ public class UpdateCourTempService {
 		addCourseByDayId.setLanguage(courseEntity.getLanguage());
 		addCourseByDayId.setEndDate(courseEntity.getEndDate());
 		addCourseByDayId.setStartDate(courseEntity.getStartDate());
+		addCourseByDayId.setEndDate(courseEntity.getEndDate());
 		addCourseByDayId.setMessage("Course updated! ");
 		addCourseByDayId.setStatus(ApiConstants.SUCCESS);
 

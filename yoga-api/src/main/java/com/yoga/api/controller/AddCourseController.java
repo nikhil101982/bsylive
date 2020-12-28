@@ -108,12 +108,11 @@ public class AddCourseController {
 	 * Add course by admin
 	 */
 
-	// @PostMapping("/addCourseWithLectureDetails")
-	// public StatusMessageResponse addCourseWithLectureDetails(@RequestBody
-	// AddCourseByDayId addCourseByDayId) throws Exception {
-	// return
-	// addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
-	// }
+//	@PostMapping("/addCourseWithLectureDetails")
+//	public StatusMessageResponse addCourseWithLectureDetails(@RequestBody AddCourseByDayId addCourseByDayId)
+//			throws Exception {
+//		return addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
+//	}
 	
 	@GetMapping("/updateCourse/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")

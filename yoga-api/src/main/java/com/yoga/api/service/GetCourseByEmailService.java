@@ -62,12 +62,6 @@ public class GetCourseByEmailService {
 			return getCourseFromAdminService.coursesForAdmin();
 		}
 
-		// try {
-		// userAccountEntity = userAccountRepository.findByUserName(userEmail);
-		// } catch (Exception e) {
-		// return errorResponse();
-		// }
-
 		if (Objects.isNull(userAccountEntity)) {
 			return errorResponse();
 		}

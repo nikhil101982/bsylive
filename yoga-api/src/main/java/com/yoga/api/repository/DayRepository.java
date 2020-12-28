@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
@@ -23,9 +24,10 @@ public interface DayRepository extends JpaRepository<DayEntity, Integer> {
 	@Query("SELECT c FROM DayEntity c WHERE c.dayName = ?1")
 	DayEntity getDayEntityByDayName(String dayName);
 	
-//	@Modifying
-//	@Query("UPDATE DayEntity d set d.lecEntity= :lecEntity WHERE d.dayId=:dayId ")
-//	int updateDayEntity(@Param("lecEntity") List<LectureEntity> lecEntity, @Param("dayId") Integer dayId);
+	//@Transactional
+    @Modifying(clearAutomatically = true)
+	@Query("UPDATE DayEntity d set d.lecEntity=:lecEntity WHERE d.dayId=:dayId ")
+	void updateDayEntity(@Param("lecEntity") List<LectureEntity> lecEntity, @Param("dayId") Integer dayId);
 
 
 
