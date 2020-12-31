@@ -14,7 +14,6 @@ import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.service.LectureService;
-import com.yoga.api.service.LectureServiceWorking;
 
 @RestController
 @CrossOrigin
@@ -22,9 +21,9 @@ public class LectureController {
 
 	@Autowired
 	LectureRepository lecRepository;
-
+	
 	@Autowired
-	LectureService lectureService;
+	LectureService createLectureService;
 
 	/*
 	 * Get all lecture
@@ -40,7 +39,7 @@ public class LectureController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse createLecture(@RequestBody CreateLectureTempRequest createLectureRequest)
 			throws Exception {
-		return lectureService.createLecture(createLectureRequest);
+		return createLectureService.createLecture(createLectureRequest);
 	}
 
 }

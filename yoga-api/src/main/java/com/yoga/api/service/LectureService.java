@@ -1,7 +1,9 @@
 package com.yoga.api.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +90,27 @@ public class LectureService {
 			log.info("Not able to create Lecture Entity! ");
 		}
 
-		for (DayId dayId : createLectureRequest.getDayIds()) {
+		Map<Integer, Integer> dayIdMap = new HashMap<Integer, Integer>();
 
+		Integer fromDayId = createLectureRequest.getFromDayId();
+		Integer toDayId = createLectureRequest.getToDayId();
+
+		for (DayId dayId : createLectureRequest.getDayIds()) {
 			dayEntity = findDayEntity(dayId.getDayId());
+			dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
+		}
+
+		// from
+		for (DayEntity dayEntity : dayEntityList) {
+			if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
+				dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
+			}
+
+		}
+
+		for (Map.Entry<Integer, Integer> entry : dayIdMap.entrySet()) {
+
+			dayEntity = findDayEntity(entry.getKey());
 
 			lectureEntityList = dayEntity.getLecEntity();
 			lectureEntityStatus = new LectureEntityStatus();

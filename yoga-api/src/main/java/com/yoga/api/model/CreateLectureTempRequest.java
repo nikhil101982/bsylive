@@ -30,6 +30,10 @@ public class CreateLectureTempRequest {
 	private Integer courseId;
 	
 	private final static long serialVersionUID = 2177644673242063512L;
+	
+	private Integer fromDayId;
+	private Integer toDayId;
+
 
 	
 
