@@ -33,7 +33,11 @@ public interface LectureRepository extends JpaRepository<LectureEntity, Integer>
 	@Query("UPDATE LectureEntity c set c.lectureName=:lectureName , c.startTime =:startTime  , c.endTime =:endTime , c.videoIframeDynamicLink = :videoIframeDynamicLink   , c.liveIframeDynamicLink = :liveIframeDynamicLink , c.currDate = :currDate  WHERE c.lectureId=:lectureId ")
 	void updateLectureEntity(@Param("lectureName") String lectureName , @Param("startTime") String startTime , @Param("endTime") String endTime, @Param("videoIframeDynamicLink") String videoIframeDynamicLink, @Param("liveIframeDynamicLink") String liveIframeDynamicLink  , @Param("currDate") String currDate , @Param("lectureId") Integer lectureId);
 
+    LectureEntity findByLectureNameAndStartTimeAndEndTime(String lectureName, String startTime, String endTime);
 
+  
+    
+    
 
 	
 }
