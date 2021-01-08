@@ -21,6 +21,9 @@ public class AllUserCourses {
 	private String endDate;
 	
 	private int courseDuration;
+	
+	private String prerequisite;
+
 
 
 

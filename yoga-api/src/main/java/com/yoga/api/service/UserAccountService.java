@@ -258,8 +258,16 @@ public class UserAccountService {
 
 		String text = "Your account has been deleted! ";
 
-		return sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, "Bihar yoga account", text,
-				successResponseMessage, failureResponseMessage);
+		
+		try {
+			sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, ApiConstants.FORGOT_PASSWORD_SUBJECT, text,
+					successResponseMessage, failureResponseMessage);
+			return utilMethods.successResponse(successResponseMessage);
+
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureResponseMessage);
+		}
+
 
 	}
 

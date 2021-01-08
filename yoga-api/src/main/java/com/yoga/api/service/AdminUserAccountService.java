@@ -101,8 +101,11 @@ public class AdminUserAccountService {
 			String text = "Your account has been created \n" + "Username: " + userAccountEntity.getUserEmail()
 					+ "\n Password " + userAccountEntity.getPassword();
 
-			return sendEmailUtil.sendEmail(userAccountEntity.getUserEmail(), forgotPasswordSendEmailFrom,
+			return  sendEmailUtil.sendEmail(userAccountEntity.getUserEmail(), forgotPasswordSendEmailFrom,
 					"Bihar yoga account", text, successResponseMessage, failureResponseMessage);
+			
+			//return utilMethods.successResponse(successResponseMessage);
+
 
 		} catch (MessagingException e) {
 			return utilMethods.errorResponse("Not able to inform user by email! ");

@@ -75,9 +75,9 @@ public class AddCourseAdminService {
 	private StatusMessageResponse saveCourse(AddCourseAdminRequest course) {
 		try {
 			courseEntity = new CourseEntity();
-			courseEntity.setCourseName(course.getCourseName());
+			courseEntity.setCourseName(course.getCourseName().toUpperCase());
 			courseEntity.setCouseDuration(course.getDuration());
-			courseEntity.setLanguage(course.getLanguage());
+			courseEntity.setLanguage(course.getLanguage().toUpperCase());
 			courseEntity.setStartDate(course.getStartDate());
 			courseEntity.setEndDate(course.getEndDate());
 			courseEntity.setDayEntity(createDayEntityList(course));

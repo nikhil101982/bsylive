@@ -29,6 +29,8 @@ public class CreateLectureTempRequest {
 	private String liveIFrameLink;
 	private Integer courseId;
 	
+	private String language;
+	
 	private final static long serialVersionUID = 2177644673242063512L;
 	
 	private Integer fromDayId;

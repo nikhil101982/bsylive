@@ -111,6 +111,14 @@ public class GetCourseController {
 		return getCourseBasedOnUserNameService.coursesByUserName(userEmail , userRole);
 
 	}
+	
+	
+	@GetMapping("/coursesForRegistration/{userEmail}/{userRole}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public AllUserCoursesResponse coursesForRegistration(@PathVariable("userEmail") String userEmail , @PathVariable("userRole") String userRole ) throws Exception {
+		return getCourseBasedOnUserNameService.coursesByUserName(userEmail , userRole);
+
+	}
 
 	
 	/*
@@ -127,6 +135,17 @@ public class GetCourseController {
 	/*
 	 * Get All Courses with course id and course name as a response
 	 */
+	@GetMapping("/allCourses")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public List<CourseEntity> allCourses() throws Exception {
+		return courseRepository.findAll();
+
+	}
+	
+	
+	/*
+	 * Get All Courses with course id and course name as a response
+	 */
 	@GetMapping("/coursesToDelete")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AllCoursesResponse coursesToDelete() throws Exception {
@@ -136,11 +155,14 @@ public class GetCourseController {
 	
 
 
-//	@GetMapping("/lectureSessionList")
-//	public List<LectureSessionEntity> lectureSessionList() throws Exception {
-//		return addCourseWithLectureDetailsService.lectureSessionList();
-//
-//	}
+	/*
+	 * Get All Courses
+	 */
+	@GetMapping("/courses")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public AllCoursesResponse updateCoursesTest() throws Exception {
+		return getCourseService2.allCourses();
+	}
 	
 	
 	

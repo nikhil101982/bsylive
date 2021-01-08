@@ -100,12 +100,14 @@ public class LectureService {
 			dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
 		}
 
+		if(!Objects.isNull(fromDayId) && !Objects.isNull(toDayId)) {
 		// from
 		for (DayEntity dayEntity : dayEntityList) {
 			if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
 				dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
 			}
 
+		}
 		}
 
 		for (Map.Entry<Integer, Integer> entry : dayIdMap.entrySet()) {

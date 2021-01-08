@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+      import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { API_ENDPOINTS } from '../app/endpoints';
@@ -62,6 +62,12 @@ export class ServiceService {
   // for admin
 
   getAllCourses() {
+    let link = `${this.url}courses`
+    return this.http.get(link, this.requestHeaders);
+    // return this.http.get('./assets/jsons/all-courses.json')
+  }
+
+  getAllCoursesForDelete() {
     let link = `${this.url}coursesForAdmin`
     return this.http.get(link, this.requestHeaders);
     // return this.http.get('./assets/jsons/all-courses.json')

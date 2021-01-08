@@ -9,34 +9,24 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "yoga_lecture")
-public class LectureEntity {
+@Table(name = "yoga_registration_form")
+@Setter
+@Getter
+public class RegistrationFormEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer lectureId;
+	public Integer registrationFormId;
 
-	public String lectureName;
-	public String startTime;
-	public String endTime;
-	public String currDate;
-	public String videoIframeDynamicLink;
-	public String liveIframeDynamicLink;
-	public String disableJoinBtn;
-	public int sNo;
-	public String lectureStatus;
-	public String language;
-
-
-
-
-
+	public String formName;
 
 }

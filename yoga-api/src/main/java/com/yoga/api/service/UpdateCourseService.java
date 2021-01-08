@@ -196,8 +196,11 @@ public class UpdateCourseService {
 
 	private StatusMessageResponse sendEmail(String subject, String text) {
 		try {
-			return sendEmailUtil.sendEmail(userAccountEntity.getUserEmail(), forgotPasswordSendEmailFrom, subject, text,
+			 sendEmailUtil.sendEmail(userAccountEntity.getUserEmail(), forgotPasswordSendEmailFrom, subject, text,
 					"User courses updated! ", "User courses not updated! ");
+			
+				return utilMethods.successResponse(successMessage);
+
 		} catch (Exception e) {
 			return utilMethods.errorResponse(failureMessage);
 		}

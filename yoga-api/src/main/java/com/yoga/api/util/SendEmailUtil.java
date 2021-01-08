@@ -28,10 +28,11 @@ public class SendEmailUtil {
 			message.setText(text);
 			message.setSubject(subject);
 			javaMailSender.send(message);
+			
 			return utilMethods.successResponse(successMessage);
 		} catch (MailException e) {
 
-			return utilMethods.errorResponse(errorMessage);
+			return  utilMethods.errorResponse(errorMessage);
 
 		}
 	}

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +36,16 @@ public class CourseEntity {
 	public String startDate;
 	public String language;
 	public String endDate;
+	public String prerequisite;
+	
+	
+	@Embedded
+	@ElementCollection
+	@OneToMany(targetEntity = RegistrationFormEntity.class, cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@JoinColumn(name = "cd_fk", referencedColumnName = "courseId")
+	private List<RegistrationFormEntity> registrationFormEntity;
+
+
 
 
 	@Embedded

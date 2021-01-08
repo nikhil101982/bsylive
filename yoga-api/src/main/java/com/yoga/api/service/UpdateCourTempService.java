@@ -28,20 +28,6 @@ import com.yoga.api.util.UtilMethods;
 @Service
 public class UpdateCourTempService {
 
-	@Autowired
-	CourseRepository courseRepository;
-
-	@Autowired
-	LectureRepository lectureRepository;
-
-	@Autowired
-	DayRepository dayRepository;
-
-	@Autowired
-	UserAccountRepository userAccountRepository;
-
-	@Value("${forgot.password.email.send.from}")
-	private String forgotPasswordSendEmailFrom;
 
 	CourseEntity courseEntity;
 
@@ -72,34 +58,29 @@ public class UpdateCourTempService {
 	LectureEntity newLectureEntity;
 
 	List<LectureByDay> lectureByDayList;
-
+	
 	@Autowired
 	SendEmailUtil sendEmailUtil;
+	
+	@Autowired
+	CourseRepository courseRepository;
+
+	@Autowired
+	LectureRepository lectureRepository;
+
+	@Autowired
+	DayRepository dayRepository;
+
+	@Autowired
+	UserAccountRepository userAccountRepository;
+	
+	@Value("${forgot.password.email.send.from}")
+	private String forgotPasswordSendEmailFrom;
 
 	String successMessage = "Course removed! ";
 	String failureMessage = "Course is not present! ";
 
 	List<DayByCourseId> day = new ArrayList<>();
-
-//	private void addLectures(CourseResources course) {
-//
-//		for (Day day : course.getDay()) {
-//
-//			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
-//			lectureEntity.setDisableJoinBtn("false");
-//			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
-//			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
-//			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
-//			lectureEntity.setVideoIframeDynamicLink(day.getVideoIframeDynamicLink());
-//			lectureEntity.setLiveIframeDynamicLink(day.getLiveIframeDynamicLink());
-//
-//			lecEntityList.add(lectureEntity);
-//		}
-//
-//		if (!Objects.isNull(lecEntityList)) {
-//			lectureRepository.saveAll(lecEntityList);
-//		}
-//	}
 
 	public AddCourseByDayId updateCourse(Integer courseId) {
 
@@ -175,55 +156,6 @@ public class UpdateCourTempService {
 
 	}
 
-//	private LectureByDay createLectureByDay(LectureEntity lectureEntity2) {
-//
-//		lectureByDay = new LectureByDay();
-//
-//		if (!Objects.isNull(lectureEntity2)) {
-//
-//			iframeLectureByDay(lectureByDay, lectureEntity2);
-//			lectureByDay.setSNo(lectureEntity2.getSNo());
-//			lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
-//			lectureByDay.setEndTime(lectureEntity2.getEndTime().toUpperCase());
-//			lectureByDay.setLectureName(lectureEntity2.getLectureName().toUpperCase());
-//			lectureByDay.setStartTime(lectureEntity2.getStartTime().toUpperCase());
-//		}
-//		return lectureByDay;
-//	}
-
-//	private void iframeLectureByDay(LectureByDay lectureByDay2, LectureEntity lectureEntity2) {
-//
-//		if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-//				&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-//			lectureByDay2.setDisableJoinBtn("true");
-//			lectureByDay2.setLiveIframeLink(null);
-//			lectureByDay2.setVideoIframeLink(null);
-//
-//		} else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-//				&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-//
-//			lectureByDay2.setDisableJoinBtn("false");
-//			lectureByDay2.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
-//			lectureByDay2.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
-//
-//		} else {
-//
-//			if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-//				lectureByDay2.setVideoIframeLink(lectureEntity2.getVideoIframeDynamicLink());
-//				lectureByDay2.setDisableJoinBtn("false");
-//				lectureByDay2.setLiveIframeLink(null);
-//
-//			} else {
-//				lectureByDay2.setVideoIframeLink(null);
-//				lectureByDay2.setDisableJoinBtn("false");
-//				lectureByDay2.setLiveIframeLink(lectureEntity2.getLiveIframeDynamicLink());
-//
-//			}
-//
-//		}
-//
-//	}
-
 	private LectureByDay createLectureEntityList(LectureByDay lectureByDay, LectureEntity lectureEntity) {
 
 		if (!Objects.isNull(lectureEntity)) {
@@ -251,6 +183,7 @@ public class UpdateCourTempService {
 		addCourseByDayId.setEndDate(courseEntity.getEndDate());
 		addCourseByDayId.setStartDate(courseEntity.getStartDate());
 		addCourseByDayId.setEndDate(courseEntity.getEndDate());
+		addCourseByDayId.setDay(dayByCourseIdList);
 		addCourseByDayId.setMessage("Course updated! ");
 		addCourseByDayId.setStatus(ApiConstants.SUCCESS);
 
@@ -271,40 +204,7 @@ public class UpdateCourTempService {
 		return addCourseByDayId;
 	}
 
-//	private void iframe(LectureEntity LectByDay, LectureEntity lectureEntity) {
-//
-//		lectureEntity = new LectureEntity();
-//
-//		if (Objects.isNull(LectByDay.getVideoIframeDynamicLink())
-//				&& Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
-//			lectureEntity.setDisableJoinBtn("true");
-//			lectureEntity.setLiveIframeDynamicLink(null);
-//			lectureEntity.setVideoIframeDynamicLink(null);
-//
-//		} else if (!Objects.isNull(LectByDay.getVideoIframeDynamicLink())
-//				&& !Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
-//
-//			lectureEntity.setDisableJoinBtn("false");
-//			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
-//			lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
-//
-//		} else {
-//
-//			if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-//				lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
-//				lectureEntity.setDisableJoinBtn("false");
-//				lectureEntity.setLiveIframeDynamicLink(null);
-//
-//			} else {
-//				lectureEntity.setVideoIframeDynamicLink(null);
-//				lectureEntity.setDisableJoinBtn("false");
-//				lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
-//
-//			}
-//
-//		}
-//
-//	}
+
 
 	private LectureByDay getIframe(LectureByDay lectureByDay, LectureEntity lectureEntity) {
 

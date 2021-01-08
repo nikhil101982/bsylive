@@ -91,23 +91,18 @@
 
     <!-- remove course section start -->
 
-    
+
     <div class="deleteUserSection col-md-12" *ngIf="showRemoveCourse">
 
         <div class="pt-4">
             <div class="fontWeight500 pb-2">Courses<span class="errorColor">*</span></div>
-            <ng-multiselect-dropdown 
-                [placeholder]="''" 
-                [settings]="allCourseSettings" 
-                [data]="allCourses" 
-                (click)="removeErrorMsg()"
-                (onSelect)="onItemSelect($event, 'delete')"
-                (onSelectAll)="onSelectAll($event, 'delete')" 
-                (onDeSelect)="onItemDeSelect($event, 'delete')" 
+            <ng-multiselect-dropdown [placeholder]="''" [settings]="allCourseSettings" [data]="allCourses"
+                (click)="removeErrorMsg()" (onSelect)="onItemSelect($event, 'delete')"
+                (onSelectAll)="onSelectAll($event, 'delete')" (onDeSelect)="onItemDeSelect($event, 'delete')"
                 (onDeSelectAll)="onSelectAll($event, 'delete')">
             </ng-multiselect-dropdown>
         </div>
-        
+
         <div *ngIf="deleteCourseError" class="pt-2 errorColor">
             * {{deleteCourseError}}
         </div>
@@ -115,7 +110,7 @@
         <div class="pt-4 pb-2">
             <button class="btn btn-primary" (click)="deleteCourse()">Delete Course(s)</button>
         </div>
-    
+
     </div>
 
 
@@ -128,24 +123,25 @@
         <div *ngIf="!enableCourseDetailsSection">
             <div class="pt-2 pb-2" *ngFor="let course of allCourses">
                 <!-- <div class="courseBgSty" (click)="showCourseDetails(course)"> {{course.courseName}}</div> -->
-            
+
                 <div class="d-flex flex-column pt-3 pb-3 courseBgSty">
-                   <div class="d-flex flex-row">
-                    <div class="courseNameSty pt-1">
-                        {{course.courseName}}
+                    <div class="d-flex flex-row">
+                        <div class="courseNameSty pt-1">
+                            {{course.courseName}}
+                        </div>
+
+                        <div class="ml-auto pr-4">
+                            <button class="btn btn-primary btnPrimary"
+                                (click)="showCourseDetails(course)">Update</button>
+                        </div>
                     </div>
-        
-                    <div class="ml-auto pr-4">
-                      <button class="btn btn-primary btnPrimary" (click)="showCourseDetails(course)">Update</button>
-                    </div>
-                    </div>
-                   <div class="hrLine"></div>
+                    <div class="hrLine"></div>
                     <div class="d-flex flex-row pt-3">
                         <div class="section2-sty">
                             FROM : {{course.startDate}}
                         </div>
                         <div class="ml-auto pr-5 section2-sty">
-                          TO : {{course.endDate}}
+                            TO : {{course.endDate}}
                         </div>
                     </div>
                 </div>
@@ -155,7 +151,7 @@
 
         <div *ngIf="enableCourseDetailsSection">
             <div class="d-flex flex-row pt-4">
-                <div class="col-md-3 pl-3 createLectureSty text-center" (click)="onClickBack()"> 
+                <div class="col-md-3 pl-3 createLectureSty text-center" (click)="onClickBack()">
                     <a class="backLink">Back</a>
                     <!-- <button class="btn btn-primary createLectureSty text-center p-2 mt-3" (click)="onClickBack()">Back</button>                 -->
                 </div>
@@ -185,7 +181,7 @@
                     </div>
                     <div class="createLectureSty text-center p-2 mt-3" (click)="onClickCreateLectureBtn()">
                         Create Lecture
-                       <!-- <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button> -->
+                        <!-- <button class="btn btn-primary" (click)="onClickCreateLectureBtn()">Create Lecture</button> -->
                     </div>
                 </div>
 
@@ -201,69 +197,54 @@
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500 pb-2">From Day<span class="errorColor">*</span></div>
-                        <ng-multiselect-dropdown 
-                            [placeholder]="''" 
-                            [(ngModel)]="fromDaysList"
-                            [settings]="allDaysSettings" 
-                            [data]="allDays" 
-                            (click)="removeErrorMsg()"
-                            (onSelect)="onItemSelect($event, 'from')"
-                            (onSelectAll)="onSelectAll($event, 'from')" 
-                            (onDeSelect)="onItemDeSelect($event, 'from')" 
-                            (onDeSelectAll)="onSelectAll($event, 'from')">
+                        <div class="fontWeight500 pb-2">From Day</div>
+                        <ng-multiselect-dropdown [placeholder]="''" [(ngModel)]="fromDaysList"
+                            [settings]="allDaysSettings" [data]="allDays" (click)="removeErrorMsg()"
+                            (onSelect)="onItemSelect($event, 'from')" (onSelectAll)="onSelectAll($event, 'from')"
+                            (onDeSelect)="onItemDeSelect($event, 'from')" (onDeSelectAll)="onSelectAll($event, 'from')">
                         </ng-multiselect-dropdown>
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500 pb-2">To Day<span class="errorColor">*</span></div>
-                        <ng-multiselect-dropdown 
-                            [placeholder]="''" 
-                            [(ngModel)]="toDaysList"
-                            [settings]="allDaysSettings" 
-                            [data]="allDays" 
-                            (click)="removeErrorMsg()"
-                            (onSelect)="onItemSelect($event, 'to')"
-                            (onSelectAll)="onSelectAll($event, 'to')" 
-                            (onDeSelect)="onItemDeSelect($event, 'to')" 
-                            (onDeSelectAll)="onSelectAll($event, 'to')">
+                        <div class="fontWeight500 pb-2">To Day</div>
+                        <ng-multiselect-dropdown [placeholder]="''" [(ngModel)]="toDaysList"
+                            [settings]="allDaysSettings" [data]="allDays" (click)="removeErrorMsg()"
+                            (onSelect)="onItemSelect($event, 'to')" (onSelectAll)="onSelectAll($event, 'to')"
+                            (onDeSelect)="onItemDeSelect($event, 'to')" (onDeSelectAll)="onSelectAll($event, 'to')">
                         </ng-multiselect-dropdown>
                     </div>
 
                     <div class="pt-3">
-                        <div class="fontWeight500 pb-2">Selected Day<span class="errorColor">*</span></div>
-                        <ng-multiselect-dropdown 
-                            [placeholder]="''" 
-                            [(ngModel)]="selectedDaysList"
-                            [settings]="selectedDaysSettings" 
-                            [data]="allDays" 
-                            (click)="removeErrorMsg()"
-                            (onSelect)="onItemSelect($event, 'select')"
-                            (onSelectAll)="onSelectAll($event, 'select')" 
-                            (onDeSelect)="onItemDeSelect($event, 'select')" 
+                        <div class="fontWeight500 pb-2">Selected Day</div>
+                        <ng-multiselect-dropdown [placeholder]="''" [(ngModel)]="selectedDaysList"
+                            [settings]="selectedDaysSettings" [data]="allDays" (click)="removeErrorMsg()"
+                            (onSelect)="onItemSelect($event, 'select')" (onSelectAll)="onSelectAll($event, 'select')"
+                            (onDeSelect)="onItemDeSelect($event, 'select')"
                             (onDeSelectAll)="onSelectAll($event, 'select')">
                         </ng-multiselect-dropdown>
                     </div>
 
                     <div class="row pt-3">
                         <div class="col-md-6">
-                        <div class="d-flex flex-column pt-3">
-                        <div class="fieldName">
-                            Start Time<span class="errorColor">*</span>
-                        </div>
-                            <!-- <ngb-timepicker [(ngModel)]="startTime"></ngb-timepicker> -->
-                            <app-timepicker [selectedTime]="startTime" (onSelectTime)="returnSelectedTime($event, 'startTime')"></app-timepicker>
+                            <div class="d-flex flex-column pt-3">
+                                <div class="fieldName">
+                                    Start Time<span class="errorColor">*</span>
+                                </div>
+                                <!-- <ngb-timepicker [(ngModel)]="startTime"></ngb-timepicker> -->
+                                <app-timepicker [selectedTime]="startTime"
+                                    (onSelectTime)="returnSelectedTime($event, 'startTime')"></app-timepicker>
 
-                        </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex flex-column pt-3">
                                 <div class="fieldName">
-                                   End Time<span class="errorColor">*</span>
+                                    End Time<span class="errorColor">*</span>
                                 </div>
-                                    <!-- <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker> -->
-                                    <app-timepicker [selectedTime]="endTime" (onSelectTime)="returnSelectedTime($event, 'endTime')"></app-timepicker>
-                                </div>                       
+                                <!-- <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker> -->
+                                <app-timepicker [selectedTime]="endTime"
+                                    (onSelectTime)="returnSelectedTime($event, 'endTime')"></app-timepicker>
+                            </div>
                         </div>
 
                     </div>
@@ -274,7 +255,7 @@
                         </div>
                         <div class="pt-1">
                             <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.liveIFrameLink"
-                             (keyup)="onKeyupIFrame($event, 'live')" [disabled]="disableLiveIframe">
+                                (keyup)="onKeyupIFrame($event, 'live')" [disabled]="disableLiveIframe">
                         </div>
                     </div>
 
@@ -284,11 +265,12 @@
                         </div>
                         <div class="pt-1">
                             <input class="w-100" type="text" placeholder="" [(ngModel)]="lectureForm.videoIFrameLink"
-                             (keyup)="onKeyupIFrame($event, 'video')" [disabled]="disableVideoIframe">
+                                (keyup)="onKeyupIFrame($event, 'video')" [disabled]="disableVideoIframe">
                         </div>
                     </div>
 
                     <div class="pt-4 pb-2">
+                        <div *ngIf="errorMsg" class="pb-3 errorColor"> * {{errorMsg}} </div>
                         <button class="btn btn-primary" (click)="saveLecture()">Save Lecture</button>
                     </div>
 

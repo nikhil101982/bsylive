@@ -1,5 +1,7 @@
 package com.yoga.api.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -29,6 +31,10 @@ public class LectureByDay {
 	String videoIframeDynamicLink;
 	String liveIframeDynamicLink;
 
+	String fromDay;
+	String toDay;
+	List<String> selectedDay;
+	
 
 }
 

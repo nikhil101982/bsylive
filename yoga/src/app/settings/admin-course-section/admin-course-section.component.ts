@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { ServiceService } from 'src/app/service.service';
 import { DateServiceService } from 'src/app/shared/date-service/date-service.service';
 import Swal from 'sweetalert2';
@@ -83,6 +84,7 @@ export class AdminCourseSectionComponent implements OnInit {
   startTime = null;
   endTime = null;
 
+  errorMsg: string = "";
 
   disableLiveIframe: boolean = false;
   disableVideoIframe: boolean = false;
@@ -350,6 +352,88 @@ export class AdminCourseSectionComponent implements OnInit {
     }
   }
 
+  timeCompare() {
+    this.errorMsg = "";
+    let form = this.lectureForm;
+    console.log("time compare = ", form, form.startTime.split(' ')[0].split(':'), Number(form.startTime.split(' ')[0].split(':')[0]), form.endTime.split(' '));
+    let start = this.lectureForm.startTime;
+    let end = this.lectureForm.endTime;
+
+    let startSpaceSep = start.split(' ');
+    let endSpaceSep = end.split(' ');
+
+    let startColanSep = startSpaceSep[0].split(':');
+    let endColanSep = endSpaceSep[0].split(':');
+
+    if (startSpaceSep[1] === endSpaceSep[1]) {
+      console.log("time if()");
+
+      if (Number(startColanSep[0]) === Number(endColanSep[0])) {
+        console.log("inside 2nd if()");
+        if (Number(startColanSep[1]) === Number(endColanSep[1]) ||
+          Number(startColanSep[1]) > Number(endColanSep[1])) {
+          this.errorMsg = "End time should greater than Start time";
+        }
+      }
+      if (Number(startColanSep[0]) > Number(endColanSep[0])) {
+        console.log("time hours not equal", startColanSep[0], endColanSep[0]);
+        this.errorMsg = "End time should greater than Start time";
+      }
+
+    }
+
+  }
+
+
+  errorHandling() {
+
+    console.log("asasasa", this.lectureForm);
+
+    this.errorMsg = "";
+    let data = this.lectureForm;
+
+    if (data.lectureName == "") {
+      this.errorMsg = "Please provide lecture name";
+    }
+
+    else if (data.fromDayId) {
+      if (data.toDayId == "" || data.toDayId == null) {
+        this.errorMsg = "Please provide to day";
+      }
+      else {
+        this.errorMsg = "";
+      }
+    }
+
+    else if (data.toDayId) {
+      if (data.fromDayId == "" || data.fromDayId == null) {
+        this.errorMsg = "Please provide from day";
+      }
+      else {
+        this.errorMsg = "";
+      }
+    }
+
+    else if (((data.fromDayId == "" || data.fromDayId == null) ||
+      (data.toDayId == "" || data.toDayId == null)) && (data.dayIds.length == 0)) {
+      this.errorMsg = "Please provide select day"
+    }
+
+    else if (data.startTime == "") {
+      this.errorMsg = "Please provide start time";
+    }
+
+    else if (data.endTime == "") {
+      this.errorMsg = "Please provide end time";
+    }
+
+    else if ((data.liveIFrameLink == "" || data.liveIFrameLink == null) &&
+      (data.videoIFrameLink == "" || data.videoIFrameLink == null)) {
+      this.errorMsg = "Please provide any IFrame link";
+    }
+
+  }
+
 
   saveLecture() {
 
@@ -357,16 +441,21 @@ export class AdminCourseSectionComponent implements OnInit {
     this.lectureForm.currentDate = this.service.convertDateFormat(new Date());
     console.log("save lecture req. body = ", this.lectureForm);
 
-    this.service.saveLecture(this.lectureForm).subscribe(res => {
-      console.log("save lecture res = ", res);
-      if (res['status'] === 'success') {
-        this.showAlertMessage('success', res['message']);
-        this.router.navigate(['/courses']);
-      }
-      if (res['status'] === 'failure') {
-        this.showAlertMessage('error', res['message']);
-      }
-    })
+    this.timeCompare();
+    this.errorHandling();
+
+    if (this.errorMsg == "") {
+      this.service.saveLecture(this.lectureForm).subscribe(res => {
+        console.log("save lecture res = ", res);
+        if (res['status'] === 'success') {
+          this.showAlertMessage('success', res['message']);
+          this.router.navigate(['/courses']);
+        }
+        if (res['status'] === 'failure') {
+          this.showAlertMessage('error', res['message']);
+        }
+      })
+    }
     console.log("save lecture = ", this.lectureForm, this.startTime, this.endTime);
   }
 

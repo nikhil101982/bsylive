@@ -66,16 +66,13 @@ public class PasswordService {
 			return utilMethods.errorResponse(failureResponseMessage);
 		}
 
+		String text = "password: " + userAccountEntity.getPassword();
+
 		try {
-
-			String text = "password: " + userAccountEntity.getPassword();
-
-			return sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, ApiConstants.FORGOT_PASSWORD_SUBJECT,
-					text, successResponseMessage, failureResponseMessage);
-
-		} catch (MessagingException e) {
+			return sendEmailUtil.sendEmail(emailId, forgotPasswordSendEmailFrom, ApiConstants.FORGOT_PASSWORD_SUBJECT, text,
+					successResponseMessage, failureResponseMessage);
+		} catch (Exception e) {
 			return utilMethods.errorResponse(failureResponseMessage);
-
 		}
 
 	}

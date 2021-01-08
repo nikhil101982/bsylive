@@ -27,17 +27,18 @@ public interface LectureRepository extends JpaRepository<LectureEntity, Integer>
 	@Query("SELECT c FROM LectureEntity c WHERE c.lectureName = ?1 and c.startTime = ?2  and c.endTime = ?3 and c.videoIframeDynamicLink = ?4  and c.liveIframeDynamicLink = ?5")
 	LectureEntity getLectureByLectureNameAndStartTimeAndEndTimeAndVideoIframeDynamicLinkAndLiveIframeDynamicLink(
 			String lectureName, String startTime, String endTime, String videoLink, String liveLink);
-	
-	//@Transactional
-    @Modifying(clearAutomatically = true)
+
+	// @Transactional
+	@Modifying(clearAutomatically = true)
 	@Query("UPDATE LectureEntity c set c.lectureName=:lectureName , c.startTime =:startTime  , c.endTime =:endTime , c.videoIframeDynamicLink = :videoIframeDynamicLink   , c.liveIframeDynamicLink = :liveIframeDynamicLink , c.currDate = :currDate  WHERE c.lectureId=:lectureId ")
-	void updateLectureEntity(@Param("lectureName") String lectureName , @Param("startTime") String startTime , @Param("endTime") String endTime, @Param("videoIframeDynamicLink") String videoIframeDynamicLink, @Param("liveIframeDynamicLink") String liveIframeDynamicLink  , @Param("currDate") String currDate , @Param("lectureId") Integer lectureId);
+	void updateLectureEntity(@Param("lectureName") String lectureName, @Param("startTime") String startTime,
+			@Param("endTime") String endTime, @Param("videoIframeDynamicLink") String videoIframeDynamicLink,
+			@Param("liveIframeDynamicLink") String liveIframeDynamicLink, @Param("currDate") String currDate,
+			@Param("lectureId") Integer lectureId);
 
-    LectureEntity findByLectureNameAndStartTimeAndEndTime(String lectureName, String startTime, String endTime);
-
-  
-    
-    
-
+	LectureEntity findByLectureNameAndStartTimeAndEndTime(String lectureName, String startTime, String endTime);
 	
+	LectureEntity findByLectureNameAndStartTimeAndEndTimeAndLanguage(String lectureName, String startTime, String endTime , String language);
+
+
 }

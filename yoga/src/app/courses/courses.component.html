@@ -6,8 +6,9 @@
     <div class="col-md-12 pt-2">
       <div class="p-2" *ngFor="let course of coursesList">
         <div class="courseBox">
-          <div class="boxText">
-            <span class="text-fs-12">COURSE</span>
+          <div class="d-flex flex-row boxText pt-2">
+            <div class="text-fs-12">COURSE</div>
+            <div class="ml-auto text-fs-12"> {{course.language}}</div>
           </div>
           <div class="d-flex pt-4 pb-3">
             <div>
@@ -27,7 +28,7 @@
             <div class="boxText text-fs-12">
               BIHAR SCHOOL OF YOGA
             </div>
-            <div class="ml-auto pr-5 text-fs-12">
+            <div class="ml-auto text-fs-12">
               FROM {{course.startDate}}, {{course.courseDuration}} days
             </div>
           </div>

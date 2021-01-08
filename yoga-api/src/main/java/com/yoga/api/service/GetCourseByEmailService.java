@@ -84,7 +84,8 @@ public class GetCourseByEmailService {
 					allUserCourses.setDays(courseEntity.getDayEntity().size());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());
-					allUserCourses.setLanguage(courseEntity.getLanguage());
+					System.out.println(courseEntity.getLanguage().toUpperCase());
+					allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
 					allUserCoursesList.add(allUserCourses);
 
 				}

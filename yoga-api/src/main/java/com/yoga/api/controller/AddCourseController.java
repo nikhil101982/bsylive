@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoga.api.entity.CourseEntity;
 import com.yoga.api.model.AddCourseAdminRequest;
 import com.yoga.api.model.AddCourseByDayId;
 import com.yoga.api.model.AddListOfCourse;
@@ -44,16 +43,19 @@ public class AddCourseController {
 
 	@Autowired
 	AddCourseAdminService addCourseAdminService;
-	
+
 	@Autowired
 	UpdateCourService updateCourService;
-	
+
 	@Autowired
 	UpdateCourTempService updateCourTempService;
-	
 
 	@Autowired
 	CourseRepository courseRepository;
+	
+	@Autowired
+	SubscribeCourseByUser subscribeCourseByUser;
+
 
 	// @Autowired
 	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
@@ -61,7 +63,7 @@ public class AddCourseController {
 	 * Add course by admin
 	 */
 
-	@PostMapping("/addCourseTemp")
+	@PostMapping("/addFullCourse")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse addCourseTemp(@RequestBody AddCourseByDayId addCourseByDayId) throws Exception {
 		return addCourseFromAdminService.addCourse(addCourseByDayId);
@@ -74,17 +76,6 @@ public class AddCourseController {
 	}
 
 	/*
-	 * Courses registration by user in their account
-	 */
-
-	@PostMapping("/registerCourses/{userEmail}")
-	@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
-	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
-			@PathVariable("userEmail") String userEmail) throws Exception {
-		return registerCourses.registerCourses(subscribeCourses, userEmail);
-	}
-
-	/*
 	 * Remove Courses by admin
 	 */
 
@@ -93,6 +84,7 @@ public class AddCourseController {
 	public StatusMessageResponse removeCourse(@RequestBody List<CoursesId> coursesIdList) throws Exception {
 		return addCourseService.removeCourse(coursesIdList);
 	}
+	
 
 	/*
 	 * Update Courses by admin in user profile
@@ -104,36 +96,25 @@ public class AddCourseController {
 		return updateCourseService.updateUserCourses(course);
 	}
 
+	
 	/*
 	 * Add course by admin
 	 */
 
-//	@PostMapping("/addCourseWithLectureDetails")
-//	public StatusMessageResponse addCourseWithLectureDetails(@RequestBody AddCourseByDayId addCourseByDayId)
-//			throws Exception {
-//		return addCourseWithLectureDetailsService.addCourseWithLectureDetails(addCourseByDayId);
-//	}
-	
 	@GetMapping("/updateCourse/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
-		
-		//return courseRepository.findAll();
-		
-	return updateCourTempService.updateCourse(courseId);
-		
-		
+
+		return updateCourTempService.updateCourse(courseId);
+
 	}
 	
-	
-	@GetMapping("/updateCoursesTest/{courseId}")
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public List<CourseEntity> updateCoursesTest(@PathVariable("courseId") Integer courseId) throws Exception {
-		
-		return courseRepository.findAll();
-		
-		
-		
+
+	@PostMapping("/registerCourses/{userEmail}")
+	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
+			@PathVariable("userEmail") String userEmail) throws Exception {
+		return subscribeCourseByUser.registerCourses(subscribeCourses, userEmail);
 	}
+
 
 }

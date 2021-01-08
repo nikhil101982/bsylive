@@ -86,7 +86,7 @@ public class GetCourseService2 {
 			if (compareDate.equals(ApiConstants.TRUE)) {
 
 				allUserCourses = new AllCourses();
-				allUserCourses.setLanguage(courseEntity.getLanguage());
+				allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setEndDate(courseEntity.getEndDate());
 
@@ -113,6 +113,56 @@ public class GetCourseService2 {
 		return successResponse(allUserCoursesList);
 	}
 
+	// Get course
+	public AllCoursesResponse allCourses() throws ParseException {
+
+		try {
+			courseEntityList = courseRepository.findAll();
+		} catch (Exception e) {
+			return errorResponse("eoor");
+
+		}
+
+		allUserCoursesResponse = new AllCoursesResponse();
+
+		allUserCoursesList = new ArrayList<>();
+
+		if (Objects.isNull(courseEntityList)) {
+			return errorResponse("error");
+		}
+
+		AllCourses allUserCourses;
+
+		for (CourseEntity courseEntity : courseEntityList) {
+
+			String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
+
+			if (compareDate.equals(ApiConstants.TRUE)) {
+
+				String courseName = courseEntity.getCourseName().toUpperCase();
+
+				allUserCourses = new AllCourses();
+				allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
+				allUserCourses.setStartDate(courseEntity.getStartDate());
+				allUserCourses.setEndDate(courseEntity.getEndDate());
+				allUserCourses.setCourseName(courseName);
+				allUserCourses.setCourseId(courseEntity.getCourseId());
+				allUserCoursesList.add(allUserCourses);
+
+			}
+
+		}
+
+		if ((Objects.isNull(allUserCoursesList))) {
+			return errorResponse("error");
+		}
+
+		if (allUserCoursesList.size() == 0) {
+			return errorResponse("There is not approved cours!");
+		}
+
+		return successResponse(allUserCoursesList);
+	}
 
 	private AllCoursesResponse errorResponse(String message) {
 		allUserCoursesResponse.setStatus(ApiConstants.FAILURE);
