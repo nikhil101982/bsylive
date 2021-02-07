@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.yoga.api.constant.ApiConstants;
@@ -41,10 +42,15 @@ public class GetCourseByEmailService {
 	List<AllUserCourses> allUserCoursesList;
 
 	CompareDates compareDates = new CompareDates();
+	
+	@Value("${authentication.flag}")
+	private String adminUserAuthFlag;
 
 	// Gell all courses based on user
 
 	public AllUserCoursesResponse coursesByUserName(String userEmail, String userRole) throws ParseException {
+
+		 String flag = "false";
 
 		allUserCoursesResponse = new AllUserCoursesResponse();
 
@@ -58,6 +64,10 @@ public class GetCourseByEmailService {
 			return errorResponse();
 		}
 
+		if (adminUserAuthFlag.equals("false")) {
+			return getCourseFromAdminService.coursesForAdmin();
+		}
+		
 		if (userAccountEntity.getRole().equals(ApiConstants.ADMIN_ROLE)) {
 			return getCourseFromAdminService.coursesForAdmin();
 		}
