@@ -60,6 +60,9 @@ public class LectureService {
 	final String failureMessage = "Lecture is not added !";
 	final String successMessage = " Lecture is added successfully !";
 
+	final String failureRemoveLectureMessage = "lecture not deleted successfully !";
+	final String successRemoveLectureMessage = " lecture deleted successfully !";
+
 	public StatusMessageResponse createLecture(CreateLectureTempRequest createLectureRequest) {
 
 		if (Objects.isNull(createLectureRequest)) {
@@ -100,14 +103,14 @@ public class LectureService {
 			dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
 		}
 
-		if(!Objects.isNull(fromDayId) && !Objects.isNull(toDayId)) {
-		// from
-		for (DayEntity dayEntity : dayEntityList) {
-			if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
-				dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
-			}
+		if (!Objects.isNull(fromDayId) && !Objects.isNull(toDayId)) {
+			// from
+			for (DayEntity dayEntity : dayEntityList) {
+				if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
+					dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
+				}
 
-		}
+			}
 		}
 
 		for (Map.Entry<Integer, Integer> entry : dayIdMap.entrySet()) {
@@ -291,6 +294,34 @@ public class LectureService {
 		statusMessageResponse.setMessage(message);
 		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
 
+	}
+
+	//
+	public StatusMessageResponse removeLecture(Integer lectureId) {
+
+		if (Objects.isNull(lectureId)) {
+			utilMethods.errorResponse(failureMessage);
+		}
+
+		try {
+
+			lectureEntity = lectureRepository.getLecEntityByLecId(lectureId);
+		} catch (Exception e) {
+			log.info("Not able to remove Lecture Entity! ");
+		}
+
+		if (Objects.isNull(lectureEntity)) {
+			utilMethods.errorResponse(failureRemoveLectureMessage);
+		}
+
+		try {
+
+			lectureRepository.delete(lectureEntity);
+		} catch (Exception e) {
+			log.info("Not able to remove Lecture Entity! ");
+		}
+
+		return utilMethods.successResponse(successRemoveLectureMessage);
 	}
 
 }

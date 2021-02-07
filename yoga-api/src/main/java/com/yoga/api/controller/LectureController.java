@@ -1,14 +1,14 @@
 package com.yoga.api.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.StatusMessageResponse;
@@ -23,7 +23,7 @@ public class LectureController {
 	LectureRepository lecRepository;
 	
 	@Autowired
-	LectureService createLectureService;
+	LectureService lectureService;
 
 	/*
 	 * Get all lecture
@@ -39,7 +39,13 @@ public class LectureController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public StatusMessageResponse createLecture(@RequestBody CreateLectureTempRequest createLectureRequest)
 			throws Exception {
-		return createLectureService.createLecture(createLectureRequest);
+		return lectureService.createLecture(createLectureRequest);
 	}
 
+	@PostMapping("/removeLecture/{lectureId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public StatusMessageResponse removeLecture(@PathVariable("lectureId") Integer lectureId )
+			throws Exception {
+		return lectureService.removeLecture(lectureId);
+	}
 }
