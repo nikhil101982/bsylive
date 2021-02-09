@@ -15,7 +15,12 @@ import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.DayId;
+import com.yoga.api.model.DaysInLectures;
+import com.yoga.api.model.DaysResponse;
+import com.yoga.api.model.LectureByDay;
 import com.yoga.api.model.LectureEntityStatus;
+import com.yoga.api.model.LectureListInCourse;
+import com.yoga.api.model.LectureReference;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
@@ -45,6 +50,8 @@ public class LectureService {
 
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
 
+	LectureListInCourse lectureListInCourse;
+
 	LectureEntity lectureEntity;
 
 	List<LectureEntity> lectureEntityList;
@@ -52,6 +59,10 @@ public class LectureService {
 	List<DayEntity> dayEntityList;
 
 	int lectureIndex;
+
+	DaysInLectures daysInLectures;
+	List<DaysResponse> daysResponseList;
+	DaysResponse daysResponse;
 
 	LectureEntityStatus lectureEntityStatus;
 
@@ -322,6 +333,127 @@ public class LectureService {
 		}
 
 		return utilMethods.successResponse(successRemoveLectureMessage);
+	}
+
+	public LectureListInCourse errorResponselistOfLectures() {
+		lectureListInCourse = new LectureListInCourse();
+
+		lectureListInCourse.setMessage("Empty Lecture! ");
+		lectureListInCourse.setStatus(ApiConstants.FAILURE);
+		return lectureListInCourse;
+	}
+
+	public DaysInLectures errorResponselistOfDaysInLectures() {
+		daysInLectures = new DaysInLectures();
+
+		daysInLectures.setMessage("Error in selected days in lecture! ");
+		daysInLectures.setStatus(ApiConstants.FAILURE);
+		return daysInLectures;
+	}
+
+	public LectureListInCourse listOfLectures(Integer courseId) {
+
+		if (Objects.isNull(courseId)) {
+			return errorResponselistOfLectures();
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return errorResponselistOfLectures();
+		}
+
+		if (Objects.isNull(courseEntity)) {
+			return errorResponselistOfLectures();
+		}
+
+		dayEntityList = courseEntity.getDayEntity();
+
+		lectureListInCourse = new LectureListInCourse();
+
+		List<LectureReference> lecture = new ArrayList<>();
+
+		LectureReference lectureReference;
+
+		lectureListInCourse = new LectureListInCourse();
+
+		for (DayEntity dayEntity : dayEntityList) {
+
+			for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
+				lectureReference = new LectureReference();
+				lectureReference.setLectureId(lectureEntity.getLectureId());
+				lectureReference.setLectureName(lectureEntity.getLectureName());
+				lecture.add(lectureReference);
+			}
+
+		}
+
+		lectureListInCourse.setLecture(lecture);
+		lectureListInCourse.setMessage("");
+		lectureListInCourse.setStatus(ApiConstants.SUCCESS);
+
+		return lectureListInCourse;
+	}
+
+	public DaysInLectures getSelectedDaysInLecture(Integer lectureId, Integer courseId) {
+
+		if (Objects.isNull(courseId)) {
+			return errorResponselistOfDaysInLectures();
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return errorResponselistOfDaysInLectures();
+		}
+
+		if (Objects.isNull(courseEntity)) {
+			errorResponselistOfDaysInLectures();
+		}
+
+		try {
+
+			lectureEntity = lectureRepository.getLecEntityByLecId(lectureId);
+		} catch (Exception e) {
+			return errorResponselistOfDaysInLectures();
+
+		}
+
+		if (Objects.isNull(lectureEntity)) {
+			return errorResponselistOfDaysInLectures();
+		}
+
+		dayEntityList = courseEntity.getDayEntity();
+		daysInLectures = new DaysInLectures();
+		daysResponseList = new ArrayList<>();
+
+		for (DayEntity dayEntity : dayEntityList) {
+
+			lectureEntityList = dayEntity.getLecEntity();
+			
+			System.out.println("###########      Day ID #########"+ dayEntity.getDayId());
+			System.out.println(" $$$$$$$$$$$$$$  Day Name $$$$$$$$$$ "+ dayEntity.getDayName());
+
+
+			System.out.println("###########      Required Lecture  #########"+ lectureEntity.getLectureName());
+			
+			
+			if (lectureEntityList.contains(lectureEntity)) {
+				daysResponse = new DaysResponse();
+				daysResponse.setDayId(dayEntity.getDayId());
+				daysResponse.setDayName(dayEntity.getDayName());
+				daysResponseList.add(daysResponse);
+			}
+
+		}
+
+		if (!Objects.isNull(daysResponseList)) {
+			daysInLectures.setDaysResponse(daysResponseList);
+			daysInLectures.setStatus(ApiConstants.SUCCESS);
+			daysInLectures.setMessage("List of days");
+		}
+
+		return daysInLectures;
 	}
 
 }

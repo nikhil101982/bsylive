@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
+import com.yoga.api.model.DaysInLectures;
+import com.yoga.api.model.LectureListInCourse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.service.LectureService;
@@ -47,5 +49,17 @@ public class LectureController {
 	public StatusMessageResponse removeLecture(@PathVariable("lectureId") Integer lectureId )
 			throws Exception {
 		return lectureService.removeLecture(lectureId);
+	}
+	
+	@GetMapping(value = "/listOfLecture/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public LectureListInCourse listOfLecture(@PathVariable("courseId") Integer courseId) throws Exception {
+		return lectureService.listOfLectures(courseId);
+	}
+	
+	@GetMapping(value = "/selectedDaysId/{lectureId}/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public DaysInLectures selectedDaysId(@PathVariable("lectureId") Integer lectureId , @PathVariable("courseId") Integer courseId) throws Exception {
+		return lectureService.getSelectedDaysInLecture(lectureId , courseId);
 	}
 }
