@@ -12,20 +12,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "yoga_course")
+@AllArgsConstructor
 public class CourseEntity {
 
 	@Id
@@ -37,16 +34,6 @@ public class CourseEntity {
 	public String language;
 	public String endDate;
 	public String prerequisite;
-	
-	
-	@Embedded
-	@ElementCollection
-	@OneToMany(targetEntity = RegistrationFormEntity.class, cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-	@JoinColumn(name = "cd_fk", referencedColumnName = "courseId")
-	private List<RegistrationFormEntity> registrationFormEntity;
-
-
-
 
 	@Embedded
 	@ElementCollection
@@ -54,6 +41,7 @@ public class CourseEntity {
 	@JoinColumn(name = "cd_fk", referencedColumnName = "courseId")
 	private List<DayEntity> dayEntity;
 	
+
 	
 	
 	

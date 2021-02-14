@@ -31,8 +31,8 @@ public class LectureByDay {
 	String videoIframeDynamicLink;
 	String liveIframeDynamicLink;
 
-	String fromDay;
-	String toDay;
+	Integer fromDay;
+	Integer toDay;
 	List<String> selectedDay;
 	
 

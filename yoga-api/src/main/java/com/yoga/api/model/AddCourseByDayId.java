@@ -29,9 +29,6 @@ public class AddCourseByDayId {
 	private String endDate;
 	private String language;
 	private Integer courseId;
-
-
-
 	private List<DayByCourseId> day = new ArrayList<>();
 	public String status;;
 	public String message;

@@ -100,14 +100,14 @@ public class LectureService {
 			dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
 		}
 
-		if(!Objects.isNull(fromDayId) && !Objects.isNull(toDayId)) {
-		// from
-		for (DayEntity dayEntity : dayEntityList) {
-			if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
-				dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
-			}
+		if (!Objects.isNull(fromDayId) && !Objects.isNull(toDayId)) {
+			// from
+			for (DayEntity dayEntity : dayEntityList) {
+				if (dayEntity.getDayId() >= fromDayId && (dayEntity.getDayId() <= toDayId)) {
+					dayIdMap.put(dayEntity.getDayId(), dayEntity.getDayId());
+				}
 
-		}
+			}
 		}
 
 		for (Map.Entry<Integer, Integer> entry : dayIdMap.entrySet()) {
@@ -178,11 +178,9 @@ public class LectureService {
 			String endTim = lecEntity.getEndTime();
 
 			if (lecName.equals(lectureName) && startTim.equals(startTime) && endTim.equals(endTime)) {
-
 				lectureEntityStatus.setIndex(i);
 				lectureEntityStatus.setLectureIsPresent(true);
 				return lectureEntityStatus;
-
 			}
 
 		}
@@ -258,6 +256,8 @@ public class LectureService {
 			lectureEntity.setEndTime(createLectureRequest.getEndTime().toUpperCase());
 			lectureEntity.setLectureName(createLectureRequest.getLectureName().toUpperCase());
 			lectureEntity.setStartTime(createLectureRequest.getStartTime().toUpperCase());
+			lectureEntity.setFromDay(createLectureRequest.getFromDayId());
+			lectureEntity.setToDay(createLectureRequest.getToDayId());
 		}
 		return lectureEntity;
 	}
@@ -291,6 +291,43 @@ public class LectureService {
 		statusMessageResponse.setMessage(message);
 		statusMessageResponse.setStatus(ApiConstants.SUCCESS);
 
+	}
+
+	public StatusMessageResponse removeLecture(Integer lectureId, Integer dayId, Integer courseId) {
+
+		if (Objects.isNull(lectureId) || Objects.isNull(dayId) || Objects.isNull(courseId)) {
+			return utilMethods.errorResponse(failureMessage);
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return utilMethods.errorResponse(failureMessage);
+		}
+
+		if (Objects.isNull(courseEntity.getDayEntity())) {
+			return utilMethods.errorResponse(failureMessage);
+		}
+
+		dayEntityList = courseEntity.getDayEntity();
+
+		for (DayEntity dayEntity : dayEntityList) {
+
+			if (dayEntity.getDayId().equals(dayId)) {
+
+				lectureEntityList = dayEntity.getLecEntity();
+
+				for (LectureEntity lectureEntity : lectureEntityList) {
+					if (lectureEntity.getLectureId().equals(lectureId)) {
+						lectureEntityList.remove(lectureEntityList.indexOf(lectureEntity));
+					}
+
+				}
+
+			}
+		}
+
+		return null;
 	}
 
 }

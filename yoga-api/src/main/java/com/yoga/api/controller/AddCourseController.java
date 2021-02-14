@@ -104,9 +104,7 @@ public class AddCourseController {
 	@GetMapping("/updateCourse/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
-
 		return updateCourTempService.updateCourse(courseId);
-
 	}
 	
 

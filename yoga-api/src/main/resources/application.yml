@@ -21,6 +21,8 @@ forgot:
         
 
         
+
+        
         
 admin:
   create:
@@ -28,9 +30,10 @@ admin:
       email:
         send:
           from: biharyoga123@gmail.com
+  authentication: false
 
   user:
-      email: nikagrl19@gmail.com
+     email: nikagrl19@gmail.com
         
 
 server:
