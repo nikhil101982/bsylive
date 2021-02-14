@@ -43,12 +43,19 @@ public class GetCourseByEmailService {
 
 	CompareDates compareDates = new CompareDates();
 	
+<<<<<<< HEAD
 	@Value("${admin.authentication}")
 	private boolean authenticationFlag;
+=======
+	@Value("${authentication.flag}")
+	private String adminUserAuthFlag;
+>>>>>>> 64d8723fc67e84e6b35f2a44fbfcf37bd22d5a48
 
 	// Gell all courses based on user
 
 	public AllUserCoursesResponse coursesByUserName(String userEmail, String userRole) throws ParseException {
+
+		 String flag = "false";
 
 		allUserCoursesResponse = new AllUserCoursesResponse();
 
@@ -61,6 +68,13 @@ public class GetCourseByEmailService {
 		} catch (Exception e) {
 			return errorResponse();
 		}
+<<<<<<< HEAD
+=======
+
+		if (adminUserAuthFlag.equals("false")) {
+			return getCourseFromAdminService.coursesForAdmin();
+		}
+>>>>>>> 64d8723fc67e84e6b35f2a44fbfcf37bd22d5a48
 		
 		if (userAccountEntity.getRole().equals(ApiConstants.ADMIN_ROLE)) {
 			return getCourseFromAdminService.coursesForAdmin();

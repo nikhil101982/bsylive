@@ -32,6 +32,8 @@ public class AddCourseByDayId {
 	private List<DayByCourseId> day = new ArrayList<>();
 	public String status;;
 	public String message;
+	private Integer lectureId;
+
 
 
 }

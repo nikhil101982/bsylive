@@ -21,7 +21,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class LectureByDay {
 
-	Integer lectureByDayId;
+	Integer lectureId;
 	String lectureName;
 	String startTime;
 	String endTime;

@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 public class LectureReference {
 
-	//private List<Lecture> lecture = new ArrayList<Lecture>();
+	private String lectureName;
+	private Integer lectureId;
 
-	private String reference;
 }

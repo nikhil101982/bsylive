@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class LectureType {
+public class DaysInLectures {
 
 	String status;
 	String message;

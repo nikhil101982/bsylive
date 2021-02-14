@@ -118,7 +118,7 @@ public class GetCourseByAdminService {
 			try {
 				lectureByDay = new LectureByDay();
 
-				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
+				lectureByDay.setLectureId(arrayOfLectureId[i]);
 
 				
 				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
