@@ -1,0 +1,132 @@
+
+.panel-title {
+    position: relative;
+    background: #616161;
+    color: #dcd5d5;
+}
+
+.panel-title::after {
+    content: "\f107";
+    /* color: #333; */
+    color: #dcd5d5;
+    font-size: 25px;
+    font-weight: 900;
+    top: 5px;
+    right: 20px;
+    position: absolute;
+    font-family: "FontAwesome";
+}
+
+.panel-title[aria-expanded="true"]::after {
+    content: "\f106";
+}
+
+.list-group-item {
+    border: 0px;
+    cursor: pointer;
+}
+
+
+.fieldName {
+    font-weight: 500;
+    padding-bottom: 8px;
+}
+.courseBgSty {
+    background: #616161;
+    /* background: #f7f7f7; */
+    /* padding-left: 20px; */
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.courseBgSty:hover {
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, .1);;
+}
+
+.langSty{
+    color: #cecece;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.courseNameSty {
+    /* color: #3278CE; */
+    color: white;
+    line-height: 1.75rem;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.backLink {
+    position: relative;
+    top: 5px;
+    font-size: 19px;
+    cursor: pointer;
+    color: white
+}
+
+.showLectures {
+  background: white;
+  border: 1px solid rgba(0,0,0,.1);
+}
+
+.daysSty {
+    background-color: #616161;
+}
+
+.lectureGroupSty {
+    background: #000C17;
+    border: 1px solid #000C17;
+    cursor: pointer;
+    color: #A6AAAE;
+}
+
+.lectureSty:hover {
+    color: white;
+}
+
+.lectureSty:visited {
+    color: red;
+}
+
+.createLectureSty {
+    background-color: #1890FF;
+    color: white;
+    cursor: pointer;
+}
+
+.deleteLectureSty {
+    background-color: #DC3545;
+    color: white;
+    cursor: pointer;
+}
+
+.hrLine {
+    border-bottom: 1px solid #989898;
+    margin-top: 20px;
+}
+
+.section2-sty {
+    color: #cecece;
+    font-size: 12px;
+}
+
+.scroller {
+    max-height: 360px;
+    overflow: auto;
+}
+
+.btnPrimary {
+    background-color:  #2972CC;  
+    /* font-size: 0.8rem; */
+    font-size: 14px;
+    min-height: 36px;
+    line-height: 1rem;
+    border-radius: 2px;
+    font-weight: 700;
+    width: 150px; 
+}

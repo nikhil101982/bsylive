@@ -1,0 +1,258 @@
+<div *ngIf="!enableLecturePage">
+  <div class="row col-md-12 mb-4">
+    <div class="col-md-2">
+      <div class="container pl-1 pt-3 pb-2">
+
+        <!-- <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/dashboard">
+        Home
+      </a>
+    </li>
+    <li class="pl-1 pr-1"> > </li>
+    <li class="breadcrumb-item">
+
+      {{courseName}}
+
+    </li>
+  </ol> -->
+        <button class="btn btn-primary" routerLink="/courses">Home</button>
+      </div>
+
+      <div class="accordion accordionStyle2 pt-2" id="accordionExample275">
+        <div class="card z-depth-0 bordered cardShadow" style="cursor: pointer;" *ngFor="let day of daysNames">
+          <div class="card-header" id="headingOne2" (click)="onClickDay(day)">
+            <h5 class="mb-0">
+              <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true"
+                aria-controls="collapseOne2" [ngClass]="{active: isActive(day.dayName)}">
+                {{day.dayName}}
+              </button>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-9">
+
+
+      <div class="container pt-5">
+        <div style="text-align: center;">
+          <h3>{{courseName}}</h3>
+          <!-- <h3> {{selectedDayName}}</h3> -->
+        </div>
+
+        <div class="pt-3" *ngIf="daysList">
+          <table class="table table-hover">
+            <thead class="tableHeader">
+              <tr>
+                <!-- <th scope="col">S.NO </th> -->
+                <th scope="col">Lecture Name</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col"></th>
+                <!-- <th scope="col"></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="trFont" *ngFor="let ls of daysList; let i = index">
+                <!-- <td>{{ls.sNo}}</td> -->
+                <td><span class="lecture" (click)="onClickLectureName(i)">{{ls.lectureName}}</span></td>
+                <td>{{ls.startTime}}</td>
+                <td>{{ls.endTime}}</td>
+                <td><button [disabled]="ls.disableJoinBtn === 'true'" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#iframeModal" data-backdrop="static" data-keyboard="false"
+                    (click)="onClickjoinLecture(i)">Join Lecture</button>
+                </td>
+                <!-- <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailsModal"
+                  (click)="onClickDetails(i)" data-backdrop="static" data-keyboard="false"> Details</button></td>
+            </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="showIframe" class="pt-3">
+      <iframe width="100%" height="620px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div> -->
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- iframe Modal -->
+<div class="modal fade" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header headerSty">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearIframeLink()">
+          <span aria-hidden="true" (click)="clearIframeLink()">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+
+        <!-- Youtube iFrame  -->
+
+        <!-- <div *ngIf="showIframe">
+          <iframe width="100%" height="500px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div> -->
+
+
+
+        <!-- Vimeo iFrame  start -->
+
+        <!-- <div style="padding:56.25% 0 0 0;position:relative;"><iframe [src]="iFrameDynamicLink" frameborder="0"
+            allow="autoplay; fullscreen" allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
+
+        <div *ngIf="showIframe">
+          <iframe width="100%" height="500px" [src]="iFrameDynamicLink" frameborder="" allowfullscreen="allowfullscreen"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Details modal -->
+
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead class="tableHeader">
+            <tr>
+              <th scope="col">S.NO </th>
+              <th scope="col">Instruction</th>
+              <th scope="col">Content</th>
+              <th scope="col">Assignment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ls of popupDetails">
+              <td>{{ls.sNo}}</td>
+              <td>{{ls.instruction}}</td>
+              <td>{{ls.content}}</td>
+              <td>{{ls.assignment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="enableLecturePage" class="ro col-md-12 pt-4 pb-5">
+
+  <div style="padding: 0px 15px;">
+    <button class="btn btn-primary" routerLink="/courses"> Home</button>
+    <button class="btn btn-primary ml-3" (click)="enableLecture()"> Back</button>
+    <button class="btn btn-primary ml-3" data-toggle="modal" data-target="#iframeModal" data-backdrop="static"
+      data-keyboard="false" (click)="onClickjoinLecture(indexIFrameLink)">Join Lecture</button>
+
+  </div>
+  <div class="pt-3 col-md-12 f-20">
+    {{selectedDayName}} - {{month}} {{day}}, {{year}}
+  </div>
+
+  <div *ngFor="let lect of lectureData" class="col-md-12 pt-3">
+    <div class="f-20 asanaSty"> {{lect.asanaName}}</div>
+    <table class="col-md-12 tableSty">
+      <thead></thead>
+      <tbody *ngFor="let ls of lect.list">
+        <tr>
+          <th class="fWeight" style="width: 4%;" [ngClass]="ls.bookname == '' ? 'thPadding' : '' ">{{ls.id}}
+          </th>
+          <th class="fWeight" style="width: 40%;">{{ls.asan}}</th>
+          <th class="fWeight" style="padding: 5px 0px;">
+            <div *ngIf="ls.bookname"> <span style="font-size: 17px; font-weight: 500;">Refreence Book : </span>
+              <span class="ml-3">{{ls.bookname}}</span>
+            </div>
+            <div class="bookLinkSty"> <a href="{{ls.booklink}}" target="_blank">{{ls.booklink}}</a> </div>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- <div class="col-md-12 pt-4 f-20">
+    <div class="fWeight asanaSty">Assignment</div><div style="padding: 30px" *ngIf="enableContentDiv">
+      <div>Q1: Assginment on Hath Yoga</div>
+      <div class="pt-2">Ans: <input type="text" class="inputSty f-15">
+        <span class="pl-3"><button type="button" class="btn btn-primary">Submit</button></span>
+      </div>
+      <div class="pt-3">
+        <div> 3. Practice Pranayama</div>
+        <div class="pt-2 d-flex flex-row">
+          <div class="d-flex">Ans:
+            <input type="file" id="file" class="f-15" (change)="handleFileInput($event.target.files)">
+          </div>
+          <div class="d-flex mx-auto" style="position: relative; left: 145px;">
+            <span class="pl-5"><button type="button" class="btn btn-primary"
+                (click)="uploadFile()">Upload</button></span>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div> -->
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-group col-md-12" id="accordion">
+        <div class="panel panel-default">
+          <div href="#" class="list-group-item panel-title f-20 asanaSty" data-toggle="collapse" data-target="#s0"
+            data-parent="#accordion" style="background-color: #E8E8E8;">
+            <span class="fWeight">Assignment </span><span class="glyphicon glyphicon-menu-down pull-right"></span>
+          </div>
+          <div id="s0" class="sublinks collapse">
+            <div style="padding: 30px">
+              <div>Q1: Assginment on Hath Yoga</div>
+              <div class="pt-2">Ans: <input type="text" class="inputSty f-15">
+                <span class="pl-3"><button type="button" class="btn btn-primary">Submit</button></span>
+              </div>
+              <div class="pt-3">
+                <div> 3. Practice Pranayama</div>
+                <div class="pt-2 d-flex flex-row">
+                  <div class="d-flex">Ans:
+                    <input type="file" id="file" class="f-15" (change)="handleFileInput($event.target.files)">
+                  </div>
+                  <div class="d-flex mx-auto" style="position: relative; left: 145px;">
+                    <span class="pl-5"><button type="button" class="btn btn-primary"
+                        (click)="uploadFile()">Upload</button></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

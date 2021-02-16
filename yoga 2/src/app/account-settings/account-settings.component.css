@@ -1,0 +1,41 @@
+.accounts-text {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.fieldName {
+    font-weight: 500;
+    padding-bottom: 8px;
+}
+
+.input-section {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.password-input-type {
+    position: relative;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 5px;
+}
+
+.fa-eye:before {
+    position: relative;
+    top: 6px;
+    cursor: pointer;
+}
+
+.color-active {
+    color: blue;
+}
+
+.changePasswordMsgColor{
+    color: #1f8354;
+}
+
+.fa-check-circle {
+    font-size: 18px;
+}

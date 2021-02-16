@@ -17,12 +17,10 @@ import lombok.ToString;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class DaysInLectures {
+public class LectureType {
 
-	String status;
-	String message;
-
-	List<DaysResponse> daysResponse = new ArrayList<>();
+	String lectureTypeHeaderName;
+	List<LectureSession> lectureSession = new ArrayList<>();
 
 
 }

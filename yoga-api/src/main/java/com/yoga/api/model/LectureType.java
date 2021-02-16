@@ -19,10 +19,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class LectureType {
 
-	String status;
-	String message;
-
-	List<DaysResponse> daysResponse = new ArrayList<>();
+	String lectureTypeHeaderName;
+	List<LectureSession> lectureSession = new ArrayList<>();
 
 
 }
