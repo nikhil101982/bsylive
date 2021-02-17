@@ -22,7 +22,6 @@ import com.yoga.api.service.AddCourseAdminService;
 import com.yoga.api.service.AddCourseFromAdminService;
 import com.yoga.api.service.AddCourseService;
 import com.yoga.api.service.SubscribeCourseByUser;
-import com.yoga.api.service.UpdateCourService;
 import com.yoga.api.service.UpdateCourTempService;
 import com.yoga.api.service.UpdateCourseService;
 
@@ -45,17 +44,13 @@ public class AddCourseController {
 	AddCourseAdminService addCourseAdminService;
 
 	@Autowired
-	UpdateCourService updateCourService;
-
-	@Autowired
 	UpdateCourTempService updateCourTempService;
 
 	@Autowired
 	CourseRepository courseRepository;
-	
+
 	@Autowired
 	SubscribeCourseByUser subscribeCourseByUser;
-
 
 	/*
 	 * Add course by admin
@@ -82,7 +77,6 @@ public class AddCourseController {
 	public StatusMessageResponse removeCourse(@RequestBody List<CoursesId> coursesIdList) throws Exception {
 		return addCourseService.removeCourse(coursesIdList);
 	}
-	
 
 	/*
 	 * Update Courses by admin in user profile
@@ -94,7 +88,6 @@ public class AddCourseController {
 		return updateCourseService.updateUserCourses(course);
 	}
 
-	
 	/*
 	 * Add course by admin
 	 */
@@ -104,13 +97,11 @@ public class AddCourseController {
 	public AddCourseByDayId updateCourses(@PathVariable("courseId") Integer courseId) throws Exception {
 		return updateCourTempService.updateCourse(courseId);
 	}
-	
 
 	@PostMapping("/registerCourses/{userEmail}")
 	public StatusMessageResponse registerCourses(@RequestBody RegisterCourses subscribeCourses,
 			@PathVariable("userEmail") String userEmail) throws Exception {
 		return subscribeCourseByUser.registerCourses(subscribeCourses, userEmail);
 	}
-
 
 }
