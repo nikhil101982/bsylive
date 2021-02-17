@@ -107,7 +107,7 @@ public class AddCourseService {
 
 	private void createCourse(CourseResources course) {
 		courseEntity = new CourseEntity();
-		courseEntity.setCourseName(course.getCourseName().toUpperCase());
+		courseEntity.setCourseName(course.getCourseName());
 		courseEntity.setCouseDuration(course.getDay().size());
 		courseEntity.setStartDate(course.getStartDate().toUpperCase());
 
@@ -121,7 +121,7 @@ public class AddCourseService {
 			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
 			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(day.getLectureName());
 			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
 			lectureEntity.setVideoIframeDynamicLink(day.getVideoIframeDynamicLink());
 			lectureEntity.setLiveIframeDynamicLink(day.getLiveIframeDynamicLink());
