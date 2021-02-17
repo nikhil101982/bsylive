@@ -21,16 +21,17 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class LectureByDay {
 
+	
+	public int sNo;
+
 	Integer lectureByDayId;
 	String lectureName;
 	String startTime;
 	String endTime;
 	String currentDate;
 	String disableJoinBtn;
-	public int sNo;
 	String videoIframeDynamicLink;
 	String liveIframeDynamicLink;
-
 	Integer fromDay;
 	Integer toDay;
 	List<String> selectedDay;

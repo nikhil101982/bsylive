@@ -1,10 +1,15 @@
 package com.yoga.api.service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,11 +55,13 @@ public class GetCourseByAdminService {
 	List<LectureByDay> lectureByDayList;
 
 	List<DayEntity> dayEntityList;
+	
+	List<LocalDate> datesBetweenStartDateAndEndDate;
 
 	DayEntity dayEntity;
 
 	DayByCourseId dayByCourseId = new DayByCourseId();
-	
+
 	CompareDates compareDates = new CompareDates();
 
 	public DayByCourseId getCourseByAdmin(Integer courseId, Integer dayId) throws ParseException {
@@ -68,19 +75,22 @@ public class GetCourseByAdminService {
 		} catch (Exception e) {
 			return errorResponse("error");
 		}
-		
+
 		if (Objects.isNull(courseEntity)) {
 			return errorResponse("error");
 		}
-		
+
 		String compareDate = compareDates.compareCourseStartDate(courseEntity.getStartDate());
-		
-		
-		if (	!compareDate.equals(ApiConstants.TRUE)) {
+
+		if (!compareDate.equals(ApiConstants.TRUE)) {
 			return errorResponse("error");
 
-			
 		}
+
+		String startDate = courseEntity.getStartDate();
+		String endDate = courseEntity.getEndDate();
+
+		 datesBetweenStartDateAndEndDate = date(startDate, endDate);
 
 		dayEntityList = courseEntity.getDayEntity();
 
@@ -120,42 +130,22 @@ public class GetCourseByAdminService {
 
 				lectureByDay.setLectureByDayId(arrayOfLectureId[i]);
 
-				
 				LectureEntity lectureEntity2 = lecRepository.getLecEntityByLecId(arrayOfLectureId[i]);
 
-				if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-						&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-
-					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-					lectureByDay.setVideoIframeDynamicLink("");
-					lectureByDay.setLiveIframeDynamicLink("");
-
-				}
-
-				else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-						&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
+				if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
 
 					lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
 					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-					lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+					lectureByDay.setLiveIframeDynamicLink("");
 
 				} else {
 
-					if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())) {
-
-						lectureByDay.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
-						lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-						lectureByDay.setLiveIframeDynamicLink("");
-
-					} else {
-
-						lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
-						lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
-						lectureByDay.setVideoIframeDynamicLink("");
-
-					}
+					lectureByDay.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+					lectureByDay.setDisableJoinBtn(lectureEntity2.getDisableJoinBtn());
+					lectureByDay.setVideoIframeDynamicLink("");
 
 				}
+
 				lectureByDay.setSNo(lectureEntity2.getSNo());
 				lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
 				lectureByDay.setEndTime(lectureEntity2.getEndTime());
@@ -179,11 +169,64 @@ public class GetCourseByAdminService {
 
 	}
 
+	public static List<LocalDate> getDatesBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
+
+		long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+		return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(i -> startDate.plusDays(i))
+				.collect(Collectors.toList());
+	}
+
+	private static List<LocalDate> date(String startDate, String endDate) {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/mm/yyyy");
+
+		String sDate = convert(startDate);
+		String eDate = convert(endDate);
+
+		// convert String to LocalDate
+		LocalDate localStartDate = LocalDate.parse(sDate, formatter);
+		LocalDate localEndDate = LocalDate.parse(eDate, formatter).plusDays(1);
+
+		List<LocalDate> datesBetweenStartDateAndEndDate = getDatesBetweenStartDateAndEndDate(localStartDate,
+				localEndDate);
+
+		return datesBetweenStartDateAndEndDate;
+
+	}
+
+	private static String convert(String startDate) {
+
+		String m = "/";
+
+		char d1 = startDate.charAt(8);
+		char d2 = startDate.charAt(9);
+
+		String dd = d1 + "" + d2;
+
+		char m1 = startDate.charAt(5);
+		char m2 = startDate.charAt(6);
+
+		String mm = m1 + "" + m2;
+
+		char y1 = startDate.charAt(0);
+		char y2 = startDate.charAt(1);
+		char y3 = startDate.charAt(2);
+		char y4 = startDate.charAt(3);
+
+		String yyyy = y1 + "" + y2 + "" + y3 + "" + y4;
+
+		String date = dd + m + mm + m + yyyy;
+
+		return date;
+
+	}
+
 	private DayByCourseId successResponse() {
 
 		dayByCourseId.setDayName(dayEntity.getDayName());
 		dayByCourseId.setDayId(dayEntity.getDayId());
 		dayByCourseId.setLecture(lectureByDayList);
+		// dayByCourseId.setDate(date);
 		dayByCourseId.setStatus(ApiConstants.SUCCESS);
 		dayByCourseId.setMessage("course!");
 		return dayByCourseId;

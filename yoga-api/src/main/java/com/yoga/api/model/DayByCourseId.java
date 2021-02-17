@@ -1,5 +1,6 @@
 package com.yoga.api.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class DayByCourseId {
 	public String status;;
 	public String message;
 	List<LectureByDay> lecture = new ArrayList<>();
+
+	LocalDate date;
 
 	private final static long serialVersionUID = 2177644673242063512L;
 
