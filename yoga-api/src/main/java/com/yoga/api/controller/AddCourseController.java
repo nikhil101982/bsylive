@@ -57,8 +57,6 @@ public class AddCourseController {
 	SubscribeCourseByUser subscribeCourseByUser;
 
 
-	// @Autowired
-	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
 	/*
 	 * Add course by admin
 	 */

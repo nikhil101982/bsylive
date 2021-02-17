@@ -89,7 +89,7 @@ public class UpdateCourService {
 			lectureEntity.setCurrDate(day.getCurrentDate().toUpperCase());
 			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setEndTime(day.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(day.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(day.getLectureName());
 			lectureEntity.setStartTime(day.getStartTime().toUpperCase());
 			lectureEntity.setVideoIframeDynamicLink(day.getVideoIframeDynamicLink());
 			lectureEntity.setLiveIframeDynamicLink(day.getLiveIframeDynamicLink());
@@ -220,7 +220,7 @@ public class UpdateCourService {
 			lectureByDay.setSNo(lectureEntity2.getSNo());
 			lectureByDay.setCurrentDate(lectureEntity2.getCurrDate());
 			lectureByDay.setEndTime(lectureEntity2.getEndTime().toUpperCase());
-			lectureByDay.setLectureName(lectureEntity2.getLectureName().toUpperCase());
+			lectureByDay.setLectureName(lectureEntity2.getLectureName());
 			lectureByDay.setStartTime(lectureEntity2.getStartTime().toUpperCase());
 		}
 		return lectureByDay;
@@ -268,7 +268,7 @@ public class UpdateCourService {
 			newLectureEntity.setSNo(lectureEntity.getSNo());
 			newLectureEntity.setCurrDate(lectureEntity.getCurrDate());
 			newLectureEntity.setEndTime(lectureEntity.getEndTime().toUpperCase());
-			newLectureEntity.setLectureName(lectureEntity.getLectureName().toUpperCase());
+			newLectureEntity.setLectureName(lectureEntity.getLectureName());
 			newLectureEntity.setStartTime(lectureEntity.getStartTime().toUpperCase());
 		}
 		return newLectureEntity;

@@ -109,7 +109,7 @@ public class GetCourseFindDaysService {
 		if (Objects.isNull(dayEntity)) {
 			//return errorResponse();
 		}
-		daysResponse.setDayName(dayEntity.getDayName().toUpperCase());
+		daysResponse.setDayName(dayEntity.getDayName());
 
 		return daysResponse;
 	}

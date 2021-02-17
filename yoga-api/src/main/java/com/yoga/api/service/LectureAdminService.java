@@ -174,7 +174,7 @@ public class LectureAdminService {
 
 			lectureEntity.setCurrDate(createLectureRequest.getCurrentDate().toUpperCase());
 			lectureEntity.setEndTime(createLectureRequest.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(createLectureRequest.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(createLectureRequest.getLectureName());
 			lectureEntity.setStartTime(createLectureRequest.getStartTime().toUpperCase());
 		}
 		return lectureEntity;

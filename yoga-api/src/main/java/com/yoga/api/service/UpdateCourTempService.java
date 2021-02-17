@@ -163,7 +163,7 @@ public class UpdateCourTempService {
 			lectureByDay = getIframe(lectureByDay, lectureEntity);
 			lectureByDay.setSNo(lectureEntity.getSNo());
 			lectureByDay.setEndTime(lectureEntity.getEndTime().toUpperCase());
-			lectureByDay.setLectureName(lectureEntity.getLectureName().toUpperCase());
+			lectureByDay.setLectureName(lectureEntity.getLectureName());
 			lectureByDay.setStartTime(lectureEntity.getStartTime().toUpperCase());
 			lectureByDay.setLiveIframeDynamicLink(lectureEntity.getLiveIframeDynamicLink());
 			lectureByDay.setVideoIframeDynamicLink(lectureEntity.getVideoIframeDynamicLink());

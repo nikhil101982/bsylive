@@ -87,13 +87,13 @@ public class GetCourseByEmailService {
 					allUserCourses = new AllUserCourses();
 					allUserCourses.setEndDate(courseEntity.getEndDate());
 					
-					allUserCourses.setCourseName(courseEntity.getCourseName().toUpperCase() );
+					allUserCourses.setCourseName(courseEntity.getCourseName() );
 
 					allUserCourses.setDays(courseEntity.getDayEntity().size());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());
-					System.out.println(courseEntity.getLanguage().toUpperCase());
-					allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
+					System.out.println(courseEntity.getLanguage());
+					allUserCourses.setLanguage(courseEntity.getLanguage());
 					allUserCoursesList.add(allUserCourses);
 
 				}

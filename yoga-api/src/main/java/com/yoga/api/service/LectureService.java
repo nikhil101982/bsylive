@@ -254,7 +254,7 @@ public class LectureService {
 		if (!Objects.isNull(createLectureRequest)) {
 			iframe(createLectureRequest, lectureEntity);
 			lectureEntity.setEndTime(createLectureRequest.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(createLectureRequest.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(createLectureRequest.getLectureName());
 			lectureEntity.setStartTime(createLectureRequest.getStartTime().toUpperCase());
 			lectureEntity.setFromDay(createLectureRequest.getFromDayId());
 			lectureEntity.setToDay(createLectureRequest.getToDayId());
@@ -267,7 +267,7 @@ public class LectureService {
 		if (!Objects.isNull(createLectureRequest)) {
 			iframe(createLectureRequest, lectureEntity);
 			lectureEntity.setEndTime(createLectureRequest.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(createLectureRequest.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(createLectureRequest.getLectureName());
 			lectureEntity.setStartTime(createLectureRequest.getStartTime().toUpperCase());
 		}
 		return lectureEntity;

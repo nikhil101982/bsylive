@@ -84,7 +84,7 @@ public class GetCourseService {
 			if (compareDate.equals(ApiConstants.TRUE)) {
 
 				allUserCourses = new AllCourses();
-				allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
+				allUserCourses.setLanguage(courseEntity.getLanguage());
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setEndDate(courseEntity.getEndDate());
 
@@ -137,10 +137,10 @@ public class GetCourseService {
 
 			if (compareDate.equals(ApiConstants.TRUE)) {
 
-				String courseName = courseEntity.getCourseName().toUpperCase();
+				String courseName = courseEntity.getCourseName();
 
 				allUserCourses = new AllCourses();
-				allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
+				allUserCourses.setLanguage(courseEntity.getLanguage());
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setEndDate(courseEntity.getEndDate());
 				allUserCourses.setCourseName(courseName);

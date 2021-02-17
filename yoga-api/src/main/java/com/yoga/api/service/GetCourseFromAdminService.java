@@ -74,14 +74,14 @@ public class GetCourseFromAdminService {
 					allUserCourses = new AllUserCourses();
 
 					
-					allUserCourses.setCourseName(courseEntity.getCourseName().toUpperCase() );
+					allUserCourses.setCourseName(courseEntity.getCourseName() );
 					
 					allUserCourses.setCourseDuration(courseEntity.getCouseDuration());
 					allUserCourses.setEndDate(courseEntity.getEndDate());
 					allUserCourses.setDays(courseEntity.getDayEntity().size());
 					allUserCourses.setStartDate(courseEntity.getStartDate());
 					allUserCourses.setCourseId(courseEntity.getCourseId());
-					allUserCourses.setLanguage(courseEntity.getLanguage().toUpperCase());
+					allUserCourses.setLanguage(courseEntity.getLanguage());
 					allUserCoursesList.add(allUserCourses);
 
 				}

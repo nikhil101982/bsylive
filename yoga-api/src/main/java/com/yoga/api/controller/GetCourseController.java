@@ -52,9 +52,7 @@ public class GetCourseController {
 	GetCourseFromAdminService getCourseFromAdminService;
 
 
-	/*
-	 * 
-	 * 
+	/* 
 	 * /* Get Courses by courseId and dayId API
 	 */
 
