@@ -139,7 +139,7 @@ public class AddCourseFromAdminService {
 			lectureEntity.setSNo(LectByDay.getSNo());
 			lectureEntity.setCurrDate(LectByDay.getCurrentDate().toUpperCase());
 			lectureEntity.setEndTime(LectByDay.getEndTime().toUpperCase());
-			lectureEntity.setLectureName(LectByDay.getLectureName().toUpperCase());
+			lectureEntity.setLectureName(LectByDay.getLectureName());
 			lectureEntity.setStartTime(LectByDay.getStartTime().toUpperCase());
 			lecEntityList.add(lectureEntity);
 			lecEntityListOfList.add(lecEntityList);
