@@ -85,7 +85,9 @@ public class AddCourseAdminService {
 			if (!Objects.isNull(courseEntity)) {
 				courseRepository.save(courseEntity);
 			}
+			
 			return utilMethods.successResponse(successMessage);
+			
 		} catch (Exception e) {
 
 			return utilMethods.errorResponse(failureMessage);

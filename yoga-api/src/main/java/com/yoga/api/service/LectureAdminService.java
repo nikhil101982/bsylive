@@ -69,9 +69,9 @@ public class LectureAdminService {
 
 		}
 
-//		if (Objects.isNull(createLectureRequest) {
-//			return utilMethods.errorResponse(failureMessage);
-//		}
+		// if (Objects.isNull(createLectureRequest) {
+		// return utilMethods.errorResponse(failureMessage);
+		// }
 
 		dayEntityList = new ArrayList<>();
 		lecEntityList = new ArrayList<>();
@@ -182,32 +182,15 @@ public class LectureAdminService {
 
 	private void iframe(CreateLectureRequest LectByDay) {
 
-		if ((Objects.isNull(LectByDay.getVideoIframeDynamicLink()) || LectByDay.getVideoIframeDynamicLink().length()==0)
-				&& Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
-			lectureEntity.setDisableJoinBtn("true");
-			lectureEntity.setLiveIframeDynamicLink(null);
-			lectureEntity.setVideoIframeDynamicLink(null);
-
-		} else if ((!Objects.isNull(LectByDay.getVideoIframeDynamicLink() ) &&  LectByDay.getVideoIframeDynamicLink().length()==0 )
-				&& !Objects.isNull(LectByDay.getLiveIframeDynamicLink()) && LectByDay.getLiveIframeDynamicLink().length()==0) {
-
-			lectureEntity.setDisableJoinBtn("false");
-			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
+		if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
 			lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
+			lectureEntity.setDisableJoinBtn("false");
+			lectureEntity.setLiveIframeDynamicLink(null);
 
 		} else {
-
-			if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-				lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIframeDynamicLink());
-				lectureEntity.setDisableJoinBtn("false");
-				lectureEntity.setLiveIframeDynamicLink(null);
-
-			} else {
-				lectureEntity.setVideoIframeDynamicLink(null);
-				lectureEntity.setDisableJoinBtn("false");
-				lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
-
-			}
+			lectureEntity.setVideoIframeDynamicLink(null);
+			lectureEntity.setDisableJoinBtn("false");
+			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIframeDynamicLink());
 
 		}
 

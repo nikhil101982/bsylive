@@ -219,30 +219,15 @@ public class LectureService {
 
 	private void iframe(CreateLectureTempRequest LectByDay, LectureEntity lectureEntity) {
 
-		boolean checkVideoIframeDynamicLink = false;
-		boolean checkLiveIframeDynamicLink = false;
-
-		if (Objects.isNull(LectByDay.getLiveIFrameLink())) {
-			checkVideoIframeDynamicLink = LectByDay.getVideoIFrameLink().isEmpty();
+		if (!Objects.isNull(LectByDay.getVideoIFrameLink())) {
+			lectureEntity.setVideoIframeDynamicLink(LectByDay.getLiveIFrameLink());
+			lectureEntity.setDisableJoinBtn("false");
+			lectureEntity.setLiveIframeDynamicLink(null);
 
 		} else {
-			checkLiveIframeDynamicLink = LectByDay.getLiveIFrameLink().isEmpty();
-		}
-
-		if (checkVideoIframeDynamicLink && checkLiveIframeDynamicLink) {
-			lectureEntity.setDisableJoinBtn("true");
-		} else if (!checkVideoIframeDynamicLink && !checkLiveIframeDynamicLink) {
-			lectureEntity.setDisableJoinBtn("true");
+			lectureEntity.setVideoIframeDynamicLink(null);
+			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIFrameLink());
-			lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIFrameLink());
-		} else {
-			if (!checkVideoIframeDynamicLink) {
-				lectureEntity.setVideoIframeDynamicLink(LectByDay.getVideoIFrameLink());
-				lectureEntity.setDisableJoinBtn("false");
-			} else if (!checkLiveIframeDynamicLink) {
-				lectureEntity.setDisableJoinBtn("false");
-				lectureEntity.setLiveIframeDynamicLink(LectByDay.getLiveIFrameLink());
-			}
 
 		}
 

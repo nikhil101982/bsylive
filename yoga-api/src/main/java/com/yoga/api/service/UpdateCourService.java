@@ -228,32 +228,15 @@ public class UpdateCourService {
 
 	private void iframeLectureByDay(LectureByDay lectureByDay2, LectureEntity lectureEntity2) {
 
-		if (Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-				&& Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-			lectureByDay2.setDisableJoinBtn("true");
-			lectureByDay2.setLiveIframeDynamicLink(null);
-			lectureByDay2.setVideoIframeDynamicLink(null);
-
-		} else if (!Objects.isNull(lectureEntity2.getVideoIframeDynamicLink())
-				&& !Objects.isNull(lectureEntity2.getLiveIframeDynamicLink())) {
-
-			lectureByDay2.setDisableJoinBtn("false");
-			lectureByDay2.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
+		if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
 			lectureByDay2.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
+			lectureByDay2.setDisableJoinBtn("false");
+			lectureByDay2.setLiveIframeDynamicLink(null);
 
 		} else {
-
-			if (!Objects.isNull(lectureEntity.getVideoIframeDynamicLink())) {
-				lectureByDay2.setVideoIframeDynamicLink(lectureEntity2.getVideoIframeDynamicLink());
-				lectureByDay2.setDisableJoinBtn("false");
-				lectureByDay2.setLiveIframeDynamicLink(null);
-
-			} else {
-				lectureByDay2.setVideoIframeDynamicLink(null);
-				lectureByDay2.setDisableJoinBtn("false");
-				lectureByDay2.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
-
-			}
+			lectureByDay2.setVideoIframeDynamicLink(null);
+			lectureByDay2.setDisableJoinBtn("false");
+			lectureByDay2.setLiveIframeDynamicLink(lectureEntity2.getLiveIframeDynamicLink());
 
 		}
 
@@ -288,7 +271,7 @@ public class UpdateCourService {
 		addCourseByDayId.setStatus(ApiConstants.SUCCESS);
 
 		List<DayByCourseId> daysList = dayList(courseEntity);
-		
+
 		addCourseByDayId.setDay(daysList);
 
 		return addCourseByDayId;
@@ -310,7 +293,7 @@ public class UpdateCourService {
 
 		if (Objects.isNull(LectByDay.getVideoIframeDynamicLink())
 				&& Objects.isNull(LectByDay.getLiveIframeDynamicLink())) {
-			lectureEntity.setDisableJoinBtn("true");
+			lectureEntity.setDisableJoinBtn("false");
 			lectureEntity.setLiveIframeDynamicLink(null);
 			lectureEntity.setVideoIframeDynamicLink(null);
 
