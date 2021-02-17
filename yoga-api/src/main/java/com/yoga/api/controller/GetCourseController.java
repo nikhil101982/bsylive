@@ -51,8 +51,7 @@ public class GetCourseController {
 	@Autowired
 	GetCourseFromAdminService getCourseFromAdminService;
 
-	// @Autowired
-	// AddCourseWithLectureDetailsService addCourseWithLectureDetailsService;
+
 	/*
 	 * 
 	 * 

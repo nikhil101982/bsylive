@@ -88,9 +88,9 @@ public class GetCourseService {
 				allUserCourses.setStartDate(courseEntity.getStartDate());
 				allUserCourses.setEndDate(courseEntity.getEndDate());
 
-				String courseName = (courseEntity.getCourseName().toUpperCase().concat(" - ")
-						.concat(courseEntity.getLanguage().toUpperCase()).concat(" - ")
-						.concat(courseEntity.getStartDate()).concat(" - ").concat(courseEntity.getEndDate()));
+				String courseName = (courseEntity.getCourseName().concat(" - ")
+						.concat(courseEntity.getLanguage())).concat(" - ")
+						.concat(courseEntity.getStartDate()).concat(" - ").concat(courseEntity.getEndDate());
 
 				allUserCourses.setCourseName(courseName);
 				allUserCourses.setCourseId(courseEntity.getCourseId());
