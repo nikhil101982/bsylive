@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
+import com.yoga.api.model.ListOfLecturesResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.service.LectureService;
@@ -48,5 +49,12 @@ public class LectureController {
 	public StatusMessageResponse removeLecture(@PathVariable("lectureId") Integer lectureId , @PathVariable("dayId") Integer dayId , @PathVariable("courseId") Integer courseId)
 			throws Exception {
 		return createLectureService.removeLecture(lectureId,dayId,courseId);
+	}
+	
+	@GetMapping("/listOfLecture/{courseId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public ListOfLecturesResponse listOfLectures(@PathVariable("courseId") Integer courseId)
+			throws Exception {
+		return createLectureService.listOfLectures(courseId);
 	}
 }

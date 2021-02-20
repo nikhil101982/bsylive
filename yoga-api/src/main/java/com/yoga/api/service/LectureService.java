@@ -16,6 +16,8 @@ import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.DayId;
 import com.yoga.api.model.LectureEntityStatus;
+import com.yoga.api.model.ListOfLectures;
+import com.yoga.api.model.ListOfLecturesResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
@@ -51,9 +53,15 @@ public class LectureService {
 
 	List<DayEntity> dayEntityList;
 
+	ListOfLecturesResponse listOfLecturesResponse = new ListOfLecturesResponse();
+
 	int lectureIndex;
 
 	LectureEntityStatus lectureEntityStatus;
+
+	ListOfLectures listOfLectures;
+
+	List<ListOfLectures> listOfLectureList = new ArrayList<>();
 
 	UtilMethods utilMethods = new UtilMethods();
 
@@ -278,6 +286,24 @@ public class LectureService {
 
 	}
 
+	public ListOfLecturesResponse errorListOfLectureResponse(String message) {
+
+		listOfLecturesResponse.setMessage(message);
+		listOfLecturesResponse.setStatus(ApiConstants.SUCCESS);
+
+		return listOfLecturesResponse;
+	}
+
+	public ListOfLecturesResponse successListOfLectureResponse(String message) {
+
+		listOfLecturesResponse.setMessage(message);
+		listOfLecturesResponse.setStatus(ApiConstants.SUCCESS);
+		listOfLecturesResponse.setLecture(listOfLectureList);
+
+		return listOfLecturesResponse;
+
+	}
+
 	public StatusMessageResponse removeLecture(Integer lectureId, Integer dayId, Integer courseId) {
 
 		if (Objects.isNull(lectureId) || Objects.isNull(dayId) || Objects.isNull(courseId)) {
@@ -312,7 +338,37 @@ public class LectureService {
 			}
 		}
 
-		return null;
+		return utilMethods.successResponse(successMessage);
+	}
+
+	public ListOfLecturesResponse listOfLectures(Integer courseId) {
+
+		if (Objects.isNull(courseId)) {
+			return errorListOfLectureResponse("Error in list of lecture");
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return errorListOfLectureResponse("Error in list of lecture");
+		}
+
+		dayEntityList = new ArrayList<>();
+
+		for (DayEntity dayEntity : courseEntity.getDayEntity()) {
+
+			for (LectureEntity lectureEntity : dayEntity.getLecEntity()) {
+				listOfLectures = new ListOfLectures();
+				listOfLectures.setLectureId(lectureEntity.getLectureId());
+				listOfLectures.setLectureName(lectureEntity.getLectureName());
+				listOfLectureList.add(listOfLectures);
+			}
+
+		}
+
+		listOfLecturesResponse.setLecture(listOfLectureList);
+
+		return successListOfLectureResponse("List of lectures");
 	}
 
 }
