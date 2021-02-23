@@ -15,9 +15,11 @@ import com.yoga.api.entity.DayEntity;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.DayId;
+import com.yoga.api.model.DaysResponse;
 import com.yoga.api.model.LectureEntityStatus;
 import com.yoga.api.model.ListOfLectures;
 import com.yoga.api.model.ListOfLecturesResponse;
+import com.yoga.api.model.SelectedDayResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.CourseRepository;
 import com.yoga.api.repository.DayRepository;
@@ -43,6 +45,8 @@ public class LectureService {
 
 	List<CourseEntity> courseEntityList;
 
+	SelectedDayResponse selectedDayResponse;
+
 	DayEntity dayEntity;
 
 	StatusMessageResponse statusMessageResponse = new StatusMessageResponse();
@@ -54,6 +58,10 @@ public class LectureService {
 	List<DayEntity> dayEntityList;
 
 	ListOfLecturesResponse listOfLecturesResponse = new ListOfLecturesResponse();
+
+	List<SelectedDayResponse> selectedDayResponseList;
+
+	List<DaysResponse> daysResponseList;
 
 	int lectureIndex;
 
@@ -369,6 +377,52 @@ public class LectureService {
 		listOfLecturesResponse.setLecture(listOfLectureList);
 
 		return successListOfLectureResponse("List of lectures");
+	}
+
+	public SelectedDayResponse errorSelectedDayResponse(String message) {
+
+		return selectedDayResponse;
+
+	}
+
+	public SelectedDayResponse successSelectedDayResponse(String message) {
+		return selectedDayResponse;
+
+	}
+
+	public SelectedDayResponse selectedDaysId(Integer courseId, Integer lectureId) {
+
+		if (Objects.isNull(courseId) && Objects.isNull(lectureId)) {
+			return errorSelectedDayResponse("Error in Selected Days !");
+		}
+
+		try {
+			courseEntity = courseRepository.getCourseEntityByCourseId(courseId);
+		} catch (Exception e) {
+			return errorSelectedDayResponse("Error in Selected Days !");
+		}
+
+		if (Objects.isNull(courseEntity)) {
+			return errorSelectedDayResponse("Error in Selected Days !");
+		}
+
+		dayEntityList = courseEntity.getDayEntity();
+
+		try {
+
+			lectureEntity = lectureRepository.getLecEntityByLecId(lectureId);
+
+		} catch (Exception e) {
+			return errorSelectedDayResponse("Error in Selected Days !");
+		}
+
+		int index = dayEntityList.indexOf(lectureEntity);
+
+		for (DayEntity dayEntity : dayEntityList) {
+
+		}
+
+		return null;
 	}
 
 }

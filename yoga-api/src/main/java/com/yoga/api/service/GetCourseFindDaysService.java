@@ -114,7 +114,7 @@ public class GetCourseFindDaysService {
 
 	private static List<LocalDate> date(String startDate, String endDate) {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/mm/yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
 		String sDate = convert(startDate);
 		String eDate = convert(endDate);

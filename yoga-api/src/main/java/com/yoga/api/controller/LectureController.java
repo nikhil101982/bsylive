@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yoga.api.entity.LectureEntity;
 import com.yoga.api.model.CreateLectureTempRequest;
 import com.yoga.api.model.ListOfLecturesResponse;
+import com.yoga.api.model.SelectedDayResponse;
 import com.yoga.api.model.StatusMessageResponse;
 import com.yoga.api.repository.LectureRepository;
 import com.yoga.api.service.LectureService;
@@ -23,7 +24,7 @@ public class LectureController {
 
 	@Autowired
 	LectureRepository lecRepository;
-	
+
 	@Autowired
 	LectureService createLectureService;
 
@@ -46,15 +47,21 @@ public class LectureController {
 
 	@PutMapping("/removeLecture/{lectureId}/{dayId}/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public StatusMessageResponse removeLecture(@PathVariable("lectureId") Integer lectureId , @PathVariable("dayId") Integer dayId , @PathVariable("courseId") Integer courseId)
-			throws Exception {
-		return createLectureService.removeLecture(lectureId,dayId,courseId);
+	public StatusMessageResponse removeLecture(@PathVariable("lectureId") Integer lectureId,
+			@PathVariable("dayId") Integer dayId, @PathVariable("courseId") Integer courseId) throws Exception {
+		return createLectureService.removeLecture(lectureId, dayId, courseId);
 	}
-	
+
 	@GetMapping("/listOfLecture/{courseId}")
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public ListOfLecturesResponse listOfLectures(@PathVariable("courseId") Integer courseId)
-			throws Exception {
+	public ListOfLecturesResponse listOfLectures(@PathVariable("courseId") Integer courseId) throws Exception {
 		return createLectureService.listOfLectures(courseId);
+	}
+
+	@GetMapping("/selectedDaysId/{courseId} / {lectureId}")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public SelectedDayResponse selectedDaysId(@PathVariable("courseId") Integer courseId,
+			@PathVariable("lectureId") Integer lectureId) throws Exception {
+		return createLectureService.selectedDaysId(courseId , lectureId);
 	}
 }
